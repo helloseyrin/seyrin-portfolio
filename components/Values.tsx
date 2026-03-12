@@ -37,6 +37,10 @@ const values = [
     body: "None of my projects use or integrate OpenAI products.",
     callout: "I do not use, recommend, or integrate OpenAI API or ChatGPT and associated products.",
   },
+  {
+    title: "EuroStack",
+    body: "The transition away from dependence on American tech giants to European-based service providers — for infrastructure, tooling, and data.",
+  },
 ];
 
 export default function Values() {
@@ -77,7 +81,14 @@ export default function Values() {
         </p>
       </div>
 
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", alignItems: "flex-start" }}>
+      {/* Ethics & commitments label + pills */}
+      <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem" }}>
+          <p style={{ fontSize: "0.75rem", fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.1em", color: "var(--text-secondary)" }}>
+            Ethics & commitments
+          </p>
+        </div>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", alignItems: "flex-start" }}>
         {values.map((v, i) => {
           const isOpen = active === v.title;
           return (
@@ -177,6 +188,59 @@ export default function Values() {
             </div>
           );
         })}
+        </div>
+      </div>
+
+      {/* Developing principles — ACID */}
+      <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem" }}>
+          <p style={{ fontSize: "0.75rem", fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.1em", color: "var(--text-secondary)" }}>
+            Developing principles
+          </p>
+          <p style={{ fontSize: "0.8rem", color: "var(--text-dim)", fontFamily: "var(--font-mono)" }}>
+            borrowed from database theory, applied to everything else
+          </p>
+        </div>
+        {/* ACID */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+          <span style={{ fontSize: "0.65rem", fontFamily: "var(--font-fira-code), 'Fira Code', monospace", color: "var(--text-dim)", letterSpacing: "0.1em", textTransform: "uppercase" }}>ACID — structured data</span>
+          <div style={{ display: "flex", gap: "0.6rem", flexWrap: "wrap" }}>
+            {[
+              { abbr: "A", term: "Atomicity", def: "A unit of work either completes fully or not at all. No half-written states, no silent partial failures." },
+              { abbr: "C", term: "Consistency", def: "Every change moves the system from one valid state to another. Constraints hold before and after." },
+              { abbr: "I", term: "Isolation", def: "Concurrent changes do not bleed into each other. Independent until committed." },
+              { abbr: "D", term: "Durability", def: "Once committed, it survives. If it is not logged, tested, or recoverable — it does not count." },
+            ].map(({ abbr, term, def }) => (
+              <div key={term} className="card" style={{ flex: "1 1 180px", padding: "0.875rem 1rem", display: "flex", flexDirection: "column", gap: "0.35rem" }}>
+                <div style={{ display: "flex", alignItems: "baseline", gap: "0.5rem" }}>
+                  <span style={{ fontFamily: "var(--font-fira-code), 'Fira Code', monospace", fontSize: "0.7rem", fontWeight: 600, color: "#8aaac8", letterSpacing: "0.06em" }}>{abbr}</span>
+                  <span style={{ fontSize: "0.875rem", fontWeight: 500, color: "var(--text-primary)" }}>{term}</span>
+                </div>
+                <p style={{ fontSize: "0.79rem", color: "var(--text-muted)", lineHeight: 1.6 }}>{def}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* BASE */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+          <span style={{ fontSize: "0.65rem", fontFamily: "var(--font-fira-code), 'Fira Code', monospace", color: "var(--text-dim)", letterSpacing: "0.1em", textTransform: "uppercase" }}>BASE — unstructured data</span>
+          <div style={{ display: "flex", gap: "0.6rem", flexWrap: "wrap" }}>
+            {[
+              { abbr: "BA", term: "Basically Available", def: "The system guarantees availability, accepting that responses may be stale or partial." },
+              { abbr: "S", term: "Soft state", def: "State may change over time even without new input, as the system propagates updates asynchronously." },
+              { abbr: "E", term: "Eventually consistent", def: "Given enough time and no new writes, all replicas converge to the same value." },
+            ].map(({ abbr, term, def }) => (
+              <div key={term} className="card" style={{ flex: "1 1 200px", padding: "0.875rem 1rem", display: "flex", flexDirection: "column", gap: "0.35rem" }}>
+                <div style={{ display: "flex", alignItems: "baseline", gap: "0.5rem" }}>
+                  <span style={{ fontFamily: "var(--font-fira-code), 'Fira Code', monospace", fontSize: "0.7rem", fontWeight: 600, color: "#a78bfa", letterSpacing: "0.06em" }}>{abbr}</span>
+                  <span style={{ fontSize: "0.875rem", fontWeight: 500, color: "var(--text-primary)" }}>{term}</span>
+                </div>
+                <p style={{ fontSize: "0.79rem", color: "var(--text-muted)", lineHeight: 1.6 }}>{def}</p>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );

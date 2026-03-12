@@ -1,8 +1,10 @@
 "use client";
 
-import { useRef } from "react";
+import React, { useRef, useState } from "react";
 import Image from "next/image";
 import ContactForm from "./ContactForm";
+import Editable from "./Editable";
+import { useEdit } from "@/contexts/EditContext";
 
 
 const featured = [
@@ -39,6 +41,8 @@ const statusStyle: Record<string, { bg: string; color: string; border: string }>
 
 export default function Hero() {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const { data } = useEdit();
+  const [bioExpanded, setBioExpanded] = useState(false);
 
   const scroll = (dir: "left" | "right") => {
     if (!scrollRef.current) return;
@@ -72,15 +76,36 @@ export default function Hero() {
       {/* Content */}
       <div style={{ display: "flex", flexDirection: "column", gap: "2rem", paddingTop: "0.75rem" }}>
 
-        {/* H1 + H2 */}
+        {/* H1 + H2 + meta row */}
         <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
           <h1 style={{ fontSize: "3rem", fontWeight: 500, color: "var(--text-primary)", lineHeight: 1.1, display: "flex", alignItems: "center", gap: "0.5rem" }}>
             Smyrna V.
             <img src="/wave.gif" alt="wave" style={{ width: "2.75rem", height: "2.75rem", verticalAlign: "middle", imageRendering: "auto", filter: "blur(0.4px) contrast(1.05)", willChange: "transform" }} />
           </h1>
           <h2 style={{ fontSize: "2.25rem", fontWeight: 400, color: "var(--text-muted)", lineHeight: 1.2 }}>
-            Data & ML Engineer
+            <Editable file="hero" path="subtitle" tag="span" />
           </h2>
+          {/* Meta row */}
+          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap", paddingTop: "0.25rem" }}>
+            {[
+              { label: "Helsinki GMT+3", dot: null },
+              { label: "open to work", dot: "#4ade80" },
+            ].map(({ label, dot }, i) => (
+              <React.Fragment key={label}>
+                {i > 0 && <span style={{ width: "3px", height: "3px", borderRadius: "50%", background: "var(--border-hover)", display: "inline-block" }} />}
+                <span style={{
+                  display: "inline-flex", alignItems: "center", gap: "0.35rem",
+                  fontSize: "0.72rem",
+                  fontFamily: "var(--font-fira-code), 'Fira Code', monospace",
+                  color: "var(--text-dim)",
+                  letterSpacing: "0.02em",
+                }}>
+                  {dot && <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: dot, boxShadow: `0 0 6px ${dot}`, display: "inline-block", flexShrink: 0 }} />}
+                  {label}
+                </span>
+              </React.Fragment>
+            ))}
+          </div>
         </div>
 
         {/* Bio — left quote border */}
@@ -94,25 +119,80 @@ export default function Hero() {
           fontSize: "0.9375rem",
           lineHeight: 1.75,
         }}>
-          <p>
-            Growing expertise at the intersection of Data & ML Engineering, with a background in
-            business analysis and UI/UX design.
-          </p>
-          <p>
-            The through-line is documents. As a translator, then as a business analyst, I kept
-            running into the same problem — large volumes of information with no efficient way to
-            navigate it. That frustration is what pulled me toward NLP specifically: the gap between
-            raw text and something you can actually use.
-          </p>
-          <p>
-            Right now I&apos;m deep in building a personal knowledge management system. New fields
-            mean new papers, books, and threads to follow — and I accumulate information faster than
-            I can process it. I need infrastructure that works.
-          </p>
+          {/* First paragraph always visible */}
+          <Editable file="hero" path="bio[0]" tag="p" multiline />
+
+          {/* Expanded content */}
+          {bioExpanded && (
+            <>
+              {data.hero.bio.slice(1).map((_, i) => (
+                <Editable key={i + 1} file="hero" path={`bio[${i + 1}]`} tag="p" multiline />
+              ))}
+              <p>
+                I&apos;m currently applying all of this to{" "}
+                <a href="https://github.com/helloseyrin/anima-mundi" target="_blank" rel="noopener noreferrer" className="link-prose">Anima Mundi</a>
+                , my Obsidian PKM vault — ingestion, cleaning, vector embeddings, evaluating different models for semantic accuracy and discovery of connections. More recently I&apos;ve been following the{" "}
+                <a href="https://arxiv.org/html/2512.24601v1" target="_blank" rel="noopener noreferrer" className="link-prose">Recursive Language Model paradigm</a>
+                {" "}and thinking about how it maps onto the retrieval problem. The personal motivation is simple enough: I accumulate information faster than I can internalise or process it, so building infrastructure that supports continuous recall and adapts to my particular way of thinking and mind mapping was an obvious turn to take.
+              </p>
+            </>
+          )}
+
+          {/* Expand / collapse toggle */}
+          <button
+            onClick={() => setBioExpanded(v => !v)}
+            style={{
+              alignSelf: "flex-start",
+              background: "none",
+              border: "none",
+              padding: 0,
+              cursor: "pointer",
+              fontSize: "0.72rem",
+              fontFamily: "var(--font-fira-code), 'Fira Code', monospace",
+              color: "var(--text-dim)",
+              letterSpacing: "0.04em",
+              transition: "color 0.15s",
+            }}
+            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = "var(--text-muted)"; }}
+            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = "var(--text-dim)"; }}
+          >
+            {bioExpanded ? "— less" : "+ more"}
+          </button>
+        </div>
+
+        {/* Now strip */}
+        <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexWrap: "wrap" }}>
+          <span style={{
+            fontSize: "0.65rem",
+            fontFamily: "var(--font-fira-code), 'Fira Code', monospace",
+            color: "var(--text-dim)",
+            letterSpacing: "0.1em",
+            textTransform: "uppercase",
+            flexShrink: 0,
+          }}>now</span>
+          <div style={{ width: "1px", height: "0.9rem", background: "var(--border)", flexShrink: 0 }} />
+          {[
+            "CI/CD",
+            "RAG",
+            "Natural Language Processing",
+            "ELT pipelines",
+          ].map(item => (
+            <span key={item} style={{
+              fontSize: "0.72rem",
+              fontFamily: "var(--font-fira-code), 'Fira Code', monospace",
+              padding: "0.22em 0.65em",
+              borderRadius: "0.3rem",
+              border: "1px solid var(--border)",
+              background: "var(--bg-card)",
+              backdropFilter: "blur(12px)",
+              color: "var(--text-muted)",
+              letterSpacing: "0.01em",
+            }}>{item}</span>
+          ))}
         </div>
 
         {/* Contact pills + about link */}
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "0.75rem" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "0.75rem", marginTop: "-0.75rem" }}>
         <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
           {[
             {
@@ -145,37 +225,12 @@ export default function Hero() {
               href={href}
               target={external ? "_blank" : undefined}
               rel="noopener noreferrer"
+              className="tag-pill"
               style={{
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "0.4rem",
-                padding: "0.24em 0.75em",
-                borderRadius: "9999px",
-                border: "1px solid rgba(99, 130, 200, 0.35)",
-                background: "transparent",
-                fontSize: "0.78rem",
-                fontFamily: "var(--font-fira-code), 'Fira Code', ui-monospace, monospace",
-                fontWeight: 400,
-                letterSpacing: "0.02em",
-                color: "var(--text-secondary)",
                 textDecoration: "none",
-                transition: "all 0.18s ease",
-              }}
-              onMouseEnter={e => {
-                const el = e.currentTarget as HTMLElement;
-                el.style.background = "linear-gradient(135deg, rgba(14, 60, 140, 0.18) 0%, rgba(7, 30, 90, 0.28) 100%)";
-                el.style.borderColor = "rgba(99, 170, 255, 0.45)";
-                el.style.color = "#2563eb";
-                el.style.boxShadow = "0 0 12px rgba(147, 197, 253, 0.12)";
-                el.style.backdropFilter = "blur(8px)";
-              }}
-              onMouseLeave={e => {
-                const el = e.currentTarget as HTMLElement;
-                el.style.background = "transparent";
-                el.style.borderColor = "rgba(99, 130, 200, 0.35)";
-                el.style.color = "var(--text-secondary)";
-                el.style.boxShadow = "none";
-                el.style.backdropFilter = "none";
               }}
             >
               {icon}
@@ -203,8 +258,8 @@ export default function Hero() {
         </a>
         </div>
 
-        {/* Featured projects carousel */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+        {/* Featured projects — glass card wrapper */}
+        <div className="card" style={{ padding: "1rem 1.25rem 1.25rem", display: "flex", flexDirection: "column", gap: "0.75rem" }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.2rem" }}>
               <p style={{ fontSize: "0.75rem", fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.1em", color: "var(--text-secondary)" }}>

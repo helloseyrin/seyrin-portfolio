@@ -1,0 +1,33 @@
+{
+  "items": [
+    {
+      "id": "beautiful-formula",
+      "type": "Video",
+      "title": "The most beautiful formula not enough people understand",
+      "author": "3Blue1Brown",
+      "url": "https://www.youtube.com/watch?v=fsLh-NYhOoU",
+      "note": "Got me thinking about hyperdimensional spaces at the right level to reason about vector databases at scale — specifically the 21:14 section on Why 4πr². I couldn't do the maths but the intuition was directly applicable.",
+      "date": "Mar 2026"
+    },
+    {
+      "id": "linux-mint",
+      "type": "Video",
+      "title": "Linux Mint Cinnamon — why it might be the best desktop",
+      "author": "YouTube",
+      "url": "https://youtu.be/z4iSZetVkRg",
+      "note": "Switched to Linux Mint Cinnamon on Feb 27 after a Windows update fried itself and its own bootloader — got sick of it the same day and just installed this instead. Two weeks in: my 2020 mid-grade laptop is visibly happier, I customised it to look better than Windows ever did, and it didn't cost €200 for a license key Microsoft might invalidate in three years.",
+      "date": "Feb 2026"
+    },
+    {
+      "id": "rlm-paper",
+      "type": "Paper",
+      "title": "Recursive Language Models",
+      "author": "Alex Zhang et al. · MIT",
+      "url": "https://arxiv.org/pdf/2512.24601",
+      "codeUrl": "https://alexzhang13.github.io/blog/2025/rlm/",
+      "abstract": "We study allowing LLMs to process arbitrarily long prompts through inference-time scaling. Rather than feeding a giant context into the neural network directly, the prompt is stored as a plain-text variable in a Python environment and the model is given search tools to navigate it recursively — going deeper into relevant sections and back out, no summarisation, no lossy compression.",
+      "note": "The elegant bit is that the problem was never really about context windows — it was about treating the neural network as the *only* place information could live. Offload the text, give the model grep. Relevant to anything involving long docs, giant codebases, or vector DB retrieval strategies where you want the model to stay precise at scale rather than hallucinating under context rot.",
+      "date": "Jan 2026"
+    }
+  ]
+}

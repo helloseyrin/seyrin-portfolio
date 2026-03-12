@@ -8,8 +8,8 @@ import Tag from "./Tag";
 const skills = [
   { name: "Languages",        items: ["Python", "SQL", "Bash", "HTML/CSS", "Markdown"] },
   { name: "ML & Data",        items: ["PyTorch", "scikit-learn", "pandas", "Polars", "NumPy", "fastembed", "ChromaDB"] },
-  { name: "NLP & Embeddings", items: ["HuggingFace Transformers", "sentence-transformers", "NLTK", "Vector Databases"] },
-  { name: "Infrastructure",   items: ["PostgreSQL", "Snowflake", "Azure", "Docker", "Airflow", "dbt", "Linux", "Git"] },
+  { name: "NLP & Embeddings", items: ["HuggingFace Transformers", "sentence-transformers", "NLTK", "Vector Databases", "RAG"] },
+  { name: "Infrastructure",   items: ["PostgreSQL", "Snowflake", "Azure", "Docker", "Airflow", "dbt", "Linux", "Git", "CI/CD"] },
   { name: "Design",           items: ["Figma", "Zeplin", "Wireframing", "Prototyping", "UX Research"] },
 ];
 

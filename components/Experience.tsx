@@ -2,94 +2,8 @@
 
 import { useState, useEffect, useRef } from "react";
 import Tag from "./Tag";
-
-const experience = [
-  {
-    role: "Business Analysis & UX Design",
-    org: "Freelance",
-    type: "Contract",
-    location: "Remote",
-    period: "Mar 2023 – Mar 2024",
-    duration: "1 yr 1 mo",
-    bullets: [
-      "Gathered and maintained stakeholder requirements; produced user personas, journey maps, and UX deliverables bridging client, designer, and developer teams",
-      "Conducted market research and competitor analysis (SWOT) to inform product strategy and design decisions",
-      "Managed feature prioritisation and documentation in JIRA/Confluence; facilitated design hand-offs via Figma, Miro, and Zeplin",
-    ],
-    tags: ["Figma", "Miro", "JIRA", "Confluence", "Zeplin", "UX Research", "Requirements Gathering", "SWOT"],
-  },
-  {
-    role: "Front Desk Operations",
-    org: "The Witchery · Kimpton at Charlotte Square · Yotel",
-    type: "Full-time",
-    location: "Edinburgh, Scotland",
-    period: "Jun 2022 – Jan 2023",
-    duration: "8 mos",
-    bullets: [
-      "Managed guest check-ins/outs and special requests using ResDiary, Reslynx, and Opera PMS",
-      "Generated daily reports and detailed handovers to maintain cross-department communication quality",
-      "Coordinated transport, deliveries, and urgent logistics; ensured compliance with safety and fire protocols",
-    ],
-    tags: ["Opera PMS", "ResDiary", "Reslynx", "Customer Service", "Reporting"],
-  },
-  {
-    role: "Administrative Assistant",
-    org: "Array Property Group",
-    type: "Full-time",
-    location: "New York, US · Remote",
-    period: "Oct 2020 – Mar 2022",
-    duration: "1 yr 6 mos",
-    bullets: [
-      "Conducted rental market research and maintained up-to-date property database reports",
-      "Managed client correspondence, documentation, scheduling, and travel coordination",
-      "Handled CRM records and calendar management for a distributed team",
-    ],
-    tags: ["Market Research", "Documentation", "CRM", "Scheduling", "Data Entry"],
-  },
-  {
-    role: "Translator & Research / Editing Assistant",
-    org: "Freelance (ENG ↔ UA)",
-    type: "Freelance",
-    location: "Ukraine · Remote",
-    period: "Sep 2014 – May 2020",
-    duration: "5 yrs 9 mos",
-    bullets: [
-      "Translated technical documentation, user manuals, and academic content (liberal arts, cultural studies, social sciences)",
-      "Developed information architecture and structured content using Markdown, HTML, Git, CMS platforms, and Confluence",
-      "Interviewed subject-matter experts to clarify domain terminology; rapidly onboarded to new fields including software APIs and engineering specifications",
-      "Copywriting, editing, and proofreading in adherence with project and style requirements",
-    ],
-    tags: ["Technical Writing", "Markdown", "HTML", "Git", "Confluence", "CMS", "Information Architecture", "Copyediting"],
-  },
-  {
-    role: "Lead Generator",
-    org: "CIENCE",
-    type: "Full-time",
-    location: "Kyiv, Ukraine",
-    period: "May 2018 – Sep 2018",
-    duration: "5 mos",
-    bullets: [
-      "Researched companies and contacts matching ICP criteria via LinkedIn and company databases",
-      "Built and segmented lead lists by industry, company size, and role; verified contact data for key decision-makers",
-      "Managed and maintained CRM records and contact databases",
-    ],
-    tags: ["CRM", "LinkedIn", "Lead Research", "Data Entry", "Segmentation"],
-  },
-  {
-    role: "Volunteer Content Manager & Editor",
-    org: "FinUA",
-    type: "Volunteer",
-    location: "Finland",
-    period: "Sep 2024 – Dec 2024",
-    duration: "4 mos",
-    bullets: [
-      "Contributed to FinUA — an information hub connecting Ukrainians in Finland to legal consulting, informational support, and psychological counselling services",
-      "Managed website content development, wrote and edited articles, and organised social media content",
-      "Refined communication strategy for outreach to Ukrainian communities",
-    ],
-    tags: ["Content Management", "Copyediting", "Social Media", "Communication Strategy"],
-  },
-];
+import Editable from "./Editable";
+import { useEdit } from "@/contexts/EditContext";
 
 const typeColors: Record<string, { bg: string; text: string; border: string }> = {
   "Contract":   { bg: "rgba(37, 99, 235, 0.08)",  text: "#2563eb", border: "rgba(37, 99, 235, 0.2)" },
@@ -99,6 +13,8 @@ const typeColors: Record<string, { bg: string; text: string; border: string }> =
 };
 
 export default function Experience() {
+  const { data } = useEdit();
+  const experience = data.experience.entries;
   const [activeIndex, setActiveIndex] = useState(-1);
   const [bumpIndex, setBumpIndex] = useState(-1);
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -223,7 +139,9 @@ export default function Experience() {
                   {e.bullets.length > 0 && (
                     <ul style={{ paddingLeft: "1.1rem", display: "flex", flexDirection: "column", gap: "0.35rem", marginBottom: "0.875rem" }}>
                       {e.bullets.map((b, j) => (
-                        <li key={j} style={{ fontSize: "0.8125rem", color: "var(--text-secondary)", lineHeight: 1.65 }}>{b}</li>
+                        <li key={j} style={{ fontSize: "0.8125rem", color: "var(--text-secondary)", lineHeight: 1.65 }}>
+                          <Editable file="experience" path={`entries[id=${e.id}].bullets[${j}]`} tag="span" multiline style={{ fontSize: "0.8125rem", color: "var(--text-secondary)", lineHeight: 1.65 }} />
+                        </li>
                       ))}
                     </ul>
                   )}

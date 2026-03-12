@@ -1,0 +1,24 @@
+{
+  "sections": [
+    {
+      "id": "non-cv",
+      "label": "the non-cv part",
+      "text": "I'm DMing my first D&D campaign and it is going okay I think. I paint sometimes, sing sometimes, take way too many notes always. Big fan of museums, conceptual cafes, and places that feel like they exist slightly outside of normal time."
+    },
+    {
+      "id": "think-too-much",
+      "label": "things i think about too much",
+      "text": "Cognition. How information moves and mutates. Liminal spaces — the kind where disciplines blur and nobody's really sure whose job it is yet. That's also kind of why I ended up in data, I think. It sits right at that edge."
+    },
+    {
+      "id": "how-i-got-into-this",
+      "label": "how i got into this",
+      "text": "I came from business analysis and UX, did some translation work, moved around a lot. At some point I realised the part I kept caring about was always the data layer — why systems fail, where information gets lost or distorted, what you'd actually need to fix it. So here I am."
+    },
+    {
+      "id": "what-im-trying-to-do",
+      "label": "what i'm trying to do",
+      "text": "Build things I'm not embarrassed by. Ideally things that are useful outside of a quarterly report — environmental data pipelines, conservation infrastructure, that kind of thing. I don't have it all figured out but I have strong opinions about not feeding the machine for free."
+    }
+  ]
+}
