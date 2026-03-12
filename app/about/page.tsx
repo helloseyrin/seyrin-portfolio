@@ -5,24 +5,23 @@ export default function AboutPage() {
     <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-6)", maxWidth: "42rem" }}>
 
       {/* Header + chao */}
-      <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "1.5rem" }}>
+      <div style={{ display: "flex", alignItems: "flex-start", gap: "1.5rem" }}>
+        <ChaoSticker />
         <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-1)" }}>
           <h1>About</h1>
           <p style={{ fontSize: "0.875rem", color: "var(--text-muted)" }}>The human behind the stack.</p>
-          {/* Quote */}
           <p style={{
             marginTop: "0.75rem",
             fontSize: "0.8125rem",
-            color: "var(--text-dim)",
+            color: "var(--text-secondary)",
             fontStyle: "italic",
-            fontFamily: "var(--font-mono)",
+            fontFamily: "'Fira Code', var(--font-mono)",
             lineHeight: 1.6,
             maxWidth: "26rem",
           }}>
-            "a protein-based life form for converting carbs into code"
+            "A carbon-based life form for carb-to-code operations to ensure delivering actionable insights and maximising stakeholder engagement"
           </p>
         </div>
-        <ChaoSticker />
       </div>
 
       {/* Sections */}

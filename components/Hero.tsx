@@ -4,7 +4,6 @@ import { useRef } from "react";
 import Image from "next/image";
 import ContactForm from "./ContactForm";
 
-const TITLE = Array.from("Hey, I'm Smyrna 🌊");
 
 const featured = [
   {
@@ -75,16 +74,9 @@ export default function Hero() {
 
         {/* H1 + H2 */}
         <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-          <h1 style={{ fontSize: "3rem", fontWeight: 500, color: "var(--text-primary)", lineHeight: 1.1 }}>
-            {TITLE.map((char, i) => (
-              <span
-                key={i}
-                className="letter-float"
-                style={{ animationDelay: `${i * 0.08}s` }}
-              >
-                {char === " " ? "\u00A0" : char}
-              </span>
-            ))}
+          <h1 style={{ fontSize: "3rem", fontWeight: 500, color: "var(--text-primary)", lineHeight: 1.1, display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            Smyrna V.
+            <img src="/wave.gif" alt="wave" style={{ width: "2.75rem", height: "2.75rem", verticalAlign: "middle", imageRendering: "auto", filter: "blur(0.4px) contrast(1.05)", willChange: "transform" }} />
           </h1>
           <h2 style={{ fontSize: "2.25rem", fontWeight: 400, color: "var(--text-muted)", lineHeight: 1.2 }}>
             Data & ML Engineer

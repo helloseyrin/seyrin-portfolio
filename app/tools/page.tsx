@@ -1,5 +1,5 @@
-import Tools from "@/components/Tools";
+import TechStack from "@/components/Tools";
 
 export default function ToolsPage() {
-  return <Tools />;
+  return <TechStack />;
 }
