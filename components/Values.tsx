@@ -1,6 +1,90 @@
 "use client";
 
 import { useState } from "react";
+import { IconValues } from "./GradientIcon";
+
+const acid = [
+  { abbr: "A", term: "Atomicity",   def: "All or nothing. A bank transfer either debits one account and credits another in full, or neither happens. No partial writes survive.", color: "#8aaac8" },
+  { abbr: "C", term: "Consistency", def: "Every transaction leaves the database in a valid state. Constraints, foreign keys, and business rules are enforced on every commit — not eventually.", color: "#8aaac8" },
+  { abbr: "I", term: "Isolation",   def: "Concurrent transactions don't see each other's intermediate states. Two bookings for the same seat can't both succeed.", color: "#8aaac8" },
+  { abbr: "D", term: "Durability",  def: "Committed data survives failures. Power loss, crash, restart — it persists. If it isn't durable, it wasn't really committed.", color: "#8aaac8" },
+];
+
+const base = [
+  { abbr: "BA", term: "Basically Available",  def: "Availability is the primary guarantee. The system responds even when nodes are partitioned or data is slightly stale — uptime over strict correctness.", color: "#a78bfa" },
+  { abbr: "S",  term: "Soft state",           def: "State can drift across nodes without new input. Consistency is an ongoing process, not a constant. Replicas may temporarily disagree.", color: "#a78bfa" },
+  { abbr: "E",  term: "Eventually consistent", def: "Given enough time and no new writes, all nodes converge to the same value. Strong enough for most read patterns at scale.", color: "#a78bfa" },
+];
+
+function PrincipleChip({ abbr, term, def, color }: { abbr: string; term: string; def: string; color: string }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div
+      style={{ position: "relative" }}
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+    >
+      <div
+        className="card"
+        style={{
+          padding: "0.75rem 1.1rem",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "0.25rem",
+          cursor: "default",
+          minWidth: "4rem",
+          transition: "border-color 0.2s, background 0.2s",
+          ...(open ? {
+            borderColor: "rgba(99, 170, 255, 0.4)",
+            background: "rgba(255,255,255,0.32)",
+          } : {}),
+        }}
+      >
+        <span style={{
+          fontFamily: "var(--font-fira-code), 'Fira Code', monospace",
+          fontSize: "1.5rem",
+          fontWeight: 600,
+          color,
+          letterSpacing: "0.04em",
+          lineHeight: 1,
+        }}>{abbr}</span>
+        <span style={{
+          fontFamily: "var(--font-fira-code), 'Fira Code', monospace",
+          fontSize: "0.62rem",
+          color: "var(--text-dim)",
+          letterSpacing: "0.04em",
+          whiteSpace: "nowrap",
+        }}>{term}</span>
+      </div>
+
+      {open && (
+        <div style={{
+          position: "absolute",
+          bottom: "calc(100% + 0.5rem)",
+          left: "50%",
+          transform: "translateX(-50%)",
+          zIndex: 20,
+          minWidth: "18rem",
+          maxWidth: "28rem",
+          borderRadius: "0.75rem",
+          border: "1px solid rgba(99, 170, 255, 0.4)",
+          background: "linear-gradient(135deg, rgba(14, 60, 140, 0.12) 0%, rgba(7, 30, 90, 0.18) 100%)",
+          backdropFilter: "blur(8px)",
+          WebkitBackdropFilter: "blur(8px)",
+          padding: "0.875rem 1rem",
+          animationName: "fade-down",
+          animationDuration: "0.18s",
+          animationTimingFunction: "ease",
+          animationFillMode: "both",
+        }}>
+          <p style={{ fontSize: "0.875rem", fontWeight: 500, color: "#2563eb", marginBottom: "0.4rem" }}>{term}</p>
+          <p style={{ fontSize: "0.8125rem", lineHeight: 1.65, color: "var(--text-secondary)" }}>{def}</p>
+        </div>
+      )}
+    </div>
+  );
+}
 
 const values = [
   {
@@ -49,7 +133,10 @@ export default function Values() {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-6)" }}>
       <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-1)" }}>
-        <h1>Values</h1>
+        <h1 style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            <IconValues />
+            Values
+          </h1>
         <p style={{ fontSize: "0.875rem", color: "var(--text-muted)" }}>What guides how I build and why.</p>
       </div>
 
@@ -203,42 +290,17 @@ export default function Values() {
         </div>
         {/* ACID */}
         <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-          <span style={{ fontSize: "0.65rem", fontFamily: "var(--font-fira-code), 'Fira Code', monospace", color: "var(--text-dim)", letterSpacing: "0.1em", textTransform: "uppercase" }}>ACID — structured data</span>
+          <span style={{ fontSize: "0.65rem", fontFamily: "var(--font-fira-code), 'Fira Code', monospace", color: "var(--text-dim)", letterSpacing: "0.1em", textTransform: "uppercase" }}>ACID — transactional systems</span>
           <div style={{ display: "flex", gap: "0.6rem", flexWrap: "wrap" }}>
-            {[
-              { abbr: "A", term: "Atomicity", def: "A unit of work either completes fully or not at all. No half-written states, no silent partial failures." },
-              { abbr: "C", term: "Consistency", def: "Every change moves the system from one valid state to another. Constraints hold before and after." },
-              { abbr: "I", term: "Isolation", def: "Concurrent changes do not bleed into each other. Independent until committed." },
-              { abbr: "D", term: "Durability", def: "Once committed, it survives. If it is not logged, tested, or recoverable — it does not count." },
-            ].map(({ abbr, term, def }) => (
-              <div key={term} className="card" style={{ flex: "1 1 180px", padding: "0.875rem 1rem", display: "flex", flexDirection: "column", gap: "0.35rem" }}>
-                <div style={{ display: "flex", alignItems: "baseline", gap: "0.5rem" }}>
-                  <span style={{ fontFamily: "var(--font-fira-code), 'Fira Code', monospace", fontSize: "0.7rem", fontWeight: 600, color: "#8aaac8", letterSpacing: "0.06em" }}>{abbr}</span>
-                  <span style={{ fontSize: "0.875rem", fontWeight: 500, color: "var(--text-primary)" }}>{term}</span>
-                </div>
-                <p style={{ fontSize: "0.79rem", color: "var(--text-muted)", lineHeight: 1.6 }}>{def}</p>
-              </div>
-            ))}
+            {acid.map(p => <PrincipleChip key={p.term} {...p} />)}
           </div>
         </div>
 
         {/* BASE */}
         <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-          <span style={{ fontSize: "0.65rem", fontFamily: "var(--font-fira-code), 'Fira Code', monospace", color: "var(--text-dim)", letterSpacing: "0.1em", textTransform: "uppercase" }}>BASE — unstructured data</span>
+          <span style={{ fontSize: "0.65rem", fontFamily: "var(--font-fira-code), 'Fira Code', monospace", color: "var(--text-dim)", letterSpacing: "0.1em", textTransform: "uppercase" }}>BASE — distributed systems</span>
           <div style={{ display: "flex", gap: "0.6rem", flexWrap: "wrap" }}>
-            {[
-              { abbr: "BA", term: "Basically Available", def: "The system guarantees availability, accepting that responses may be stale or partial." },
-              { abbr: "S", term: "Soft state", def: "State may change over time even without new input, as the system propagates updates asynchronously." },
-              { abbr: "E", term: "Eventually consistent", def: "Given enough time and no new writes, all replicas converge to the same value." },
-            ].map(({ abbr, term, def }) => (
-              <div key={term} className="card" style={{ flex: "1 1 200px", padding: "0.875rem 1rem", display: "flex", flexDirection: "column", gap: "0.35rem" }}>
-                <div style={{ display: "flex", alignItems: "baseline", gap: "0.5rem" }}>
-                  <span style={{ fontFamily: "var(--font-fira-code), 'Fira Code', monospace", fontSize: "0.7rem", fontWeight: 600, color: "#a78bfa", letterSpacing: "0.06em" }}>{abbr}</span>
-                  <span style={{ fontSize: "0.875rem", fontWeight: 500, color: "var(--text-primary)" }}>{term}</span>
-                </div>
-                <p style={{ fontSize: "0.79rem", color: "var(--text-muted)", lineHeight: 1.6 }}>{def}</p>
-              </div>
-            ))}
+            {base.map(p => <PrincipleChip key={p.term} {...p} />)}
           </div>
         </div>
       </div>

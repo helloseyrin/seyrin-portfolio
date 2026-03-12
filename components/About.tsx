@@ -3,6 +3,7 @@
 import ChaoSticker from "@/components/ChaoSticker";
 import Editable from "@/components/Editable";
 import { useEdit } from "@/contexts/EditContext";
+import { IconAbout } from "@/components/GradientIcon";
 
 export default function About() {
   const { data } = useEdit();
@@ -14,7 +15,10 @@ export default function About() {
       <div style={{ display: "flex", alignItems: "flex-start", gap: "1.5rem" }}>
         <ChaoSticker />
         <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-1)" }}>
-          <h1>About</h1>
+          <h1 style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+              <IconAbout />
+              About
+            </h1>
           <p style={{ fontSize: "0.875rem", color: "var(--text-muted)" }}>The human behind the stack.</p>
           <p style={{
             marginTop: "0.75rem",

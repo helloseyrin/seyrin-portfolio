@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { IconExperience } from "./GradientIcon";
 import Tag from "./Tag";
 import Editable from "./Editable";
 import { useEdit } from "@/contexts/EditContext";
@@ -56,7 +57,10 @@ export default function Experience() {
       {/* Main content */}
       <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-6)" }}>
         <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-1)" }}>
-          <h1>Experience</h1>
+          <h1 style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            <IconExperience />
+            Experience
+          </h1>
           <p style={{ fontSize: "0.875rem", color: "var(--text-muted)" }}>Work history and roles.</p>
         </div>
 

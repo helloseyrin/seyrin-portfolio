@@ -122,6 +122,10 @@ code, pre {
   from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+@keyframes fade-down {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 
 /* ── Letter float wave ──────────────────────────── */
 @keyframes letter-float {

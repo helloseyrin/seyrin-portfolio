@@ -2,6 +2,7 @@
 
 import { useState, useRef } from "react";
 import Tag from "./Tag";
+import { IconTechStack } from "./GradientIcon";
 
 // ── Data ─────────────────────────────────────────
 
@@ -138,7 +139,10 @@ export default function TechStack() {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-6)" }}>
       <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-1)" }}>
-        <h1>Tech Stack</h1>
+        <h1 style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            <IconTechStack />
+            Tech Stack
+          </h1>
         <p style={{ fontSize: "0.875rem", color: "var(--text-muted)" }}>What I use to build and think.</p>
       </div>
 

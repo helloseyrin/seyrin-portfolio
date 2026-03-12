@@ -45,6 +45,7 @@ const education = [
 ];
 
 import Tag from "./Tag";
+import { IconEducation } from "./GradientIcon";
 
 const typeColors: Record<string, { bg: string; text: string; border: string }> = {
   Programme:   { bg: "rgba(37, 99, 235, 0.1)",   text: "#2563eb", border: "rgba(37, 99, 235, 0.25)"  },
@@ -57,7 +58,10 @@ export default function Education() {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-6)" }}>
       <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-1)" }}>
-        <h1>Education</h1>
+        <h1 style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            <IconEducation />
+            Education
+          </h1>
         <p style={{ fontSize: "0.875rem", color: "var(--text-muted)" }}>Institutions, programmes, and courses.</p>
       </div>
 

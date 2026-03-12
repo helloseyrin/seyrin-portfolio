@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Tag from "./Tag";
+import { IconProjects } from "./GradientIcon";
 
 const projects = [
   {
@@ -68,7 +69,10 @@ export default function Projects() {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-6)" }}>
       <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-1)" }}>
-        <h1>Projects</h1>
+        <h1 style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            <IconProjects />
+            Projects
+          </h1>
         <p style={{ fontSize: "0.875rem", color: "var(--text-muted)" }}>Things I&apos;ve built and am building.</p>
       </div>
 

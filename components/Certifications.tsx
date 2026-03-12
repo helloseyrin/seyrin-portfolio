@@ -50,6 +50,7 @@ const certs = [
 ];
 
 import Tag from "./Tag";
+import { IconCertifications } from "./GradientIcon";
 
 const platformColors: Record<string, { bg: string; text: string; border: string }> = {
   DataCamp:        { bg: "rgba(3, 172, 140, 0.12)",  text: "#03ac8c", border: "rgba(3, 172, 140, 0.3)"  },
@@ -62,7 +63,10 @@ export default function Certifications() {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-6)" }}>
       <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-1)" }}>
-        <h1>Certifications</h1>
+        <h1 style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            <IconCertifications />
+            Certifications
+          </h1>
         <p style={{ fontSize: "0.875rem", color: "var(--text-muted)" }}>Courses and credentials completed.</p>
       </div>
 
