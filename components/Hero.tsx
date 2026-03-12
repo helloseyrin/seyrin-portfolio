@@ -71,7 +71,7 @@ export default function Hero() {
       ))}
 
       {/* Content */}
-      <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "2rem", paddingTop: "0.75rem" }}>
 
         {/* H1 + H2 */}
         <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
@@ -93,7 +93,7 @@ export default function Hero() {
 
         {/* Bio — left quote border */}
         <div style={{
-          borderLeft: "2px solid var(--accent-ice)",
+          borderLeft: "2px solid var(--border-hover)",
           paddingLeft: "1.25rem",
           display: "flex",
           flexDirection: "column",
@@ -119,7 +119,8 @@ export default function Hero() {
           </p>
         </div>
 
-        {/* Contact pills */}
+        {/* Contact pills + about link */}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "0.75rem" }}>
         <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
           {[
             {
@@ -156,31 +157,71 @@ export default function Hero() {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "0.4rem",
-                padding: "0.45rem 1rem",
+                padding: "0.24em 0.75em",
                 borderRadius: "9999px",
-                border: "1px solid var(--border)",
-                background: "var(--bg-card)",
-                backdropFilter: "blur(8px)",
-                fontSize: "0.875rem",
+                border: "1px solid rgba(99, 130, 200, 0.35)",
+                background: "transparent",
+                fontSize: "0.78rem",
+                fontFamily: "var(--font-fira-code), 'Fira Code', ui-monospace, monospace",
+                fontWeight: 400,
+                letterSpacing: "0.02em",
                 color: "var(--text-secondary)",
                 textDecoration: "none",
-                transition: "border-color 0.15s, color 0.15s",
+                transition: "all 0.18s ease",
               }}
-              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(99,170,255,0.4)"; (e.currentTarget as HTMLElement).style.color = "var(--text-primary)"; }}
-              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "var(--border)"; (e.currentTarget as HTMLElement).style.color = "var(--text-secondary)"; }}
+              onMouseEnter={e => {
+                const el = e.currentTarget as HTMLElement;
+                el.style.background = "linear-gradient(135deg, rgba(14, 60, 140, 0.18) 0%, rgba(7, 30, 90, 0.28) 100%)";
+                el.style.borderColor = "rgba(99, 170, 255, 0.45)";
+                el.style.color = "#2563eb";
+                el.style.boxShadow = "0 0 12px rgba(147, 197, 253, 0.12)";
+                el.style.backdropFilter = "blur(8px)";
+              }}
+              onMouseLeave={e => {
+                const el = e.currentTarget as HTMLElement;
+                el.style.background = "transparent";
+                el.style.borderColor = "rgba(99, 130, 200, 0.35)";
+                el.style.color = "var(--text-secondary)";
+                el.style.boxShadow = "none";
+                el.style.backdropFilter = "none";
+              }}
             >
               {icon}
               {label}
             </a>
           ))}
         </div>
+        <a
+          href="/about"
+          style={{
+            fontSize: "0.78rem",
+            fontFamily: "var(--font-fira-code), 'Fira Code', ui-monospace, monospace",
+            color: "var(--text-dim)",
+            textDecoration: "none",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "0.3rem",
+            transition: "color 0.18s ease",
+            whiteSpace: "nowrap",
+          }}
+          onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = "var(--text-secondary)"; }}
+          onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = "var(--text-dim)"; }}
+        >
+          about me →
+        </a>
+        </div>
 
         {/* Featured projects carousel */}
         <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-            <p style={{ fontSize: "0.65rem", textTransform: "uppercase", letterSpacing: "0.1em", color: "var(--text-dim)" }}>
-              Featured projects
-            </p>
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.2rem" }}>
+              <p style={{ fontSize: "0.75rem", fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.1em", color: "var(--text-secondary)" }}>
+                Featured projects
+              </p>
+              <p style={{ fontSize: "0.7rem", color: "var(--text-dim)", fontFamily: "var(--font-mono)" }}>
+                LLM codes, I help
+              </p>
+            </div>
             <div style={{ display: "flex", gap: "0.25rem" }}>
               {(["left", "right"] as const).map(dir => (
                 <button key={dir} onClick={() => scroll(dir)} style={{

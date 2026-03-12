@@ -2,9 +2,10 @@ const education = [
   {
     institution: "Turing College",
     credential: "Data Science & AI",
-    period: "2024 – present",
-    desc: "Intensive programme covering data engineering, machine learning, NLP, and system design.",
+    period: "Starting Apr 2026",
+    desc: "Covers data wrangling, statistical inference, supervised & unsupervised ML, NLP, and computer vision. Specialisations in NLP (BERT, text classification, NER) and CV (CNNs, image segmentation).",
     type: "Programme",
+    tags: ["Python", "SQL", "Pandas", "NumPy", "scikit-learn", "PyTorch", "XGBoost", "NLP", "BERT", "Computer Vision", "OpenCV", "Statistical Inference", "A/B Testing", "RAG"],
   },
   {
     institution: "Aalto University",
@@ -42,6 +43,8 @@ const education = [
     type: "Certificate",
   },
 ];
+
+import Tag from "./Tag";
 
 const typeColors: Record<string, { bg: string; text: string; border: string }> = {
   Programme:   { bg: "rgba(37, 99, 235, 0.1)",   text: "#2563eb", border: "rgba(37, 99, 235, 0.25)"  },
@@ -85,6 +88,11 @@ export default function Education() {
                 </div>
               </div>
               <p style={{ fontSize: "0.875rem", color: "var(--text-secondary)", lineHeight: 1.6 }}>{e.desc}</p>
+              {"tags" in e && e.tags && (
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem", marginTop: "0.25rem" }}>
+                  {e.tags.map((t: string) => <Tag key={t}>{t}</Tag>)}
+                </div>
+              )}
             </div>
           );
         })}

@@ -1,28 +1,61 @@
 const certs = [
   {
-    course: "Associate Data Engineer",
+    course: "Associate Data Engineer in SQL",
     platform: "DataCamp",
-    issued: "2025–2026",
+    issued: "Feb 09, 2026",
+    hours: "28 hr",
+    credentialUrl: "/datacamp-associate-data-engineer.pdf",
+    tags: ["SQL", "PostgreSQL", "Database Design", "Data Warehousing", "ETL", "Window Functions", "Data Modeling", "Shell"],
+  },
+  {
+    course: "Data Engineer in Python",
+    platform: "DataCamp",
+    issued: "pending",
+    hours: "57 hr",
     credentialUrl: "",
+    tags: ["Python", "Pandas", "ETL", "Airflow", "Shell", "SQL", "APIs", "Data Pipelines", "Software Engineering"],
   },
   {
     course: "Natural Language Processing in Python",
     platform: "DataCamp",
-    issued: "2025–2026",
+    issued: "pending",
+    hours: null,
     credentialUrl: "",
+    tags: ["Python", "NLP", "spaCy", "NLTK", "Text Classification", "Named Entity Recognition"],
+  },
+  {
+    course: "Business Analysis in IT",
+    platform: "Beetroot Academy",
+    issued: "Mar 26, 2025",
+    hours: null,
+    credentialUrl: "https://beetroot-academy.trueoriginal.com/diploma-alumni-ba123-smyrna-volzhich-246013/",
+    tags: ["Business Analysis", "Requirements Engineering", "User Stories", "BPMN", "UML", "Agile", "Stakeholder Management", "Wireframing", "Jira", "Confluence"],
+  },
+  {
+    course: "CISA: Certified Information Systems Auditor",
+    platform: "Coursera",
+    issued: "pending",
+    hours: null,
+    credentialUrl: "",
+    tags: ["IT Audit", "Information Security", "Risk Management", "IT Governance", "Compliance", "Access Control", "Incident Response", "Business Continuity"],
   },
   {
     course: "IBM Data Engineering Professional",
     platform: "Coursera",
-    issued: "2025–2026",
+    issued: "pending",
+    hours: null,
     credentialUrl: "",
+    tags: ["Python", "SQL", "NoSQL", "Apache Spark", "Hadoop", "ETL", "Docker", "Kafka"],
   },
 ];
 
+import Tag from "./Tag";
+
 const platformColors: Record<string, { bg: string; text: string; border: string }> = {
-  DataCamp:  { bg: "rgba(3, 172, 140, 0.12)",  text: "#03ac8c", border: "rgba(3, 172, 140, 0.3)"  },
-  Coursera:  { bg: "rgba(37, 99, 235, 0.1)",   text: "#2563eb", border: "rgba(37, 99, 235, 0.25)" },
-  IBM:       { bg: "rgba(15, 98, 254, 0.1)",   text: "#0f62fe", border: "rgba(15, 98, 254, 0.25)" },
+  DataCamp:        { bg: "rgba(3, 172, 140, 0.12)",  text: "#03ac8c", border: "rgba(3, 172, 140, 0.3)"  },
+  Coursera:        { bg: "rgba(37, 99, 235, 0.1)",   text: "#2563eb", border: "rgba(37, 99, 235, 0.25)" },
+  IBM:             { bg: "rgba(15, 98, 254, 0.1)",   text: "#0f62fe", border: "rgba(15, 98, 254, 0.25)" },
+  "Beetroot Academy": { bg: "rgba(74, 183, 73, 0.1)", text: "#4ab749", border: "rgba(74, 183, 73, 0.25)" },
 };
 
 export default function Certifications() {
@@ -61,9 +94,17 @@ export default function Certifications() {
                 {c.course}
               </p>
 
+              {/* Tags */}
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem" }}>
+                {c.tags.map(t => <Tag key={t}>{t}</Tag>)}
+              </div>
+
               {/* Footer row */}
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "auto" }}>
-                <span style={{ fontSize: "0.8rem", color: "var(--text-dim)", fontFamily: "var(--font-mono)" }}>{c.issued}</span>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                  <span style={{ fontSize: "0.8rem", color: "var(--text-dim)", fontFamily: "var(--font-mono)" }}>{c.issued}</span>
+                  {c.hours && <span style={{ fontSize: "0.75rem", color: "var(--text-dim)", fontFamily: "var(--font-mono)" }}>· {c.hours}</span>}
+                </div>
                 {c.credentialUrl ? (
                   <a
                     href={c.credentialUrl}

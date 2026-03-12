@@ -49,6 +49,34 @@ export default function Values() {
         <p style={{ fontSize: "0.875rem", color: "var(--text-muted)" }}>What guides how I build and why.</p>
       </div>
 
+      {/* Quote card */}
+      <div style={{
+        borderLeft: "2px solid var(--border-hover)",
+        paddingLeft: "1.25rem",
+        display: "flex",
+        flexDirection: "column",
+        gap: "0.5rem",
+      }}>
+        <p style={{ fontSize: "0.9375rem", color: "var(--text-secondary)", lineHeight: 1.75, fontStyle: "italic" }}>
+          "A computer can never be held accountable, therefore a computer must never make a management decision."
+        </p>
+        <p style={{ fontSize: "0.75rem", color: "var(--text-dim)", fontFamily: "var(--font-mono)" }}>
+          IBM training manual, 1979
+        </p>
+        <p style={{ fontSize: "0.8rem", color: "var(--text-dim)", lineHeight: 1.6, marginTop: "0.25rem" }}>
+          Cautionary tale:{" "}
+          <a
+            href="https://www.ft.com/content/934cc94b-32c4-497e-9718-d87d6a7835ca"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "var(--text-secondary)", textDecoration: "none", borderBottom: "1px solid rgba(137,196,225,0.25)" }}
+          >
+            Deloitte issues refund for error-ridden Australian government report that used AI
+          </a>
+          {" "}— FT, Oct 2025
+        </p>
+      </div>
+
       <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", alignItems: "flex-start" }}>
         {values.map((v, i) => {
           const isOpen = active === v.title;
@@ -58,22 +86,31 @@ export default function Values() {
               onMouseEnter={() => setActive(v.title)}
               onMouseLeave={() => setActive(null)}
               style={{
-                animation: `fade-up 0.4s ease both`,
+                position: "relative",
+                animationName: "fade-up",
+                animationDuration: "0.4s",
+                animationTimingFunction: "ease",
+                animationFillMode: "both",
                 animationDelay: `${i * 0.07}s`,
-                borderRadius: isOpen ? "0.75rem" : "9999px",
+                borderRadius: "9999px",
                 border: isOpen
                   ? "1px solid rgba(99, 170, 255, 0.4)"
                   : "1px solid rgba(99, 130, 200, 0.35)",
                 background: isOpen
                   ? "linear-gradient(135deg, rgba(14, 60, 140, 0.12) 0%, rgba(7, 30, 90, 0.18) 100%)"
                   : "transparent",
-                backdropFilter: isOpen ? "blur(8px)" : undefined,
-                WebkitBackdropFilter: isOpen ? "blur(8px)" : undefined,
-                padding: isOpen ? "0.875rem 1rem" : "0.35em 1em",
+                padding: "0.35em 1em",
                 cursor: "default",
-                transition: "border-radius 0.2s ease, padding 0.2s ease, background 0.2s ease, border-color 0.2s ease",
-                width: isOpen ? undefined : "fit-content",
-                maxWidth: isOpen ? "28rem" : undefined,
+                width: "fit-content",
+                transition: "background 0.2s ease, border-color 0.2s ease",
+                ...(isOpen ? {
+                  animationName: "neuron-fire",
+                  animationDuration: "0.7s",
+                  animationTimingFunction: "ease-out",
+                  animationIterationCount: "1",
+                  animationFillMode: "forwards",
+                } : {}),
+                zIndex: isOpen ? 10 : undefined,
               }}
             >
               {"titleHref" in v && v.titleHref ? (
@@ -81,15 +118,13 @@ export default function Values() {
                   href={v.titleHref}
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={e => e.stopPropagation()}
                   style={{
                     fontSize: "0.875rem",
                     fontWeight: 500,
                     color: isOpen ? "#2563eb" : "var(--text-secondary)",
-                    textDecoration: isOpen ? "underline" : "none",
+                    textDecoration: "none",
                     transition: "color 0.2s ease",
-                    display: "block",
-                    whiteSpace: isOpen ? undefined : "nowrap",
+                    whiteSpace: "nowrap",
                   }}
                 >
                   {v.title}
@@ -100,30 +135,40 @@ export default function Values() {
                   fontWeight: 500,
                   color: isOpen ? "#2563eb" : "var(--text-secondary)",
                   transition: "color 0.2s ease",
-                  whiteSpace: isOpen ? undefined : "nowrap",
+                  whiteSpace: "nowrap",
                 }}>
                   {v.title}
                 </p>
               )}
 
+              {/* Expanded card — absolutely positioned, never affects flex layout */}
               {isOpen && (
-                <div style={{ animation: "fade-up 0.18s ease both" }}>
-                  <p style={{
-                    fontSize: "0.8125rem",
-                    lineHeight: 1.65,
-                    color: "var(--text-secondary)",
-                    marginTop: "0.5rem",
-                  }}>
+                <div style={{
+                  position: "absolute",
+                  top: "calc(100% + 0.5rem)",
+                  left: 0,
+                  zIndex: 20,
+                  minWidth: "18rem",
+                  maxWidth: "28rem",
+                  borderRadius: "0.75rem",
+                  border: "1px solid rgba(99, 170, 255, 0.4)",
+                  background: "linear-gradient(135deg, rgba(14, 60, 140, 0.12) 0%, rgba(7, 30, 90, 0.18) 100%)",
+                  backdropFilter: "blur(8px)",
+                  WebkitBackdropFilter: "blur(8px)",
+                  padding: "0.875rem 1rem",
+                  animationName: "fade-up",
+                  animationDuration: "0.18s",
+                  animationTimingFunction: "ease",
+                  animationFillMode: "both",
+                }}>
+                  <p style={{ fontSize: "0.875rem", fontWeight: 500, color: "#2563eb", marginBottom: "0.4rem" }}>
+                    {v.title}
+                  </p>
+                  <p style={{ fontSize: "0.8125rem", lineHeight: 1.65, color: "var(--text-secondary)" }}>
                     {v.body}
                   </p>
                   {"callout" in v && v.callout && (
-                    <p style={{
-                      marginTop: "0.5rem",
-                      fontSize: "0.8rem",
-                      lineHeight: 1.6,
-                      color: "var(--text-muted)",
-                      fontStyle: "italic",
-                    }}>
+                    <p style={{ marginTop: "0.5rem", fontSize: "0.8rem", lineHeight: 1.6, color: "var(--text-muted)", fontStyle: "italic" }}>
                       {v.callout}
                     </p>
                   )}
