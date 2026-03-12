@@ -1,8 +1,10 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import Image from "next/image";
 import ContactForm from "./ContactForm";
+
+const TITLE = Array.from("Hey, I'm Smyrna 🌊");
 
 const featured = [
   {
@@ -37,7 +39,6 @@ const statusStyle: Record<string, { bg: string; color: string; border: string }>
 };
 
 export default function Hero() {
-  const [shimmerKey, setShimmerKey] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scroll = (dir: "left" | "right") => {
@@ -74,15 +75,17 @@ export default function Hero() {
 
         {/* H1 + H2 */}
         <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-          <div
-            style={{ position: "relative", display: "inline-block", overflow: "hidden", borderRadius: "0.25rem", cursor: "default" }}
-            onMouseEnter={() => setShimmerKey(k => k + 1)}
-          >
-            <h1 style={{ fontSize: "3rem", fontWeight: 500, color: "var(--text-primary)", lineHeight: 1.1 }}>
-              Hey, I&apos;m Smyrna 🌊
-            </h1>
-            <div key={shimmerKey} className="mercury-shimmer" />
-          </div>
+          <h1 style={{ fontSize: "3rem", fontWeight: 500, color: "var(--text-primary)", lineHeight: 1.1 }}>
+            {TITLE.map((char, i) => (
+              <span
+                key={i}
+                className="letter-float"
+                style={{ animationDelay: `${i * 0.08}s` }}
+              >
+                {char === " " ? "\u00A0" : char}
+              </span>
+            ))}
+          </h1>
           <h2 style={{ fontSize: "2.25rem", fontWeight: 400, color: "var(--text-muted)", lineHeight: 1.2 }}>
             Data & ML Engineer
           </h2>

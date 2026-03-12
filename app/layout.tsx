@@ -3,6 +3,7 @@ import { Fira_Sans, Fira_Code } from "next/font/google";
 import "./globals.css";
 import Sidebar from "@/components/Sidebar";
 import BackgroundBlobs from "@/components/BackgroundBlobs";
+import NeuralCanvas from "@/components/NeuralCanvas";
 
 const firaSans = Fira_Sans({
   variable: "--font-fira-sans",
@@ -28,6 +29,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className={`${firaSans.variable} ${firaCode.variable}`}>
         <BackgroundBlobs />
+        <NeuralCanvas />
         <Sidebar />
         <div style={{ marginLeft: SIDEBAR_WIDTH, minHeight: "100vh", display: "flex", flexDirection: "column", position: "relative", zIndex: 1 }}>
           <main style={{ flexGrow: 1, padding: "8rem 3rem 4rem 3rem", maxWidth: "56rem", width: "100%", marginLeft: "auto", marginRight: "auto" }}>
