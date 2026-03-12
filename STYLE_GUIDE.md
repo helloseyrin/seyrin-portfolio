@@ -45,6 +45,8 @@ color: transparent;
 
 Stops: `#8aaac8` (steel blue) → `#a78bfa` (soft lavender/violet).
 
+Also used as an SVG `linearGradient` fill on section header icons (via `components/GradientIcon.tsx`).
+
 ---
 
 ## Typography
@@ -119,6 +121,22 @@ color: #7ecfef;
 border: 1px solid #1a4a7a;
 ```
 
+### Section Header Icons — `GradientIcon.tsx`
+
+Phosphor Icons (`@phosphor-icons/react`) with `weight="duotone"`, filled via an inline SVG `linearGradient` (blue→lavender). All Phosphor imports are isolated inside this single `"use client"` file — server components import only the named exports.
+
+| Export | Icon | Page |
+|---|---|---|
+| `IconExperience` | Briefcase | Experience |
+| `IconEducation` | GraduationCap | Education |
+| `IconCertifications` | Seal | Certifications |
+| `IconProjects` | Flask | Projects |
+| `IconTechStack` | Wrench | Tech Stack |
+| `IconValues` | Compass | Values |
+| `IconAbout` | Plant | About |
+
+**Rule:** never import from `@phosphor-icons/react` directly in a page or component — always go through `GradientIcon.tsx` to avoid the `createContext` server component error.
+
 ### Sidebar shimmer — `.sidebar-shimmer`
 
 1px right-edge border on sidebar, animates a gradient wash downward over 5s. Ice → periwinkle → aqua.
@@ -132,6 +150,7 @@ border: 1px solid #1a4a7a;
 | `blink` / `cursor-blink` | Typewriter cursor blink | 530ms step-end |
 | `letter-float` | Vertical float wave (removed from hero, reserved) | 3s ease-in-out |
 | `fade-up` | Entrance: opacity 0→1, translateY 10→0 | — |
+| `fade-down` | Entrance from above: opacity 0→1, translateY -8→0 | — |
 | `blob-1/2/3` | Background blob drift | 18–22s |
 | `synapse-pulse` | Glow pulse on neural network nodes | — |
 | `neuron-fire` | Node fire burst | — |
@@ -165,6 +184,7 @@ Path syntax for `<Editable>`: dot notation with `[id=slug]` for keyed arrays, `[
 |---|---|
 | `app/globals.css` | All tokens, base styles, keyframes, utility classes |
 | `components/Tag.tsx` | Single-purpose tag pill wrapper |
+| `components/GradientIcon.tsx` | All Phosphor icon exports with gradient fill — only file that imports `@phosphor-icons/react` |
 | `components/Editable.tsx` | Inline edit-mode field |
 | `contexts/EditContext.tsx` | Global edit state + data store |
 | `data/*.json` | Content source of truth |
