@@ -1,6 +1,50 @@
 "use client";
 
+import { useState, useRef } from "react";
+import Image from "next/image";
+import ContactForm from "./ContactForm";
+
+const featured = [
+  {
+    title: "Anima Mundi // Obsidian PKM",
+    desc: "Self-organising PKM with semantic search across articles, videos, PDFs, and repos.",
+    status: "Active",
+    cover: "/project-anima-mundi.jpg",
+    coverPosition: "center 40%",
+    href: "https://github.com/helloseyrin/anima-mundi",
+  },
+  {
+    title: "Lexis // Text Classifier",
+    desc: "Fine-tuned transformer pipeline for multi-label document classification.",
+    status: "In progress",
+    cover: "/cover-aero.jpg",
+    coverPosition: "center 60%",
+    href: "/projects",
+  },
+  {
+    title: "Strata // Data Pipeline",
+    desc: "Modular ELT pipeline with schema inference, lineage tracking, and incremental loading.",
+    status: "In progress",
+    cover: "/cover-flow.jpg",
+    coverPosition: "center 40%",
+    href: "/projects",
+  },
+];
+
+const statusStyle: Record<string, { bg: string; color: string; border: string }> = {
+  "Active":      { bg: "rgba(10,30,60,0.72)", color: "#7ecfef", border: "rgba(126,207,239,0.3)" },
+  "In progress": { bg: "rgba(10,30,50,0.72)", color: "#a8d8f0", border: "rgba(168,216,240,0.3)" },
+};
+
 export default function Hero() {
+  const [shimmerKey, setShimmerKey] = useState(0);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const scroll = (dir: "left" | "right") => {
+    if (!scrollRef.current) return;
+    scrollRef.current.scrollBy({ left: dir === "right" ? 280 : -280, behavior: "smooth" });
+  };
+
   return (
     <div style={{ position: "relative", width: "100%", overflow: "hidden" }}>
 
@@ -30,85 +74,189 @@ export default function Hero() {
 
         {/* H1 + H2 */}
         <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-          <h1 style={{ fontSize: "3rem", fontWeight: 500, color: "var(--text-primary)", lineHeight: 1.1 }}>
-            Hey, I&apos;m Smyrna
-          </h1>
+          <div
+            style={{ position: "relative", display: "inline-block", overflow: "hidden", borderRadius: "0.25rem", cursor: "default" }}
+            onMouseEnter={() => setShimmerKey(k => k + 1)}
+          >
+            <h1 style={{ fontSize: "3rem", fontWeight: 500, color: "var(--text-primary)", lineHeight: 1.1 }}>
+              Hey, I&apos;m Smyrna 🌊
+            </h1>
+            <div key={shimmerKey} className="mercury-shimmer" />
+          </div>
           <h2 style={{ fontSize: "2.25rem", fontWeight: 400, color: "var(--text-muted)", lineHeight: 1.2 }}>
             Data & ML Engineer
           </h2>
         </div>
 
-        {/* Email CTA card — styled like reference's social card */}
-        <a href="mailto:smyrna.volzhevska@protonmail.com" style={{
+        {/* Bio — left quote border */}
+        <div style={{
+          borderLeft: "2px solid var(--accent-ice)",
+          paddingLeft: "1.25rem",
           display: "flex",
-          alignItems: "center",
-          gap: "1rem",
-          padding: "0.875rem 1.25rem",
-          borderRadius: "0.75rem",
-          border: "1px solid var(--border)",
-          background: "linear-gradient(135deg, var(--bg-card), var(--bg-hover))",
-          textDecoration: "none",
-          transition: "box-shadow 0.2s, border-color 0.2s",
-          boxShadow: "0 1px 4px rgba(0,0,0,0.06)",
-        }}
-          onMouseEnter={e => { (e.currentTarget as HTMLElement).style.boxShadow = "0 4px 16px rgba(0,0,0,0.1)"; (e.currentTarget as HTMLElement).style.borderColor = "var(--border-hover)"; }}
-          onMouseLeave={e => { (e.currentTarget as HTMLElement).style.boxShadow = "0 1px 4px rgba(0,0,0,0.06)"; (e.currentTarget as HTMLElement).style.borderColor = "var(--border)"; }}
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-          <p style={{ flex: 1, fontSize: "0.875rem", fontWeight: 400, color: "var(--text-primary)" }}>
-            smyrna.volzhevska@protonmail.com
-          </p>
-          <span style={{ fontSize: "0.75rem", padding: "0.25rem 0.75rem", borderRadius: "9999px", background: "var(--bg-hover)", border: "1px solid var(--border)", color: "var(--text-secondary)", fontWeight: 400 }}>
-            Say hi
-          </span>
-        </a>
-
-        {/* Body */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "1rem", color: "var(--text-secondary)", fontSize: "0.9375rem", lineHeight: 1.7 }}>
+          flexDirection: "column",
+          gap: "0.85rem",
+          color: "var(--text-secondary)",
+          fontSize: "0.9375rem",
+          lineHeight: 1.75,
+        }}>
           <p>
-            Student at{" "}
-            <a href="https://turingcollege.com" target="_blank" rel="noopener noreferrer"
-              style={{ color: "var(--text-primary)", textDecoration: "underline", padding: "0 0.15em", borderRadius: "3px" }}>
-              Turing College
-            </a>{" "}
-            studying Data Science & AI.
+            Growing expertise at the intersection of Data & ML Engineering, with a background in
+            business analysis and UI/UX design.
           </p>
-          <p>Building ML engineering skills — NLP, embedding models, vectorization, predictive modeling.</p>
-          <p>Interested in data systems for conservation: IoT and sensor data.</p>
+          <p>
+            The through-line is documents. As a translator, then as a business analyst, I kept
+            running into the same problem — large volumes of information with no efficient way to
+            navigate it. That frustration is what pulled me toward NLP specifically: the gap between
+            raw text and something you can actually use.
+          </p>
+          <p>
+            Right now I&apos;m deep in building a personal knowledge management system. New fields
+            mean new papers, books, and threads to follow — and I accumulate information faster than
+            I can process it. I need infrastructure that works.
+          </p>
         </div>
 
-        {/* Featured project card — placeholder structure */}
-        <a href="/projects" style={{
-          display: "block",
-          borderRadius: "0.75rem",
-          border: "1px solid var(--border)",
-          overflow: "hidden",
-          textDecoration: "none",
-          transition: "border-color 0.2s, box-shadow 0.2s",
-        }}
-          onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = "var(--border-hover)"; (e.currentTarget as HTMLElement).style.boxShadow = "0 4px 24px rgba(0,0,0,0.08)"; }}
-          onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "var(--border)"; (e.currentTarget as HTMLElement).style.boxShadow = "none"; }}
-        >
-          <div style={{ display: "flex", flexDirection: "row" }}>
-            {/* Placeholder image area */}
-            <div style={{ width: "10rem", flexShrink: 0, background: "var(--bg-deep)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--border-hover)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-            </div>
-            <div style={{ flex: 1, padding: "1.25rem 1.5rem", background: "var(--bg-card)", display: "flex", flexDirection: "column", justifyContent: "space-between", gap: "0.5rem" }}>
-              <div>
-                <p style={{ fontSize: "0.65rem", textTransform: "uppercase", letterSpacing: "0.1em", color: "var(--text-muted)", marginBottom: "0.4rem" }}>Featured project</p>
-                <p style={{ fontSize: "1rem", fontWeight: 500, color: "var(--text-primary)", lineHeight: 1.3 }}>Anima Mundi // Obsidian PKM</p>
-                <p style={{ fontSize: "0.8125rem", color: "var(--text-secondary)", marginTop: "0.4rem", lineHeight: 1.6 }}>
-                  Self-organising PKM with semantic search across articles, videos, PDFs, and repos.
-                </p>
-              </div>
-              <div style={{ display: "flex", alignItems: "center", gap: "0.3rem", fontSize: "0.8125rem", color: "var(--text-muted)", marginTop: "0.5rem" }}>
-                <span>View project</span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-              </div>
+        {/* Contact pills */}
+        <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+          {[
+            {
+              label: "Send an email",
+              href: "mailto:smyrna.volzhevska@protonmail.com",
+              icon: <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>,
+              external: false,
+            },
+            {
+              label: "LinkedIn",
+              href: "https://linkedin.com/in/smyrna-v",
+              icon: <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>,
+              external: true,
+            },
+            {
+              label: "GitHub",
+              href: "https://github.com/helloseyrin",
+              icon: <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>,
+              external: true,
+            },
+            {
+              label: "Resume",
+              href: "/cv.pdf",
+              icon: <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/><line x1="10" x2="8" y1="9" y2="9"/></svg>,
+              external: true,
+            },
+          ].map(({ label, href, icon, external }) => (
+            <a
+              key={label}
+              href={href}
+              target={external ? "_blank" : undefined}
+              rel="noopener noreferrer"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "0.4rem",
+                padding: "0.45rem 1rem",
+                borderRadius: "9999px",
+                border: "1px solid var(--border)",
+                background: "var(--bg-card)",
+                backdropFilter: "blur(8px)",
+                fontSize: "0.875rem",
+                color: "var(--text-secondary)",
+                textDecoration: "none",
+                transition: "border-color 0.15s, color 0.15s",
+              }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(99,170,255,0.4)"; (e.currentTarget as HTMLElement).style.color = "var(--text-primary)"; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "var(--border)"; (e.currentTarget as HTMLElement).style.color = "var(--text-secondary)"; }}
+            >
+              {icon}
+              {label}
+            </a>
+          ))}
+        </div>
+
+        {/* Featured projects carousel */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            <p style={{ fontSize: "0.65rem", textTransform: "uppercase", letterSpacing: "0.1em", color: "var(--text-dim)" }}>
+              Featured projects
+            </p>
+            <div style={{ display: "flex", gap: "0.25rem" }}>
+              {(["left", "right"] as const).map(dir => (
+                <button key={dir} onClick={() => scroll(dir)} style={{
+                  width: "1.75rem", height: "1.75rem",
+                  borderRadius: "50%",
+                  border: "1px solid var(--border)",
+                  background: "var(--bg-card)",
+                  color: "var(--text-muted)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  cursor: "pointer",
+                  transition: "border-color 0.15s, color 0.15s",
+                }}
+                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = "var(--border-hover)"; (e.currentTarget as HTMLElement).style.color = "var(--text-primary)"; }}
+                  onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "var(--border)"; (e.currentTarget as HTMLElement).style.color = "var(--text-muted)"; }}
+                >
+                  {dir === "left"
+                    ? <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                    : <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                  }
+                </button>
+              ))}
             </div>
           </div>
-        </a>
+
+          {/* Scroll track */}
+          <div ref={scrollRef} className="carousel-track" style={{
+            display: "flex",
+            gap: "0.75rem",
+            overflowX: "auto",
+            scrollSnapType: "x mandatory",
+            scrollbarWidth: "none",
+            paddingBottom: "0.25rem",
+          }}>
+            {featured.map((p) => {
+              const s = statusStyle[p.status] ?? statusStyle["In progress"];
+              return (
+                <a
+                  key={p.title}
+                  href={p.href}
+                  target={p.href.startsWith("http") ? "_blank" : undefined}
+                  rel="noopener noreferrer"
+                  className="project-card"
+                  style={{
+                    flexShrink: 0,
+                    width: "260px",
+                    padding: 0,
+                    overflow: "hidden",
+                    scrollSnapAlign: "start",
+                    textDecoration: "none",
+                  }}
+                >
+                  <div style={{ position: "relative", width: "100%", height: "8rem", overflow: "hidden" }}>
+                    <Image src={p.cover} alt={p.title} fill style={{ objectFit: "cover", objectPosition: p.coverPosition }} />
+                    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 25%, rgba(240,246,252,0.85) 100%)" }} />
+                    <span style={{
+                      position: "absolute", top: "0.6rem", right: "0.6rem",
+                      fontSize: "0.6rem", fontFamily: "var(--font-mono)", fontWeight: 500,
+                      padding: "0.18em 0.6em", borderRadius: "0.2rem",
+                      background: s.bg, color: s.color, border: `1px solid ${s.border}`,
+                      backdropFilter: "blur(8px)", letterSpacing: "0.06em", textTransform: "uppercase",
+                    }}>
+                      {p.status}
+                    </span>
+                  </div>
+                  <div style={{ padding: "0.75rem 1rem 1rem" }}>
+                    <p style={{ fontWeight: 500, color: "var(--text-primary)", fontSize: "0.875rem", marginBottom: "0.3rem", lineHeight: 1.3 }}>{p.title}</p>
+                    <p style={{ fontSize: "0.775rem", color: "var(--text-secondary)", lineHeight: 1.55 }}>{p.desc}</p>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.25rem", marginTop: "0.6rem", fontSize: "0.75rem", color: "var(--text-muted)" }}>
+                      <span>View</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </div>
+                  </div>
+                </a>
+              );
+            })}
+          </div>
+        </div>
+
+        <ContactForm />
 
       </div>
     </div>

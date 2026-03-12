@@ -1,3 +1,5 @@
+import Tag from "./Tag";
+
 const items = [
   {
     role: "Data Science & AI Student",
@@ -32,7 +34,7 @@ export default function Experience() {
             </div>
             <p style={{ fontSize: "0.875rem", lineHeight: 1.65, color: "var(--text-secondary)", marginBottom: "var(--space-2)" }}>{item.desc}</p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
-              {item.tags.map((t) => <span key={t} className="tag">{t}</span>)}
+              {item.tags.map((t) => <Tag key={t}>{t}</Tag>)}
             </div>
           </div>
         ))}

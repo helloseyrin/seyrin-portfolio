@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 
-const TITLES = ["Data Engineering", "Machine Learning", "Natural Language Processing", "MLOps"];
+const TITLES = ["Data Engineering", "Machine Learning", "NLP", "MLOps"];
 const TYPE_SPEED = 60;
 const DELETE_SPEED = 35;
 const PAUSE_AFTER_TYPE = 1800;
@@ -41,7 +41,7 @@ export default function Typewriter() {
   }, [displayed, phase, titleIndex]);
 
   return (
-    <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", marginTop: "0.2rem", minHeight: "1.1em", fontFamily: "var(--font-mono)" }}>
+    <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", minHeight: "1.2em", fontFamily: "var(--font-fira-code), 'Fira Code', ui-monospace, monospace", whiteSpace: "nowrap" }}>
       {displayed}
       <span className="typewriter-cursor" />
     </p>
