@@ -2,9 +2,11 @@
 
 import { useEffect, useRef } from "react";
 
-const NODE_COUNT     = 52;
-const CONNECTION_DIST = 185;
-const PULSE_INTERVAL  = 900;
+const NODE_COUNT_DESKTOP  = 52;
+const NODE_COUNT_MOBILE   = 20;
+const CONN_DIST_DESKTOP   = 185;
+const CONN_DIST_MOBILE    = 120;
+const PULSE_INTERVAL      = 900;
 
 interface Node {
   x: number; y: number;
@@ -49,6 +51,10 @@ export default function NeuralCanvas() {
     canvas.width  = width;
     canvas.height = height;
 
+    const isMobile = width <= 768;
+    const NODE_COUNT    = isMobile ? NODE_COUNT_MOBILE  : NODE_COUNT_DESKTOP;
+    const CONNECTION_DIST = isMobile ? CONN_DIST_MOBILE : CONN_DIST_DESKTOP;
+
     const nodes: Node[] = Array.from({ length: NODE_COUNT }, () => ({
       x:             Math.random() * width,
       y:             Math.random() * height,
@@ -88,8 +94,8 @@ export default function NeuralCanvas() {
       // Spawn pulses
       if (timestamp - lastPulse > PULSE_INTERVAL) {
         spawnPulse();
-        spawnPulse();
-        if (Math.random() > 0.4) spawnPulse();
+        if (!isMobile) spawnPulse();
+        if (!isMobile && Math.random() > 0.4) spawnPulse();
         lastPulse = timestamp;
       }
 

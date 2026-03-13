@@ -367,9 +367,10 @@ code, pre {
 .mobile-nav      { display: none; }
 
 @media (max-width: 768px) {
-  .sidebar-desktop { display: none; }
-  .mobile-nav      { display: block; }
-  .main-content    { margin-left: 0 !important; padding: 5rem 1.25rem 3rem !important; }
+  .sidebar-desktop      { display: none; }
+  .mobile-nav           { display: block; }
+  .main-content         { margin-left: 0 !important; padding: 5rem 1.25rem 3rem !important; }
+  .floating-contact-wrap { top: 4.25rem !important; }
 }
 
 /* ── Carousel scroll buttons ────────────────────── */

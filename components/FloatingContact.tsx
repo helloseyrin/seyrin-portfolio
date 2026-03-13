@@ -25,7 +25,7 @@ export default function FloatingContact() {
   }, []);
 
   return (
-    <div ref={ref} style={{ position: "fixed", top: "1.25rem", right: "1.5rem", zIndex: 100 }}>
+    <div ref={ref} className="floating-contact-wrap" style={{ position: "fixed", top: "1.25rem", right: "1.5rem", zIndex: 100 }}>
 
       {/* Trigger button */}
       <button
