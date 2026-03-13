@@ -75,7 +75,10 @@ export default function Sidebar() {
           <Image src="/avatar2.jpg" alt="Smyrna" width={64} height={64} style={{ objectFit: "cover", objectPosition: "center 15%", width: "100%", height: "100%" }} />
         </div>
         <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", gap: "0.2rem" }}>
-          <p style={{ fontSize: "0.875rem", fontWeight: 500, color: "var(--text-primary)", lineHeight: 1 }}>Smyrna V.</p>
+          <p style={{ fontSize: "0.875rem", fontWeight: 500, color: "var(--text-primary)", lineHeight: 1, display: "flex", alignItems: "center", gap: "0.3rem" }}>
+            Smyrna V.
+            <img src="/wave.gif" alt="wave" style={{ width: "1rem", height: "1rem" }} />
+          </p>
           <Typewriter />
         </div>
       </div>
