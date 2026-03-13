@@ -117,11 +117,12 @@ export default function Hero() {
         {/* Bio — animated shimmer border */}
         <div style={{
           display: "flex",
-          gap: "1.75rem",
+          gap: "0",
           animation: "fade-down 0.45s 0.24s ease both",
         }}>
           <div className="bio-border-shimmer" />
           <div style={{
+            paddingLeft: "1.5rem",
             display: "flex",
             flexDirection: "column",
             gap: "0.85rem",
