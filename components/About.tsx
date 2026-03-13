@@ -1,72 +1,85 @@
 "use client";
 
-import ChaoSticker from "@/components/ChaoSticker";
-import Editable from "@/components/Editable";
-import { useEdit } from "@/contexts/EditContext";
-import { IconAbout } from "@/components/GradientIcon";
-
 export default function About() {
-  const { data } = useEdit();
-
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-6)", maxWidth: "42rem" }}>
+    <div style={{
+      minHeight: "60vh",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    }}>
+      <div className="card" style={{
+        padding: "3rem 2.5rem",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: "1.25rem",
+        textAlign: "center",
+        maxWidth: "26rem",
+        width: "100%",
+        position: "relative",
+        overflow: "hidden",
+      }}>
 
-      {/* Header + chao */}
-      <div style={{ display: "flex", alignItems: "flex-start", gap: "1.5rem" }}>
-        <ChaoSticker />
-        <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-1)" }}>
-          <h1 style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-              <IconAbout />
-              About
-            </h1>
-          <p style={{ fontSize: "0.875rem", color: "var(--text-muted)" }}>The human behind the stack.</p>
+        {/* Floating sparkle dots */}
+        {[
+          { top: "10%",  left: "8%",  size: 5, color: "#89c4e1", dur: "2s" },
+          { top: "18%",  left: "84%", size: 3, color: "#a78bfa", dur: "3s" },
+          { top: "62%",  left: "6%",  size: 4, color: "#c5d8f0", dur: "2.5s" },
+          { top: "78%",  left: "88%", size: 5, color: "#89c4e1", dur: "2s" },
+          { top: "42%",  left: "91%", size: 3, color: "#a78bfa", dur: "3.5s" },
+          { top: "85%",  left: "38%", size: 4, color: "#c5d8f0", dur: "2.8s" },
+          { top: "6%",   left: "52%", size: 3, color: "#89c4e1", dur: "3s"  },
+        ].map((d, i) => (
+          <div key={i} style={{
+            position: "absolute",
+            top: d.top, left: d.left,
+            width: d.size, height: d.size,
+            borderRadius: "50%",
+            background: d.color,
+            boxShadow: `0 0 ${d.size * 3}px ${d.color}`,
+            animationName: "star-pulse",
+            animationDuration: d.dur,
+            animationDelay: `${i * 0.35}s`,
+            animationTimingFunction: "ease-in-out",
+            animationIterationCount: "infinite",
+            pointerEvents: "none",
+          }} />
+        ))}
+
+        {/* Chao */}
+        <img
+          src="/chao.png"
+          alt="chao"
+          style={{
+            width: "6rem",
+            height: "6rem",
+            objectFit: "contain",
+            animationName: "blob-1",
+            animationDuration: "4s",
+            animationTimingFunction: "ease-in-out",
+            animationIterationCount: "infinite",
+          }}
+        />
+
+        {/* Text */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
           <p style={{
-            marginTop: "0.75rem",
-            fontSize: "0.8125rem",
-            color: "var(--text-secondary)",
-            fontStyle: "italic",
-            fontFamily: "var(--font-mono)",
-            lineHeight: 1.6,
-            maxWidth: "26rem",
+            fontSize: "1.25rem",
+            fontWeight: 500,
+            background: "linear-gradient(90deg, #89c4e1, #c5d8f0, #a78bfa)",
+            WebkitBackgroundClip: "text",
+            backgroundClip: "text",
+            color: "transparent",
           }}>
-            &ldquo;A carbon-based life form for carb-to-code operations to ensure delivering actionable insights and maximising stakeholder engagement&rdquo;
+            coming soon
+          </p>
+          <p style={{ fontSize: "0.8125rem", color: "var(--text-dim)", fontFamily: "var(--font-mono)" }}>
+            the human behind the stack — writing this one carefully
           </p>
         </div>
-      </div>
 
-      {/* Sections */}
-      <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
-        {data.about.sections.map((section) => (
-          <div
-            key={section.id}
-            style={{
-              borderLeft: "2px solid var(--border-hover)",
-              paddingLeft: "1.25rem",
-              display: "flex",
-              flexDirection: "column",
-              gap: "0.5rem",
-            }}
-          >
-            <p style={{
-              fontSize: "0.7rem",
-              fontFamily: "var(--font-mono)",
-              color: "var(--text-muted)",
-              letterSpacing: "0.1em",
-              textTransform: "uppercase",
-            }}>
-              {section.label}
-            </p>
-            <Editable
-              file="about"
-              path={`sections[id=${section.id}].text`}
-              tag="p"
-              multiline
-              style={{ fontSize: "0.9375rem", color: "var(--text-secondary)", lineHeight: 1.8 }}
-            />
-          </div>
-        ))}
       </div>
-
     </div>
   );
 }
