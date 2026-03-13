@@ -14,7 +14,7 @@ const featured = [
     status: "Active",
     cover: "/project-anima-mundi.jpg",
     coverPosition: "center 40%",
-    href: "https://github.com/helloseyrin/anima-mundi",
+    href: "#",
   },
   {
     title: "Lexis // Text Classifier",

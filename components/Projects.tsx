@@ -6,9 +6,9 @@ import { statusStyle } from "@/lib/constants";
 const projects = [
   {
     title: "Anima Mundi // Obsidian PKM",
-    desc: "Self-organising Personal Knowledge Management System. Semantic search across clipped articles, videos, PDFs, GitHub repos, and links.",
+    desc: "Self-organising Personal Knowledge Management System. Semantic search across clipped articles, videos, PDFs, GitHub repos, and links. Private repo — going public soon.",
     tags: ["Python", "ChromaDB", "NLP", "embeddings", "fastembed"],
-    href: "https://github.com/helloseyrin/anima-mundi",
+    href: "#",
     status: "Active",
     cover: "/project-anima-mundi.jpg",
     coverPosition: "center 40%",
