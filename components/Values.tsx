@@ -113,7 +113,7 @@ const values = [
   },
   {
     title: "Human-in-the-Loop",
-    body: "Automation should augment human judgment, not replace it. Especially where the stakes are high.",
+    body: "No matter how capable a system becomes — quantum, superintelligent, whatever comes next — only a human knows their immediate needs and lived reality. We read context instantly, intuit what isn't said, and adjust to the texture of a situation that no model has actually inhabited. Until a machine is precisely empathetic with that experience — not just simulating it — it has no business making judgement calls or executive decisions on someone's behalf.",
   },
   {
     title: "Privacy by Design",
