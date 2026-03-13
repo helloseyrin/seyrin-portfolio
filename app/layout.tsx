@@ -21,8 +21,9 @@ const firaCode = Fira_Code({
 });
 
 export const metadata: Metadata = {
-  title: "Smyrna V. | Data & ML Engineer",
-  description: "Personal portfolio — Data & ML Engineer, Turing College",
+  title: "Smyrna V. | Knowledge Engineering",
+  description: "Personal portfolio — Knowledge Engineering, unstructured data, AI tooling.",
+  icons: { icon: "/wave.gif" },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
