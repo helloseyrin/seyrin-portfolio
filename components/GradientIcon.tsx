@@ -9,6 +9,7 @@ import {
   Compass,
   Plant,
   Brain,
+  type IconWeight,
 } from "@phosphor-icons/react";
 
 const GRAD_ID = "icon-grad-global";
@@ -17,7 +18,7 @@ function GradientIcon({
   icon: Icon,
   size = 36,
 }: {
-  icon: React.ComponentType<{ size?: number; weight?: string; color?: string }>;
+  icon: React.ComponentType<{ size?: number; weight?: IconWeight; color?: string }>;
   size?: number;
 }) {
   return (
