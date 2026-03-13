@@ -362,6 +362,17 @@ code, pre {
 .about-link  { transition: color var(--duration-fast) var(--ease); }
 .about-link:hover  { color: var(--text-secondary); }
 
+/* ── CV page — hide all layout chrome ───────────── */
+body[data-page="cv"] .sidebar-desktop,
+body[data-page="cv"] .mobile-nav,
+body[data-page="cv"] .floating-contact-wrap { display: none !important; }
+body[data-page="cv"] .main-content {
+  margin-left: 0 !important;
+  padding: 0 !important;
+  background: #e8edf5;
+}
+body[data-page="cv"] footer { display: none !important; }
+
 /* ── Mobile layout ──────────────────────────────── */
 .sidebar-desktop { display: flex; }
 .mobile-nav      { display: none; }

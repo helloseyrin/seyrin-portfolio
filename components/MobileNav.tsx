@@ -18,7 +18,6 @@ const navLinks = [
 const socialLinks = [
   { label: "LinkedIn", href: "https://www.linkedin.com/in/smyrna/" },
   { label: "GitHub",   href: "https://github.com/helloseyrin" },
-  { label: "Resume",   href: "/cv.pdf" },
 ];
 
 export default function MobileNav() {

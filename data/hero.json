@@ -1,7 +1,7 @@
 {
   "subtitle": "Information & Knowledge Engineering",
   "bio": [
-    "I specialize in knowledge engineering and unstructured data processing, with a background in business analysis and UI/UX design.",
+    "Growing my expertise in the domain of knowledge engineering and unstructured data processing, with a background in business analysis and UI/UX design.",
     "In my experience as a translator, then as a business analyst, I kept running into the same situation: useful material scattered across folders with cryptic filenames, unicode issues, weird metadata, a mix of image formats and old slide decks — hours spent manually assembling reference for a task that in itself takes fifteen minutes. In trying to manage large volumes of information with no effective way to navigate it, I got pulled toward NLP and RAG naturally and learned the full process for turning unstructured data into queryable document databases."
   ]
 }
