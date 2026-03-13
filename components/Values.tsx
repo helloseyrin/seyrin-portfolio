@@ -117,7 +117,7 @@ const values = [
   },
   {
     title: "Privacy by Design",
-    body: "Privacy is not a feature you bolt on at the end. It is a constraint you design around from the start.",
+    body: "Privacy is not a feature you bolt on at the end — it is a constraint you design around from the start. That means data minimisation, no collection of what you don't need, and encryption as a default. It also means local-first: your data should live on your device unless there is a specific, consented reason for it to leave. The cloud is someone else's computer, and most applications have no compelling reason to insist on being there.",
   },
   {
     title: "Right to Lifelong Learning",
