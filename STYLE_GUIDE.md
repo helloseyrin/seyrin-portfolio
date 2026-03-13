@@ -6,7 +6,13 @@ Reference document for design decisions, tokens, and component conventions used 
 
 ## Aesthetic
 
-**Frutiger Aero / Ami Mizuno** — clean, luminous, water-toned. Light background with glassmorphism cards, subtle blue-ice accents, monospace type for code/tags. Not sterile, not maximalist. The feeling: professional but alive.
+**Neural Glassmorphism** — the design emerged organically rather than from a defined reference. The closest description: airy, slightly magical glassmorphism with a neural/synaptic undercurrent.
+
+The background is a live canvas of drifting nodes connected by glowing edges — referencing neural network diagrams and vector graph visualisations. Pulses fire along connections, nodes twinkle with iridescent halos. The palette (ice blue, periwinkle, soft violet) was chosen to feel luminous against the light background without being clinical.
+
+On top of that: frosted glass cards with `backdrop-filter: blur + saturate`, inset white highlights, and soft blue-toned shadows — consistent with the broader glassmorphism aesthetic popularised by Apple's interface direction (translucent surfaces, depth through blur, light catching edges). The intent is not to copy any specific system but to borrow the principle: materials that feel like light passing through them.
+
+The result sits somewhere between a scientific visualisation tool and a minimal portfolio — precise but not sterile, structured but alive. No maximalism, no dark mode theatrics. The neural canvas does the atmospheric work; the content stays clean.
 
 ---
 
@@ -131,7 +137,8 @@ Phosphor Icons (`@phosphor-icons/react`) with `weight="duotone"`, filled via an 
 | `IconEducation` | GraduationCap | Education |
 | `IconCertifications` | Seal | Certifications |
 | `IconProjects` | Flask | Projects |
-| `IconTechStack` | Wrench | Tech Stack |
+| `IconSkills` | Brain | Skills |
+| `IconTools` | Wrench | Tools |
 | `IconValues` | Compass | Values |
 | `IconAbout` | Plant | About |
 
