@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Outfit, Fira_Code } from "next/font/google";
 import "./globals.css";
 import Sidebar from "@/components/Sidebar";
+import MobileNav from "@/components/MobileNav";
 import BackgroundBlobs from "@/components/BackgroundBlobs";
 import NeuralCanvas from "@/components/NeuralCanvas";
 import FloatingContact from "@/components/FloatingContact";
@@ -33,8 +34,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <BackgroundBlobs />
           <NeuralCanvas />
           <FloatingContact />
-          <Sidebar />
-          <div style={{ marginLeft: SIDEBAR_WIDTH, minHeight: "100vh", display: "flex", flexDirection: "column", position: "relative", zIndex: 1 }}>
+          <div className="sidebar-desktop"><Sidebar /></div>
+          <div className="mobile-nav"><MobileNav /></div>
+          <div className="main-content" style={{ marginLeft: SIDEBAR_WIDTH, minHeight: "100vh", display: "flex", flexDirection: "column", position: "relative", zIndex: 1 }}>
             <main style={{ flexGrow: 1, padding: "8rem 3rem 4rem 3rem", maxWidth: "56rem", width: "100%", marginLeft: "auto", marginRight: "auto" }}>
               {children}
             </main>

@@ -362,6 +362,16 @@ code, pre {
 .about-link  { transition: color var(--duration-fast) var(--ease); }
 .about-link:hover  { color: var(--text-secondary); }
 
+/* ── Mobile layout ──────────────────────────────── */
+.sidebar-desktop { display: flex; }
+.mobile-nav      { display: none; }
+
+@media (max-width: 768px) {
+  .sidebar-desktop { display: none; }
+  .mobile-nav      { display: block; }
+  .main-content    { margin-left: 0 !important; padding: 5rem 1.25rem 3rem !important; }
+}
+
 /* ── Carousel scroll buttons ────────────────────── */
 .carousel-btn { transition: border-color var(--duration-fast) var(--ease), color var(--duration-fast) var(--ease); }
 .carousel-btn:hover { border-color: var(--border-hover) !important; color: var(--text-primary) !important; }
