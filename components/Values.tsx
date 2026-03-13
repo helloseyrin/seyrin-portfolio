@@ -105,7 +105,7 @@ const values = [
   },
   {
     title: "Digital Sovereignty",
-    body: "Nations, organisations, and individuals should control their own digital destiny — their data, infrastructure, and software — not rent access to it from a handful of corporations.",
+    body: "Nations, organisations, and individuals should control their own digital destiny — their data, infrastructure, and software — not rent access to it from a handful of foreign corporations.",
   },
   {
     title: "Algorithmic Autonomy",
