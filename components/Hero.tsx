@@ -84,15 +84,15 @@ export default function Hero() {
 
         {/* H1 + H2 + meta row */}
         <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-          <h1 style={{ fontSize: "3rem", fontWeight: 500, color: "var(--text-primary)", lineHeight: 1.1, display: "flex", alignItems: "center", gap: "0.5rem" }}>
-            Smyrna V.
+          <h1 style={{ fontSize: "3rem", fontWeight: 500, lineHeight: 1.1, display: "flex", alignItems: "center", gap: "0.5rem", animation: "fade-down 0.45s ease both" }}>
+            <span className="hero-name">Smyrna V.</span>
             <img src="/wave.gif" alt="wave" style={{ width: "2.75rem", height: "2.75rem", verticalAlign: "middle", imageRendering: "auto", filter: "blur(0.4px) contrast(1.05)", willChange: "transform" }} />
           </h1>
-          <h2 style={{ fontSize: "2.25rem", fontWeight: 400, color: "var(--text-muted)", lineHeight: 1.2 }}>
+          <h2 style={{ fontSize: "2.25rem", fontWeight: 400, color: "var(--text-muted)", lineHeight: 1.2, animation: "fade-down 0.45s 0.08s ease both" }}>
             <Editable file="hero" path="subtitle" tag="span" />
           </h2>
           {/* Meta row */}
-          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap", paddingTop: "0.25rem" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap", paddingTop: "0.25rem", animation: "fade-down 0.45s 0.16s ease both" }}>
             {[
               { label: "Helsinki GMT+3", dot: null },
               { label: "open to work", dot: "#4ade80" },
@@ -114,9 +114,9 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Bio — left quote border */}
+        {/* Bio — animated shimmer border */}
         <div style={{
-          borderLeft: "2px solid var(--border-hover)",
+          position: "relative",
           paddingLeft: "1.25rem",
           display: "flex",
           flexDirection: "column",
@@ -124,7 +124,9 @@ export default function Hero() {
           color: "var(--text-secondary)",
           fontSize: "0.9375rem",
           lineHeight: 1.75,
+          animation: "fade-down 0.45s 0.24s ease both",
         }}>
+          <div className="bio-border-shimmer" />
           {/* First paragraph always visible */}
           <Editable file="hero" path="bio[0]" tag="p" multiline />
 
@@ -191,7 +193,7 @@ export default function Hero() {
         </div>
 
         {/* Now strip */}
-        <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexWrap: "wrap" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexWrap: "wrap", animation: "fade-down 0.45s 0.34s ease both" }}>
           <span style={{
             fontSize: "0.65rem",
             fontFamily: "var(--font-mono)",
@@ -222,7 +224,7 @@ export default function Hero() {
         </div>
 
         {/* Contact pills + about link */}
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "0.75rem", marginTop: "-0.75rem" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "0.75rem", marginTop: "-0.75rem", animation: "fade-down 0.45s 0.42s ease both" }}>
         <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
           {[
             {
@@ -233,7 +235,7 @@ export default function Hero() {
             },
             {
               label: "LinkedIn",
-              href: "https://linkedin.com/in/smyrna-v",
+              href: "https://www.linkedin.com/in/smyrna/",
               icon: <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>,
               external: true,
             },
