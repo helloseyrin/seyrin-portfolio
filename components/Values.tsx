@@ -108,8 +108,8 @@ const values = [
     body: "Nations, organisations, and individuals should control their own digital destiny — their data, infrastructure, and software — not rent access to it from a handful of corporations.",
   },
   {
-    title: "Algorithmic Transparency",
-    body: "If a system makes decisions that affect people, those people deserve to understand how. Black boxes are not neutral — they are a choice to obscure power.",
+    title: "Algorithmic Autonomy",
+    body: "Algorithms don't just surface content — they construct the version of reality you inhabit online. You should have the right to understand how that works and, crucially, to turn it off. Chronological feeds, no recommendation engines, no engagement-maximising loops — the choice should be yours. I don't build systems that optimise for attention capture.",
   },
   {
     title: "Human-in-the-Loop",
