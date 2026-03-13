@@ -116,17 +116,19 @@ export default function Hero() {
 
         {/* Bio — animated shimmer border */}
         <div style={{
-          position: "relative",
-          paddingLeft: "1.25rem",
           display: "flex",
-          flexDirection: "column",
-          gap: "0.85rem",
-          color: "var(--text-secondary)",
-          fontSize: "0.9375rem",
-          lineHeight: 1.75,
+          gap: "1.25rem",
           animation: "fade-down 0.45s 0.24s ease both",
         }}>
           <div className="bio-border-shimmer" />
+          <div style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "0.85rem",
+            color: "var(--text-secondary)",
+            fontSize: "0.9375rem",
+            lineHeight: 1.75,
+          }}>
           {/* First paragraph always visible */}
           <Editable file="hero" path="bio[0]" tag="p" multiline />
 
@@ -190,6 +192,7 @@ export default function Hero() {
           >
             {bioExpanded ? "— less" : "+ more"}
           </button>
+          </div>
         </div>
 
         {/* Now strip */}
@@ -204,10 +207,12 @@ export default function Hero() {
           }}>now</span>
           <div style={{ width: "1px", height: "0.9rem", background: "var(--border)", flexShrink: 0 }} />
           {[
-            "CI/CD",
             "RAG",
-            "Natural Language Processing",
+            "NLP",
             "ELT pipelines",
+            "Recursive Language Models",
+            "Knowledge Graphs",
+            "CI/CD",
           ].map(item => (
             <span key={item} style={{
               fontSize: "0.72rem",

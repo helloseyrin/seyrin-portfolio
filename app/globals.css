@@ -353,11 +353,9 @@ code, pre {
 
 /* ── Bio left border shimmer ────────────────────── */
 .bio-border-shimmer {
-  position: absolute;
-  left: 0;
-  top: 0;
+  flex-shrink: 0;
+  align-self: stretch;
   width: 2px;
-  height: 100%;
   border-radius: 9999px;
   background: linear-gradient(
     to bottom,
@@ -369,7 +367,7 @@ code, pre {
   );
   background-size: 100% 300%;
   animation: shimmer-down 4s linear infinite;
-  opacity: 0.75;
+  opacity: 0.85;
 }
 
 /* ── Hero bio toggle + about link ───────────────── */
