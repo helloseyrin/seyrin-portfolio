@@ -124,6 +124,10 @@ const values = [
     body: "The best infrastructure is infrastructure everyone can inspect, modify, and own. Closed systems that communities depend on are a single point of failure — political, commercial, and technical.",
   },
   {
+    title: "Intentional Building",
+    body: "The industry has a name for building things primarily because they look good on a CV — Resume-Driven Development. I try to work the other way around: start with a problem that genuinely exists, validate that it matters to someone other than me, and only then ask whether software is actually the right solution. YAGNI and problem-solution fit aren't just engineering principles — they're an argument against software that doesn't need to exist.",
+  },
+  {
     title: "#QuitGPT",
     titleHref: "https://quitgpt.org",
     body: "None of my projects use or integrate OpenAI products.",
