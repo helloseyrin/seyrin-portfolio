@@ -41,7 +41,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </main>
             <footer style={{ padding: "1.5rem 3rem", width: "100%", borderTop: "1px solid var(--border)" }}>
               <div style={{ fontSize: "0.8125rem", color: "var(--text-muted)", maxWidth: "56rem", marginLeft: "auto", marginRight: "auto", textAlign: "center" }}>
-                Smyrna V. © 2026
+                Smyrna V. © 2026 · Built with TypeScript &amp; Next.js · Deployed on Vercel
               </div>
             </footer>
           </div>
