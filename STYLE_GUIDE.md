@@ -159,11 +159,17 @@ Phosphor Icons (`@phosphor-icons/react`) with `weight="duotone"`, filled via an 
 
 ## Content Tone
 
-- Direct, first-person, not performative.
-- No corporate-speak. Not "delivering actionable insights" unironically.
-- Definitions over declarations — describe what something is, not your stance on it.
-- Technical but readable. Code terms inline when precise (e.g. `RAG`, `ELT`).
-- Fira Code for any inline technical identifiers even in prose context.
+First-person, direct, and grounded in practical reality. The goal is to sound like a knowledgeable person explaining something to a curious friend — not a textbook, not a LinkedIn post, not a corporate values page.
+
+**Rules:**
+- Write like a Medium post, not a spec sheet. Sentences should flow, not fire in staccato bursts.
+- Avoid "not this, not that" and "no X, no Y" constructions — they read as AI-generated and aren't how people actually speak.
+- Every concept should have a real-world implication. What breaks when this goes wrong? What does it look like in practice?
+- Lead with what a thing *is*, follow with why it *matters*, close with where *you* stand on it.
+- Definitions over declarations — describe what something is, not just your stance on it.
+- Technical terms inline when precise (`RAG`, `ELT`, `YAGNI`) but always explain the stakes, not just the acronym.
+- No corporate-speak. Not "delivering actionable insights", not "leveraging synergies", not "impactful solutions".
+- The through-line across values content: technology should correspond to and improve actual reality, not reshape it to serve a product owner's growth metrics.
 
 ---
 
