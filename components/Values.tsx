@@ -4,16 +4,16 @@ import { useState } from "react";
 import { IconValues } from "./GradientIcon";
 
 const acid = [
-  { abbr: "A", term: "Atomicity",   def: "Think of a transaction as a single indivisible action — even if it involves dozens of steps under the hood, the database treats it as one thing that either happened or didn't. A bank transfer is the textbook example: the debit and the credit are bound together, and if anything goes wrong between them, the whole thing unwinds. I wrap multi-step operations in explicit transactions for exactly this reason.", color: "#8aaac8" },
-  { abbr: "C", term: "Consistency", def: "The database has rules baked into it — constraints, foreign keys, business logic encoded at the schema level — and every transaction has to leave things in a state that respects all of them. A transaction that would produce broken or contradictory data simply won't be allowed to complete. I define these rules in the schema itself rather than trusting application code to enforce them every time.", color: "#8aaac8" },
-  { abbr: "I", term: "Isolation",   def: "When multiple transactions are running at the same time, they need to stay out of each other's way — the end result should be identical to what you'd get if they'd run one after another. In practice, databases offer different isolation levels as a tradeoff between strictness and performance. When building pipelines that write to shared tables, isolation levels are something I think through deliberately rather than leaving to defaults.", color: "#8aaac8" },
-  { abbr: "D", term: "Durability",  def: "A committed transaction is a committed transaction, even if the server crashes seconds after the confirmation comes back. Most databases handle this through write-ahead logging — the record of what happened is written to disk before the operation is considered done. I treat a write as confirmed only once it's actually been committed, rather than assuming an in-flight operation will land.", color: "#8aaac8" },
+  { abbr: "A", term: "Atomicity",   def: "A transaction is indivisible — it either completes in full or the whole thing unwinds, as if it never started. A payment where the debit goes through but the credit doesn't would leave money genuinely unaccounted for, and at scale those half-states compound into serious integrity failures. I wrap multi-step operations in explicit transactions so any mid-process failure leaves the database exactly as it was.", color: "#8aaac8" },
+  { abbr: "C", term: "Consistency", def: "Every transaction has to leave the database in a valid state — constraints, foreign keys, business rules all enforced, every time. Inventory showing stock as both available and sold, or a user record pointing to a deleted account, creates real downstream failures: wrong orders shipped, broken reports, billing errors. I encode those rules at the schema level rather than trusting application code to remember them.", color: "#8aaac8" },
+  { abbr: "I", term: "Isolation",   def: "Concurrent transactions should produce the same result as if they'd run one after another, even when they're happening simultaneously. Two people booking the last seat on a flight at the same time — without proper isolation, both get confirmations. I think through isolation levels deliberately when building pipelines that touch shared data, rather than leaving it to whatever the default is.", color: "#8aaac8" },
+  { abbr: "D", term: "Durability",  def: "Committed means committed — a confirmed transaction survives crashes, power loss, and restarts. A payment confirmation that vanishes on server restart isn't just a bug, it's a trust breach. I don't treat in-flight or queued writes as done until they've actually been committed to disk.", color: "#8aaac8" },
 ];
 
 const base = [
-  { abbr: "BA", term: "Basically Available",  def: "Distributed systems have to make tradeoffs, and BASE systems choose to stay responsive over staying perfectly accurate. When part of the system goes down, you still get a response — it might reflect a slightly older state of the world, but it's there. For read-heavy workloads where a few seconds of staleness is acceptable, this is often the right call.", color: "#a78bfa" },
-  { abbr: "S",  term: "Soft state",           def: "In a distributed system, different nodes can temporarily show different versions of the same data — and that's considered acceptable. Consistency is something the system works toward continuously rather than enforcing at every instant. I design with the expectation that state drifts and build logic that can handle disagreement between nodes gracefully.", color: "#a78bfa" },
-  { abbr: "E",  term: "Eventually consistent", def: "The guarantee is that if you stop writing and wait long enough, every node in the system will end up showing the same value. It says nothing about when — just that it will happen. I use this model for caches, search indices, and read replicas where a brief lag is fine, and I'm deliberate about identifying the places in a system where it isn't.", color: "#a78bfa" },
+  { abbr: "BA", term: "Basically Available",  def: "The system stays responsive even when parts of it are down, accepting that some responses might be slightly stale. A social feed showing posts from 30 seconds ago is fine; a hospital system showing yesterday's medication records is a different matter entirely. I use this model where staleness is genuinely acceptable and I'm explicit about where it isn't.", color: "#a78bfa" },
+  { abbr: "S",  term: "Soft state",           def: "Nodes in a distributed system are allowed to temporarily disagree — consistency is something the system works toward over time rather than enforcing at every instant. A shopping cart that shows different counts across devices for a few seconds is recoverable; an account balance doing the same is a compliance issue. I design with drift in mind and build logic that handles it rather than assuming it away.", color: "#a78bfa" },
+  { abbr: "E",  term: "Eventually consistent", def: "All nodes will converge to the same value given enough time and no new writes — DNS propagation is a familiar real-world example, where your domain update goes live in some parts of the world before others. I use this model for caches, search indices, and read replicas where a brief lag is acceptable, and I'm deliberate about identifying the parts of a system where it isn't.", color: "#a78bfa" },
 ];
 
 function PrincipleChip({ abbr, term, def, color }: { abbr: string; term: string; def: string; color: string }) {
@@ -89,19 +89,15 @@ function PrincipleChip({ abbr, term, def, color }: { abbr: string; term: string;
 const values = [
   {
     title: "Responsible Design & Development",
-    body: "Integrating sustainability, inclusivity, and social responsibility into the full lifecycle of what you build — accounting for downstream effects on people and the planet, not just the immediate deliverable. I avoid technologies and patterns that extract value at the expense of communities or the environment, and favour longevity and modularity over disposability.",
+    body: "Every design decision has downstream effects on people and the planet — accounting for those is part of the job, not a bonus consideration. I inform the systems I contribute to with the goal of improving actual reality, not bending it toward a product owner's growth metrics.",
   },
   {
     title: "Design for Longevity",
-    body: "In software, longevity means writing systems and interfaces that outlast their original authors — maintainable, documented, built on open standards rather than proprietary lock-in. The opposite of throwaway code. I favour solutions that can be understood, modified, and extended by whoever inherits them.",
+    body: "Software that outlasts its authors requires deliberate choices: open standards, clear documentation, modularity over clever shortcuts. The real-world cost of throwaway code is accumulated technical debt that eventually falls on whoever can least afford to deal with it. I favour solutions that can be understood and extended by whoever inherits them.",
   },
   {
-    title: "Right to Repair",
-    body: "Users and independent technicians should have the legal right and practical ability to repair the devices and software they own — with access to parts, documentation, and tools. Manufacturer-enforced obsolescence through repair restriction is both an environmental and a justice issue.",
-  },
-  {
-    title: "Against Planned Obsolescence",
-    body: "Deliberately designing products to fail, degrade, or become incompatible is an extraction strategy — extracting money, extracting materials, and externalising the environmental cost onto everyone else. In software it shows up as forced upgrades, dropped support for functional hardware, and dark patterns that push users toward paid tiers.",
+    title: "Against Disposability",
+    body: "Designing products to fail prematurely — or restricting repair to force replacement — externalises the environmental and financial cost onto users and the planet. In software this shows up as forced upgrades, dropped support for functional hardware, and locked ecosystems. Users should have the legal right and practical ability to repair what they own.",
   },
   {
     title: "Digital Sovereignty",
@@ -109,23 +105,23 @@ const values = [
   },
   {
     title: "Algorithmic Autonomy",
-    body: "Algorithms don't just surface content — they construct the version of reality you inhabit online. You should have the right to understand how that works and, crucially, to turn it off. Chronological feeds, no recommendation engines, no engagement-maximising loops — the choice should be yours. I don't build systems that optimise for attention capture.",
+    body: "Algorithms shape the digital reality we inhabit online, which means they actively shape our views and beliefs. A feed optimised for engagement will always drift toward outrage and tribalism because those generate the most clicks. I don't build systems that optimise for attention capture, and I think opting out of algorithmic curation should be a default right.",
   },
   {
     title: "Human-in-the-Loop",
-    body: "No matter how capable a system becomes — quantum, superintelligent, whatever comes next — only a human knows their immediate needs and lived reality. We read context instantly, intuit what isn't said, and adjust to the texture of a situation that no model has actually inhabited. Until a machine is precisely empathetic with that experience — not just simulating it — it has no business making judgement calls or executive decisions on someone's behalf.",
+    body: "Only a human knows their immediate needs and lived reality — we read context instantly and intuit what isn't said. Delegating executive decisions to systems without that grounding produces outcomes that are technically optimised and humanly catastrophic. Until a machine actually inhabits experience rather than modelling it, the final call stays with a person.",
   },
   {
     title: "Privacy by Design",
-    body: "Privacy is not a feature you bolt on at the end — it is a constraint you design around from the start. That means data minimisation, no collection of what you don't need, and encryption as a default. It also means local-first: your data should live on your device unless there is a specific, consented reason for it to leave. The cloud is someone else's computer, and most applications have no compelling reason to insist on being there.",
+    body: "Privacy is a constraint you design around from the start. In practice: local-first, data minimisation, encryption as default — your data stays on your device unless there's a specific consented reason for it to leave. Most applications that insist on the cloud do so because your data is the product.",
   },
   {
     title: "Right to Lifelong Learning",
-    body: "Access to education and skill development should not be gated by geography, income, or credential. I build in the open and share what I learn.",
+    body: "Access to education shouldn't be gated by geography, income, or credential — knowledge compounds, and locking people out of it locks them out of everything downstream. I share what I learn in the open.",
   },
   {
     title: "Open Source Initiative",
-    body: "The best infrastructure is infrastructure everyone can inspect, improve, and own.",
+    body: "The best infrastructure is infrastructure everyone can inspect, modify, and own. Closed systems that communities depend on are a single point of failure — political, commercial, and technical.",
   },
   {
     title: "#QuitGPT",
@@ -135,7 +131,7 @@ const values = [
   },
   {
     title: "EuroStack",
-    body: "The transition away from dependence on American tech giants to European-based service providers — for infrastructure, tooling, and data.",
+    body: "I support the shift away from dependency on American tech platforms toward European-based alternatives. In my own work and tooling I choose European providers where suitable options exist.",
   },
 ];
 
