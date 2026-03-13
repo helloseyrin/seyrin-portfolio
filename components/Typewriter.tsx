@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 
-const TITLES = ["Data Engineering", "NLP", "MLOps", "Process Automation"];
+const TITLES = ["Knowledge Engineering", "Unstructured Data", "RAG & Semantic Search", "AI Tooling", "NLP & Embeddings"];
 const TYPE_SPEED = 60;
 const DELETE_SPEED = 35;
 const PAUSE_AFTER_TYPE = 1800;
