@@ -41,12 +41,23 @@
   --badge-text: #2563eb;
 
   /* Typography */
-  --font-sans: var(--font-fira-sans), "Outfit", system-ui, sans-serif;
+  --font-sans: var(--font-outfit), "Outfit", system-ui, sans-serif;
   --font-mono: var(--font-fira-code), "Fira Code", monospace;
 
   --accent-ice: #89c4e1;
   --accent-aqua: #4a9ebe;
   --accent-periwinkle: #c5d8f0;
+
+  /* Easing scale */
+  --ease:        cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out:    cubic-bezier(0.0, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Duration scale */
+  --duration-fast:  150ms;
+  --duration-base:  200ms;
+  --duration-slow:  350ms;
+  --duration-enter: 450ms;
 }
 
 /* ── Base ───────────────────────────────────────── */
@@ -127,16 +138,6 @@ code, pre {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ── Letter float wave ──────────────────────────── */
-@keyframes letter-float {
-  0%, 100% { transform: translateY(0px); }
-  50%       { transform: translateY(-8px); }
-}
-.letter-float {
-  display: inline-block;
-  animation: letter-float 3s ease-in-out infinite;
-}
-
 /* ── Typewriter cursor ──────────────────────────── */
 @keyframes blink {
   0%, 100% { opacity: 1; }
@@ -202,7 +203,7 @@ code, pre {
     inset 0 1px 0 rgba(255, 255, 255, 0.6),
     0 4px 24px rgba(10, 40, 100, 0.08);
   border-radius: 0.75rem;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  transition: border-color var(--duration-base) var(--ease), box-shadow var(--duration-base) var(--ease), background var(--duration-base) var(--ease);
 }
 .card:hover {
   background: rgba(255, 255, 255, 0.32);
@@ -240,7 +241,7 @@ code, pre {
   border-radius: 0.75rem;
   padding: var(--space-3);
   text-decoration: none;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  transition: border-color var(--duration-base) var(--ease), box-shadow var(--duration-base) var(--ease), background var(--duration-base) var(--ease);
 }
 .project-card:hover {
   border-color: rgba(138, 170, 200, 0.7);
@@ -254,11 +255,11 @@ code, pre {
 }
 
 /* ── Social links ───────────────────────────────── */
-.social-link { color: var(--text-muted); transition: color 0.15s ease; }
+.social-link { color: var(--text-muted); transition: color var(--duration-fast) var(--ease); }
 .social-link:hover { color: var(--text-primary); text-decoration: underline; }
 
 /* ── Inline links ───────────────────────────────── */
-.link-subtle { color: var(--text-primary); transition: background 0.15s; border-radius: 3px; }
+.link-subtle { color: var(--text-primary); transition: background var(--duration-fast) var(--ease); border-radius: 3px; }
 .link-subtle:hover { background: var(--bg-hover); }
 
 /* ── Tag pills ──────────────────────────────────── */
@@ -266,7 +267,7 @@ code, pre {
   display: inline-block;
   padding: 0.24em 0.75em;
   border-radius: 9999px;
-  font-family: var(--font-fira-code), 'Fira Code', ui-monospace, monospace;
+  font-family: var(--font-mono);
   font-size: 0.78rem;
   font-weight: 400;
   letter-spacing: 0.02em;
@@ -274,26 +275,33 @@ code, pre {
   border: 1px solid rgba(99, 130, 200, 0.35);
   background: transparent;
   cursor: default;
-  transition: all 0.18s ease;
+  transition: border-color var(--duration-base) var(--ease),
+              box-shadow var(--duration-base) var(--ease),
+              color var(--duration-base) var(--ease),
+              background var(--duration-base) var(--ease),
+              font-weight var(--duration-fast) var(--ease);
 }
 .tag-pill:hover {
   font-weight: 500;
-  border-color: rgba(138, 170, 200, 0.45);
-  box-shadow: 0 0 12px rgba(147, 197, 253, 0.12);
+  border-color: rgba(137, 196, 225, 0.5);
   background: linear-gradient(90deg, #8aaac8, #a78bfa);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  box-shadow:
+    0 0 0 1px rgba(137, 196, 225, 0.2),
+    0 0 14px rgba(137, 196, 225, 0.3),
+    0 0 28px rgba(137, 196, 225, 0.12);
 }
 
 /* ── Prose links (hero bio, etc) ────────────────── */
 .link-prose {
   color: var(--text-muted);
   text-decoration: none;
-  font-family: 'Fira Code', var(--font-mono);
+  font-family: var(--font-mono);
   font-weight: 500;
   border-bottom: 1px solid rgba(138, 170, 200, 0.35);
-  transition: color 0.2s ease, border-color 0.2s ease, background-size 0.3s ease;
+  transition: color var(--duration-base) var(--ease), border-color var(--duration-base) var(--ease), background-size var(--duration-slow) var(--ease);
   background: linear-gradient(90deg, #8aaac8, #a78bfa);
   background-size: 0% 1.5px;
   background-repeat: no-repeat;
@@ -324,37 +332,45 @@ code, pre {
   border: 1px solid var(--border);
   color: var(--text-primary);
   text-decoration: none;
-  transition: border-color 0.18s ease;
+  transition: border-color var(--duration-fast) var(--ease);
 }
 .email-cta:hover { border-color: var(--border-active); }
 
-/* ── Footer link ────────────────────────────────── */
-.hover-link { color: var(--text-dim); transition: color 0.15s; text-decoration: none; }
-.hover-link:hover { color: var(--text-primary); }
+/* ── Contact form ───────────────────────────────── */
+.form-input { transition: border-color var(--duration-fast) var(--ease); }
+.form-input:focus  { border-color: rgba(99, 170, 255, 0.5); }
+.form-submit { transition: box-shadow var(--duration-base) var(--ease); }
+.form-submit:hover { box-shadow: 0 0 12px rgba(147, 197, 253, 0.15); }
 
-/* ── Table rows ─────────────────────────────────── */
-.cert-row { transition: background 0.15s; }
-.cert-row:hover { background: var(--bg-hover); }
+/* ── Hero bio toggle + about link ───────────────── */
+.bio-toggle  { transition: color var(--duration-fast) var(--ease); }
+.bio-toggle:hover { color: var(--text-muted); }
+.about-link  { transition: color var(--duration-fast) var(--ease); }
+.about-link:hover  { color: var(--text-secondary); }
 
-/* ── Callout boxes ──────────────────────────────── */
-.callout {
-  margin-top: var(--space-3);
-  padding: var(--space-2);
-  border-radius: 0.375rem;
-  font-size: 0.875rem;
-  line-height: 1.6;
-  background: var(--bg-deep);
-  border: 1px solid var(--border);
-  color: var(--text-muted);
+/* ── Carousel scroll buttons ────────────────────── */
+.carousel-btn { transition: border-color var(--duration-fast) var(--ease), color var(--duration-fast) var(--ease); }
+.carousel-btn:hover { border-color: var(--border-hover) !important; color: var(--text-primary) !important; }
+
+/* ── Tools icon card ────────────────────────────── */
+.icon-card { transition: transform var(--duration-base) var(--ease), box-shadow var(--duration-base) var(--ease); }
+.icon-card:hover { transform: translateY(-4px); }
+
+/* ── Tab buttons (Tools, Values) ────────────────── */
+.tab-btn { transition: all var(--duration-fast) var(--ease); }
+
+/* ── Floating contact button ────────────────────── */
+.floating-btn {
+  transition: border-color var(--duration-base) var(--ease),
+              background var(--duration-base) var(--ease),
+              box-shadow var(--duration-base) var(--ease),
+              color var(--duration-base) var(--ease);
+}
+.floating-btn:hover,
+.floating-btn[data-open="true"] {
+  border-color: rgba(137, 196, 225, 0.6) !important;
+  background: linear-gradient(135deg, rgba(14,60,140,0.18) 0%, rgba(7,30,90,0.25) 100%) !important;
+  box-shadow: 0 0 14px 3px rgba(137, 196, 225, 0.35) !important;
+  color: #89c4e1 !important;
 }
 
-.callout-warning {
-  margin-top: var(--space-3);
-  padding: var(--space-2);
-  border-radius: 0.375rem;
-  font-size: 0.875rem;
-  line-height: 1.6;
-  background: #fafafa;
-  border: 1px solid #e4e4e7;
-  color: #71717a;
-}

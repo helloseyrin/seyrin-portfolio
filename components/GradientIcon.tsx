@@ -8,6 +8,7 @@ import {
   Wrench,
   Compass,
   Plant,
+  Brain,
 } from "@phosphor-icons/react";
 
 const GRAD_ID = "icon-grad-global";
@@ -34,10 +35,11 @@ function GradientIcon({
   );
 }
 
-export const IconExperience    = () => <GradientIcon icon={Briefcase} />;
-export const IconEducation     = () => <GradientIcon icon={GraduationCap} />;
-export const IconCertifications= () => <GradientIcon icon={Seal} />;
-export const IconProjects      = () => <GradientIcon icon={Flask} />;
-export const IconTechStack     = () => <GradientIcon icon={Wrench} />;
-export const IconValues        = () => <GradientIcon icon={Compass} />;
-export const IconAbout         = () => <GradientIcon icon={Plant} />;
+export const IconExperience     = () => <GradientIcon icon={Briefcase} />;
+export const IconEducation      = () => <GradientIcon icon={GraduationCap} />;
+export const IconCertifications = () => <GradientIcon icon={Seal} />;
+export const IconProjects       = () => <GradientIcon icon={Flask} />;
+export const IconSkills         = () => <GradientIcon icon={Brain} />;
+export const IconTools          = () => <GradientIcon icon={Wrench} />;
+export const IconValues         = () => <GradientIcon icon={Compass} />;
+export const IconAbout          = () => <GradientIcon icon={Plant} />;

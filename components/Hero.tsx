@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import ContactForm from "./ContactForm";
 import Editable from "./Editable";
 import { useEdit } from "@/contexts/EditContext";
-
+import { statusStyle } from "@/lib/constants";
 
 const featured = [
   {
@@ -34,15 +34,21 @@ const featured = [
   },
 ];
 
-const statusStyle: Record<string, { bg: string; color: string; border: string }> = {
-  "Active":      { bg: "rgba(10,30,60,0.72)", color: "#7ecfef", border: "rgba(126,207,239,0.3)" },
-  "In progress": { bg: "rgba(10,30,50,0.72)", color: "#a8d8f0", border: "rgba(168,216,240,0.3)" },
-};
-
 export default function Hero() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const { data } = useEdit();
   const [bioExpanded, setBioExpanded] = useState(false);
+  const bioInnerRef = useRef<HTMLDivElement>(null);
+  const [bioHeight, setBioHeight] = useState(0);
+
+  useEffect(() => {
+    if (!bioInnerRef.current) return;
+    if (bioExpanded) {
+      setBioHeight(bioInnerRef.current.scrollHeight);
+    } else {
+      setBioHeight(0);
+    }
+  }, [bioExpanded]);
 
   const scroll = (dir: "left" | "right") => {
     if (!scrollRef.current) return;
@@ -96,7 +102,7 @@ export default function Hero() {
                 <span style={{
                   display: "inline-flex", alignItems: "center", gap: "0.35rem",
                   fontSize: "0.72rem",
-                  fontFamily: "var(--font-fira-code), 'Fira Code', monospace",
+                  fontFamily: "var(--font-mono)",
                   color: "var(--text-dim)",
                   letterSpacing: "0.02em",
                 }}>
@@ -122,21 +128,44 @@ export default function Hero() {
           {/* First paragraph always visible */}
           <Editable file="hero" path="bio[0]" tag="p" multiline />
 
-          {/* Expanded content */}
-          {bioExpanded && (
-            <>
+          {/* Expanded content — animated */}
+          <div
+            style={{
+              overflow: "hidden",
+              height: `${bioHeight}px`,
+              transition: "height 0.45s cubic-bezier(0.4, 0, 0.2, 1)",
+            }}
+          >
+            <div ref={bioInnerRef} style={{ display: "flex", flexDirection: "column", gap: "0.85rem" }}>
               {data.hero.bio.slice(1).map((_, i) => (
-                <Editable key={i + 1} file="hero" path={`bio[${i + 1}]`} tag="p" multiline />
+                <div
+                  key={i + 1}
+                  style={{
+                    opacity: bioExpanded ? 1 : 0,
+                    transform: bioExpanded ? "translateY(0)" : "translateY(8px)",
+                    transition: `opacity 0.35s ease ${0.08 + i * 0.09}s, transform 0.35s ease ${0.08 + i * 0.09}s`,
+                  }}
+                >
+                  <Editable file="hero" path={`bio[${i + 1}]`} tag="p" multiline />
+                </div>
               ))}
-              <p>
-                I&apos;m currently applying all of this to{" "}
-                <a href="https://github.com/helloseyrin/anima-mundi" target="_blank" rel="noopener noreferrer" className="link-prose">Anima Mundi</a>
-                , my Obsidian PKM vault — ingestion, cleaning, vector embeddings, evaluating different models for semantic accuracy and discovery of connections. More recently I&apos;ve been following the{" "}
-                <a href="https://arxiv.org/html/2512.24601v1" target="_blank" rel="noopener noreferrer" className="link-prose">Recursive Language Model paradigm</a>
-                {" "}and thinking about how it maps onto the retrieval problem. The personal motivation is simple enough: I accumulate information faster than I can internalise or process it, so building infrastructure that supports continuous recall and adapts to my particular way of thinking and mind mapping was an obvious turn to take.
-              </p>
-            </>
-          )}
+              <div
+                style={{
+                  opacity: bioExpanded ? 1 : 0,
+                  transform: bioExpanded ? "translateY(0)" : "translateY(8px)",
+                  transition: `opacity 0.35s ease ${0.08 + data.hero.bio.slice(1).length * 0.09}s, transform 0.35s ease ${0.08 + data.hero.bio.slice(1).length * 0.09}s`,
+                }}
+              >
+                <p>
+                  I&apos;m currently applying all of this to{" "}
+                  <a href="https://github.com/helloseyrin/anima-mundi" target="_blank" rel="noopener noreferrer" className="link-prose">Anima Mundi</a>
+                  , my Obsidian PKM vault — ingestion, cleaning, vector embeddings, evaluating different models for semantic accuracy and discovery of connections. More recently I&apos;ve been following the{" "}
+                  <a href="https://arxiv.org/html/2512.24601v1" target="_blank" rel="noopener noreferrer" className="link-prose">Recursive Language Model paradigm</a>
+                  {" "}and thinking about how it maps onto the retrieval problem. The personal motivation is simple enough: I accumulate information faster than I can internalise or process it, so building infrastructure that supports continuous recall and adapts to my particular way of thinking and mind mapping was an obvious turn to take.
+                </p>
+              </div>
+            </div>
+          </div>
 
           {/* Expand / collapse toggle */}
           <button
@@ -148,13 +177,14 @@ export default function Hero() {
               padding: 0,
               cursor: "pointer",
               fontSize: "0.72rem",
-              fontFamily: "var(--font-fira-code), 'Fira Code', monospace",
+              fontFamily: "var(--font-mono)",
               color: "var(--text-dim)",
               letterSpacing: "0.04em",
-              transition: "color 0.15s",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.3rem",
             }}
-            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = "var(--text-muted)"; }}
-            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = "var(--text-dim)"; }}
+            className="bio-toggle"
           >
             {bioExpanded ? "— less" : "+ more"}
           </button>
@@ -164,7 +194,7 @@ export default function Hero() {
         <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexWrap: "wrap" }}>
           <span style={{
             fontSize: "0.65rem",
-            fontFamily: "var(--font-fira-code), 'Fira Code', monospace",
+            fontFamily: "var(--font-mono)",
             color: "var(--text-dim)",
             letterSpacing: "0.1em",
             textTransform: "uppercase",
@@ -179,7 +209,7 @@ export default function Hero() {
           ].map(item => (
             <span key={item} style={{
               fontSize: "0.72rem",
-              fontFamily: "var(--font-fira-code), 'Fira Code', monospace",
+              fontFamily: "var(--font-mono)",
               padding: "0.22em 0.65em",
               borderRadius: "0.3rem",
               border: "1px solid var(--border)",
@@ -242,17 +272,15 @@ export default function Hero() {
           href="/about"
           style={{
             fontSize: "0.78rem",
-            fontFamily: "var(--font-fira-code), 'Fira Code', ui-monospace, monospace",
+            fontFamily: "var(--font-mono)",
             color: "var(--text-dim)",
             textDecoration: "none",
             display: "inline-flex",
             alignItems: "center",
             gap: "0.3rem",
-            transition: "color 0.18s ease",
             whiteSpace: "nowrap",
           }}
-          onMouseEnter={e => { (e.currentTarget as HTMLElement).style.color = "var(--text-secondary)"; }}
-          onMouseLeave={e => { (e.currentTarget as HTMLElement).style.color = "var(--text-dim)"; }}
+          className="about-link"
         >
           about me →
         </a>
@@ -279,10 +307,8 @@ export default function Hero() {
                   color: "var(--text-muted)",
                   display: "flex", alignItems: "center", justifyContent: "center",
                   cursor: "pointer",
-                  transition: "border-color 0.15s, color 0.15s",
                 }}
-                  onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = "var(--border-hover)"; (e.currentTarget as HTMLElement).style.color = "var(--text-primary)"; }}
-                  onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "var(--border)"; (e.currentTarget as HTMLElement).style.color = "var(--text-muted)"; }}
+                  className="carousel-btn"
                 >
                   {dir === "left"
                     ? <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>

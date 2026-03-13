@@ -5,7 +5,6 @@ import ContactForm from "./ContactForm";
 
 export default function FloatingContact() {
   const [open, setOpen] = useState(false);
-  const [hovered, setHovered] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   // Close on outside click
@@ -31,33 +30,25 @@ export default function FloatingContact() {
       {/* Trigger button */}
       <button
         onClick={() => setOpen(o => !o)}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
         title="Get in touch"
+        data-open={open}
+        className="floating-btn"
         style={{
           width: "2.25rem",
           height: "2.25rem",
           borderRadius: "50%",
-          border: hovered || open
-            ? "1px solid rgba(137,196,225,0.6)"
-            : "1px solid rgba(137,196,225,0.2)",
-          background: hovered || open
-            ? "linear-gradient(135deg, rgba(14,60,140,0.18) 0%, rgba(7,30,90,0.25) 100%)"
-            : "rgba(255,255,255,0.04)",
+          border: "1px solid rgba(137,196,225,0.2)",
+          background: "rgba(255,255,255,0.04)",
           backdropFilter: "blur(8px)",
           WebkitBackdropFilter: "blur(8px)",
-          boxShadow: hovered || open
-            ? "0 0 14px 3px rgba(137,196,225,0.35)"
-            : "none",
+          boxShadow: "none",
           cursor: "pointer",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          transition: "all 0.2s ease",
-          color: hovered || open ? "#89c4e1" : "rgba(137,196,225,0.45)",
+          color: "rgba(137,196,225,0.45)",
         }}
       >
-        {/* Paper plane icon */}
         <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="m22 2-7 20-4-9-9-4Z"/>
           <path d="M22 2 11 13"/>

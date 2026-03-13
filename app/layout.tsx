@@ -6,9 +6,10 @@ import BackgroundBlobs from "@/components/BackgroundBlobs";
 import NeuralCanvas from "@/components/NeuralCanvas";
 import FloatingContact from "@/components/FloatingContact";
 import Providers from "@/components/Providers";
+import { SIDEBAR_WIDTH } from "@/lib/constants";
 
 const outfit = Outfit({
-  variable: "--font-fira-sans",
+  variable: "--font-outfit",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600"],
 });
@@ -23,8 +24,6 @@ export const metadata: Metadata = {
   title: "Smyrna V. | Data & ML Engineer",
   description: "Personal portfolio — Data & ML Engineer, Turing College",
 };
-
-const SIDEBAR_WIDTH = "16.5rem"; // must match sidebar inline style
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

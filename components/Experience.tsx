@@ -86,10 +86,10 @@ export default function Experience() {
               <div
                 key={i}
                 ref={el => { entryRefs.current[i] = el; }}
-                style={{ display: "flex", gap: "1.5rem", paddingBottom: "2.5rem" }}
+                style={{ display: "flex", gap: "0", paddingBottom: "0" }}
               >
                 {/* Synapse dot column */}
-                <div style={{ flexShrink: 0, width: "1rem", display: "flex", flexDirection: "column", alignItems: "center", paddingTop: "0.35rem" }}>
+                <div style={{ flexShrink: 0, width: "1rem", display: "flex", flexDirection: "column", alignItems: "center", paddingTop: "1.1rem" }}>
                   <div style={{
                     width: isActive ? "0.75rem" : i % 3 === 0 ? "0.3rem" : "0.25rem",
                     height: isActive ? "0.75rem" : i % 3 === 0 ? "0.3rem" : "0.25rem",
@@ -116,12 +116,13 @@ export default function Experience() {
                   }} />
                 </div>
 
-                {/* Entry body */}
-                <div style={{ flex: 1, paddingBottom: "0.5rem" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "0.5rem", flexWrap: "wrap" }}>
-                    <span style={{ fontSize: "0.75rem", color: "var(--text-dim)", fontFamily: "var(--font-mono)" }}>
-                      {e.period}{e.duration ? ` · ${e.duration}` : ""}
-                    </span>
+                {/* Connector */}
+                <div style={{ flexShrink: 0, width: "1.25rem", height: "1px", background: "rgba(210,225,248,0.35)", marginTop: "1.45rem", alignSelf: "flex-start" }} />
+
+                {/* Entry card */}
+                <div className="card" style={{ flex: 1, padding: "1rem 1.25rem", marginBottom: "1.25rem" }}>
+                  {/* Meta row */}
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.625rem", flexWrap: "wrap" }}>
                     <span style={{
                       fontSize: "0.65rem",
                       fontFamily: "var(--font-mono)",
@@ -133,18 +134,25 @@ export default function Experience() {
                       color: pal.text,
                       border: `1px solid ${pal.border}`,
                       textTransform: "uppercase",
+                      flexShrink: 0,
                     }}>{e.type}</span>
-                    <span style={{ fontSize: "0.72rem", color: "var(--text-dim)", fontFamily: "var(--font-mono)" }}>{e.location}</span>
+                    <span style={{ fontSize: "0.72rem", color: "var(--text-dim)", fontFamily: "var(--font-mono)" }}>
+                      {e.period}{e.duration ? ` · ${e.duration}` : ""}
+                    </span>
+                    {e.location && (
+                      <span style={{ fontSize: "0.72rem", color: "var(--text-dim)", fontFamily: "var(--font-mono)" }}>· {e.location}</span>
+                    )}
                   </div>
 
-                  <p style={{ fontWeight: 500, fontSize: "0.9375rem", color: "var(--text-primary)", lineHeight: 1.3 }}>{e.role}</p>
-                  <p style={{ fontSize: "0.8125rem", color: "var(--text-secondary)", marginTop: "0.15rem", marginBottom: "0.75rem" }}>{e.org}</p>
+                  {/* Role + org */}
+                  <p style={{ fontWeight: 600, fontSize: "1rem", color: "var(--text-primary)", lineHeight: 1.3 }}>{e.role}</p>
+                  <p style={{ fontSize: "0.8125rem", fontWeight: 500, color: "var(--text-secondary)", marginTop: "0.2rem", marginBottom: e.bullets.length > 0 ? "0.75rem" : e.tags.length > 0 ? "0.75rem" : 0 }}>{e.org}</p>
 
                   {e.bullets.length > 0 && (
-                    <ul style={{ paddingLeft: "1.1rem", display: "flex", flexDirection: "column", gap: "0.35rem", marginBottom: "0.875rem" }}>
+                    <ul style={{ paddingLeft: "1.1rem", display: "flex", flexDirection: "column", gap: "0.35rem", marginBottom: e.tags.length > 0 ? "0.875rem" : 0 }}>
                       {e.bullets.map((b, j) => (
-                        <li key={j} style={{ fontSize: "0.8125rem", color: "var(--text-secondary)", lineHeight: 1.65 }}>
-                          <Editable file="experience" path={`entries[id=${e.id}].bullets[${j}]`} tag="span" multiline style={{ fontSize: "0.8125rem", color: "var(--text-secondary)", lineHeight: 1.65 }} />
+                        <li key={j} style={{ fontSize: "0.8125rem", color: "var(--text-primary)", lineHeight: 1.65, opacity: 0.8 }}>
+                          <Editable file="experience" path={`entries[id=${e.id}].bullets[${j}]`} tag="span" multiline style={{ fontSize: "0.8125rem", color: "var(--text-primary)", lineHeight: 1.65, opacity: 0.8 }} />
                         </li>
                       ))}
                     </ul>

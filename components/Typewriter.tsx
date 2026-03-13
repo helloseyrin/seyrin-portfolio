@@ -41,7 +41,7 @@ export default function Typewriter() {
   }, [displayed, phase, titleIndex]);
 
   return (
-    <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", minHeight: "1.2em", fontFamily: "var(--font-fira-code), 'Fira Code', ui-monospace, monospace", whiteSpace: "nowrap" }}>
+    <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", minHeight: "1.2em", fontFamily: "var(--font-mono)", whiteSpace: "nowrap" }}>
       {displayed}
       <span className="typewriter-cursor" />
     </p>

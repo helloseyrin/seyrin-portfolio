@@ -42,7 +42,7 @@ function PrincipleChip({ abbr, term, def, color }: { abbr: string; term: string;
         }}
       >
         <span style={{
-          fontFamily: "var(--font-fira-code), 'Fira Code', monospace",
+          fontFamily: "var(--font-mono)",
           fontSize: "1.5rem",
           fontWeight: 600,
           color,
@@ -50,7 +50,7 @@ function PrincipleChip({ abbr, term, def, color }: { abbr: string; term: string;
           lineHeight: 1,
         }}>{abbr}</span>
         <span style={{
-          fontFamily: "var(--font-fira-code), 'Fira Code', monospace",
+          fontFamily: "var(--font-mono)",
           fontSize: "0.62rem",
           color: "var(--text-dim)",
           letterSpacing: "0.04em",
@@ -290,7 +290,7 @@ export default function Values() {
         </div>
         {/* ACID */}
         <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-          <span style={{ fontSize: "0.65rem", fontFamily: "var(--font-fira-code), 'Fira Code', monospace", color: "var(--text-dim)", letterSpacing: "0.1em", textTransform: "uppercase" }}>ACID — transactional systems</span>
+          <span style={{ fontSize: "0.65rem", fontFamily: "var(--font-mono)", color: "var(--text-dim)", letterSpacing: "0.1em", textTransform: "uppercase" }}>ACID — transactional systems</span>
           <div style={{ display: "flex", gap: "0.6rem", flexWrap: "wrap" }}>
             {acid.map(p => <PrincipleChip key={p.term} {...p} />)}
           </div>
@@ -298,7 +298,7 @@ export default function Values() {
 
         {/* BASE */}
         <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-          <span style={{ fontSize: "0.65rem", fontFamily: "var(--font-fira-code), 'Fira Code', monospace", color: "var(--text-dim)", letterSpacing: "0.1em", textTransform: "uppercase" }}>BASE — distributed systems</span>
+          <span style={{ fontSize: "0.65rem", fontFamily: "var(--font-mono)", color: "var(--text-dim)", letterSpacing: "0.1em", textTransform: "uppercase" }}>BASE — distributed systems</span>
           <div style={{ display: "flex", gap: "0.6rem", flexWrap: "wrap" }}>
             {base.map(p => <PrincipleChip key={p.term} {...p} />)}
           </div>

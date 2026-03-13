@@ -1,18 +1,10 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 import Tag from "./Tag";
-import { IconTechStack } from "./GradientIcon";
+import { IconTools } from "./GradientIcon";
 
 // ── Data ─────────────────────────────────────────
-
-const skills = [
-  { name: "Languages",        items: ["Python", "SQL", "Bash", "HTML/CSS", "Markdown"] },
-  { name: "ML & Data",        items: ["PyTorch", "scikit-learn", "pandas", "Polars", "NumPy", "fastembed", "ChromaDB"] },
-  { name: "NLP & Embeddings", items: ["HuggingFace Transformers", "sentence-transformers", "NLTK", "Vector Databases", "RAG"] },
-  { name: "Infrastructure",   items: ["PostgreSQL", "Snowflake", "Azure", "Docker", "Airflow", "dbt", "Linux", "Git", "CI/CD"] },
-  { name: "Design",           items: ["Figma", "Zeplin", "Wireframing", "Prototyping", "UX Research"] },
-];
 
 const dailyTools = [
   { name: "Cursor",      category: "IDE",           icon: "https://cdn.simpleicons.org/cursor/89c4e1",     color: "#89c4e1" },
@@ -20,7 +12,7 @@ const dailyTools = [
   { name: "Obsidian",    category: "PKM",           icon: "https://cdn.simpleicons.org/obsidian/a78bfa",   color: "#a78bfa" },
   { name: "Notion",      category: "Productivity",  icon: "https://cdn.simpleicons.org/notion/89c4e1",     color: "#89c4e1" },
   { name: "NotebookLM",  category: "Research",      icon: "https://cdn.simpleicons.org/google/4ade80",     color: "#4ade80" },
-  { name: "Canva",       category: "Design",        icon: "https://cdn.simpleicons.org/canva/00c4cc",      color: "#00c4cc" },
+  { name: "Canva",       category: "Design",        icon: "https://cdn.simpleicons.org/canva",             color: "#00c4cc" },
   { name: "Protonmail",  category: "Communication", icon: "https://cdn.simpleicons.org/protonmail/6d4aff", color: "#6d4aff" },
 ];
 
@@ -50,6 +42,15 @@ const resources = [
     date: "Feb 2026",
   },
   {
+    type: "Book",
+    title: "Designing Data-Intensive Applications",
+    author: "Martin Kleppmann · O'Reilly",
+    url: "https://www.oreilly.com/library/view/designing-data-intensive-applications/9781491903063/",
+    cover: "/book-ddia.jpg",
+    note: "Must-read for data operations. Covers the internals of databases, distributed systems, and data pipelines at the level where you actually understand the tradeoffs — not just which tool to pick but why. ACID, BASE, replication, partitioning, stream vs batch — all grounded in how real systems fail. The book that makes CAP theorem feel obvious in retrospect.",
+    date: "2017",
+  },
+  {
     type: "Paper",
     title: "Recursive Language Models",
     author: "Alex Zhang et al. · MIT",
@@ -58,6 +59,118 @@ const resources = [
     abstract: "We study allowing LLMs to process arbitrarily long prompts through inference-time scaling. Rather than feeding a giant context into the neural network directly, the prompt is stored as a plain-text variable in a Python environment and the model is given search tools to navigate it recursively — going deeper into relevant sections and back out, no summarisation, no lossy compression.",
     note: "The elegant bit is that the problem was never really about context windows — it was about treating the neural network as the *only* place information could live. Offload the text, give the model grep. Relevant to anything involving long docs, giant codebases, or vector DB retrieval strategies where you want the model to stay precise at scale rather than hallucinating under context rot.",
     date: "Jan 2026",
+  },
+];
+
+type SpecItem = {
+  label: string;
+  value: string;
+  image: string | null;
+  info?: { label: string; value: string }[];
+};
+
+const specs: SpecItem[] = [
+  {
+    label: "Laptop",
+    value: "ASUS VivoBook 15 OLED K513",
+    image: "/specs/laptop-asus.png",
+    info: [
+      { label: "Display",  value: "15.6\" OLED FHD · 60Hz · 600 nits · 100% DCI-P3 · 0.2ms" },
+      { label: "CPU",      value: "Intel Core i5/i7-1135G7/1165G7 · 4 cores · 11th Gen" },
+      { label: "GPU",      value: "Intel Iris Xᵉ + NVIDIA GeForce MX350" },
+      { label: "RAM",      value: "Up to 16GB DDR4 (4GB soldered + SO-DIMM)" },
+      { label: "Storage",  value: "Up to 1TB NVMe SSD" },
+      { label: "Battery",  value: "42Wh · ~9h browsing · 65W charger" },
+      { label: "Weight",   value: "1.80 kg · 35.9 × 23.5 × 1.79 cm" },
+      { label: "Ports",    value: "USB-C · USB-A ×3 · HDMI 1.4 · microSD · 3.5mm" },
+    ],
+  },
+  {
+    label: "OS",
+    value: "Linux Mint 22.3 Cinnamon",
+    image: "/specs/linux-mint.png",
+    info: [
+      { label: "Version",   value: "22.3 \"Zena\" · Cinnamon Edition" },
+      { label: "Base",      value: "Ubuntu 24.04 LTS · 64-bit" },
+      { label: "Kernel",    value: "Linux 6.8" },
+      { label: "Desktop",   value: "Cinnamon 6.4" },
+      { label: "ISO",       value: "2.9GB" },
+      { label: "License",   value: "Free & open source" },
+    ],
+  },
+  {
+    label: "Mouse & Keys",
+    value: "Logitech Pebble 2 Combo",
+    image: "https://resource.logitech.com/w_544,h_466,ar_7:6,c_pad,q_auto,f_auto,dpr_2.0/d_transparent.gif/content/dam/logitech/en/products/combos/pebble-2-combo/gallery/pebble-2-combo-top-tonal-white-gallery-deu.png",
+    info: [
+      { label: "Mouse",      value: "Pebble Mouse 2 M350s · 400–4000 DPI · silent clicks · 99.8g" },
+      { label: "Keyboard",   value: "Pebble Keys 2 K380s · compact · quiet keys" },
+      { label: "Connect",    value: "Bluetooth 5.1 + Logi Bolt USB receiver · 10m range" },
+      { label: "Devices",    value: "Easy-Switch · up to 3 paired devices" },
+      { label: "Battery",    value: "Mouse: 1× AA ~18mo · Keyboard: 2× AAA ~36mo" },
+      { label: "Compat",     value: "Windows · macOS · Linux · iPadOS · Android" },
+      { label: "Material",   value: "45%+ post-consumer recycled plastic" },
+    ],
+  },
+  {
+    label: "Monitor",
+    value: "Lenovo L27i-4A",
+    image: "https://p3-ofp.static.pub//fes/cms/2024/09/02/y7pmh7qtou9q8932h2lfhie4lifs7m408333.png?width=400&height=400",
+    info: [
+      { label: "Display",   value: "27\" IPS · FHD 1920×1080 · 16:9" },
+      { label: "Refresh",   value: "100Hz · 4ms GtG response" },
+      { label: "Brightness", value: "250 nits · 1000:1 contrast" },
+      { label: "Sync",      value: "AMD FreeSync" },
+      { label: "Ports",     value: "HDMI 1.4 · VGA · 3.5mm audio out" },
+      { label: "VESA",      value: "100 × 100mm · tilt adjustable" },
+    ],
+  },
+  {
+    label: "Headphones",
+    value: "JBL Tune 520BT · Blue",
+    image: "https://fi.jbl.com/dw/image/v2/BFND_PRD/on/demandware.static/-/Sites-masterCatalog_Harman/default/dwfb620202/01.JBL_Tune_520BT_ProductImage_Hero_Blue.png?sw=1605&sh=1605",
+    info: [
+      { label: "Driver",   value: "33mm · 20Hz–20kHz · 102dB · 30Ω" },
+      { label: "Battery",  value: "57h playtime · 2h charge · 5min → 3h quick charge" },
+      { label: "Bluetooth", value: "5.3 · 10m range · AAC + SBC · multipoint" },
+      { label: "Style",    value: "On-ear · 157g · USB-C charging" },
+      { label: "Extras",   value: "Built-in mic · hands-free · JBL app EQ" },
+    ],
+  },
+  {
+    label: "iPad",
+    value: "iPad Air 3 · Gold · 64GB",
+    image: "/specs/ipad.png",
+    info: [
+      { label: "Model",    value: "iPad Air 3rd Gen · March 2019" },
+      { label: "Display",  value: "10.5\" Retina · 2224×1668 · 264ppi" },
+      { label: "Chip",     value: "Apple A12 Bionic · 64-bit" },
+      { label: "Storage",  value: "64GB · Wi-Fi · no SIM" },
+      { label: "Camera",   value: "8MP rear · 7MP FaceTime · 4K video" },
+      { label: "Battery",  value: "~10h · Lightning · 30.8Wh" },
+      { label: "Source",   value: "Back Market (refurbished) · Gold" },
+    ],
+  },
+  {
+    label: "Chair",
+    value: "Cat Ear Gaming Chair · The Range",
+    image: "/specs/chair.png",
+    info: [
+      { label: "Style",    value: "Gaming chair with cat ears" },
+      { label: "Lumbar",   value: "Massage lumbar support cushion" },
+      { label: "Retailer", value: "The Range (UK)" },
+    ],
+  },
+  {
+    label: "Desk",
+    value: "IKEA LAGKAPTEN / ADILS",
+    image: "/specs/desk.png",
+    info: [
+      { label: "Model",  value: "LAGKAPTEN tabletop + ADILS legs" },
+      { label: "Size",   value: "140 × 60 cm" },
+      { label: "Color",  value: "White" },
+      { label: "Brand",  value: "IKEA" },
+    ],
   },
 ];
 
@@ -87,19 +200,11 @@ const typeColor: Record<string, { bg: string; text: string; border: string }> = 
 // ── Icon card ─────────────────────────────────────
 
 function IconCard({ tool }: { tool: typeof dailyTools[0] }) {
-  const pal = categoryColor[tool.category] ?? categoryColor["IDE"];
+  const pal = categoryColor[tool.category] ?? categoryColor["Learning"];
   return (
     <div
-      className="card"
-      style={{ padding: "1.25rem 0.75rem", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.75rem", textAlign: "center", transition: "transform 0.2s ease, box-shadow 0.2s ease", cursor: "default" }}
-      onMouseEnter={e => {
-        (e.currentTarget as HTMLDivElement).style.transform = "translateY(-4px)";
-        (e.currentTarget as HTMLDivElement).style.boxShadow = `0 8px 24px rgba(0,0,0,0.1), 0 0 0 1px ${tool.color}22`;
-      }}
-      onMouseLeave={e => {
-        (e.currentTarget as HTMLDivElement).style.transform = "translateY(0)";
-        (e.currentTarget as HTMLDivElement).style.boxShadow = "";
-      }}
+      className="card icon-card"
+      style={{ padding: "1.25rem 0.75rem", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.75rem", textAlign: "center", cursor: "default" }}
     >
       <div style={{ width: "2.5rem", height: "2.5rem", borderRadius: "0.75rem", background: `${tool.color}18`, border: `1px solid ${tool.color}30`, display: "flex", alignItems: "center", justifyContent: "center", padding: "0.5rem" }}>
         <img src={tool.icon} alt={tool.name} width={24} height={24} style={{ width: "1.5rem", height: "1.5rem", objectFit: "contain" }} onError={e => { (e.currentTarget as HTMLImageElement).style.display = "none"; }} />
@@ -122,28 +227,120 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   );
 }
 
-// ── Main component ────────────────────────────────
+// ── Spec card ─────────────────────────────────────
+
+function SpecCard({
+  spec,
+  onMouseMove,
+  onMouseLeave,
+}: {
+  spec: SpecItem;
+  onMouseMove?: (e: React.MouseEvent) => void;
+  onMouseLeave?: () => void;
+}) {
+  const empty = spec.value === "—";
+  return (
+    <div
+      className="card"
+      onMouseMove={spec.info ? onMouseMove : undefined}
+      onMouseLeave={spec.info ? onMouseLeave : undefined}
+      style={{ padding: 0, overflow: "hidden", display: "flex", flexDirection: "column", cursor: spec.info ? "default" : "default" }}
+    >
+      {/* Image area */}
+      <div style={{
+        aspectRatio: "4/3",
+        background: "linear-gradient(135deg, rgba(138,170,200,0.18) 0%, rgba(192,132,252,0.14) 50%, rgba(167,139,250,0.18) 100%)",
+        borderBottom: "1px solid var(--border)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        overflow: "hidden",
+        flexShrink: 0,
+        position: "relative",
+      }}>
+        {spec.image ? (
+          <img
+            src={spec.image}
+            alt={spec.label}
+            style={{ width: "100%", height: "100%", objectFit: "contain", padding: "0.75rem" }}
+          />
+        ) : (
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(137,196,225,0.2)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/>
+          </svg>
+        )}
+        {spec.info && (
+          <div style={{
+            position: "absolute",
+            bottom: "0.4rem",
+            right: "0.4rem",
+            width: "1.2rem",
+            height: "1.2rem",
+            borderRadius: "50%",
+            background: "rgba(137,196,225,0.15)",
+            border: "1px solid rgba(137,196,225,0.3)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="rgba(137,196,225,0.8)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>
+            </svg>
+          </div>
+        )}
+      </div>
+
+      {/* Info */}
+      <div style={{ padding: "0.625rem 0.75rem", display: "flex", flexDirection: "column", gap: "0.2rem" }}>
+        <p style={{ fontSize: "0.6rem", fontFamily: "var(--font-mono)", textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--text-dim)", margin: 0 }}>
+          {spec.label}
+        </p>
+        <p style={{ fontSize: "0.8125rem", fontWeight: empty ? 400 : 500, color: empty ? "var(--text-dim)" : "var(--text-primary)", margin: 0, lineHeight: 1.3 }}>
+          {spec.value}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+// ── Tabs ──────────────────────────────────────────
+
+type Tab = "Kit" | "Learning" | "Resources" | "Specs";
 
 const TABS: { id: Tab; label: string; icon: React.ReactNode }[] = [
-  { id: "Skills",    label: "Skills",    icon: <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.84A2.5 2.5 0 0 1 9.5 2"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.84A2.5 2.5 0 0 0 14.5 2"/></svg> },
-  { id: "Tools",     label: "Tools",     icon: <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg> },
-  { id: "Learning",  label: "Learning",  icon: <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg> },
-  { id: "Resources", label: "Resources", icon: <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/><path d="M8 10h8"/><path d="M8 14h6"/></svg> },
+  {
+    id: "Kit", label: "Kit",
+    icon: <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>,
+  },
+  {
+    id: "Learning", label: "Learning",
+    icon: <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>,
+  },
+  {
+    id: "Resources", label: "Resources",
+    icon: <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/><path d="M8 10h8"/><path d="M8 14h6"/></svg>,
+  },
+  {
+    id: "Specs", label: "Specs",
+    icon: <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="14" height="8" x="5" y="2" rx="2"/><rect width="20" height="8" x="2" y="14" rx="2"/><path d="M6 18h2"/><path d="M12 18h6"/></svg>,
+  },
 ];
-type Tab = "Skills" | "Tools" | "Learning" | "Resources";
 
-export default function TechStack() {
-  const [active, setActive] = useState<Tab>("Skills");
+// ── Main component ────────────────────────────────
+
+export default function Tools() {
+  const [active, setActive] = useState<Tab>("Kit");
   const [hoveredNote, setHoveredNote] = useState<{ i: number; x: number; y: number } | null>(null);
+  const [hoveredSpec, setHoveredSpec] = useState<{ spec: SpecItem; x: number; y: number } | null>(null);
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-6)" }}>
       <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-1)" }}>
         <h1 style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-            <IconTechStack />
-            Tech Stack
-          </h1>
-        <p style={{ fontSize: "0.875rem", color: "var(--text-muted)" }}>What I use to build and think.</p>
+          <IconTools />
+          Tools
+        </h1>
+        <p style={{ fontSize: "0.875rem", color: "var(--text-muted)" }}>What I learn from, build with, and sit in front of.</p>
       </div>
 
       {/* Tab bar */}
@@ -154,6 +351,7 @@ export default function TechStack() {
             <button
               key={id}
               onClick={() => setActive(id)}
+              className="tab-btn"
               style={{
                 padding: "0.35em 1em",
                 borderRadius: "9999px",
@@ -168,7 +366,6 @@ export default function TechStack() {
                 WebkitBackdropFilter: isActive ? "blur(8px)" : undefined,
                 boxShadow: isActive ? "0 0 10px rgba(147,197,253,0.08)" : undefined,
                 cursor: "pointer",
-                transition: "all 0.15s ease",
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "0.35rem",
@@ -180,24 +377,15 @@ export default function TechStack() {
         })}
       </div>
 
-      {/* Skills */}
-      {active === "Skills" && (
+      {/* Kit — daily tools */}
+      {active === "Kit" && (
         <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-4)" }}>
-          {skills.map(sec => (
-            <div key={sec.name}>
-              <SectionLabel>{sec.name}</SectionLabel>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
-                {sec.items.map(item => <Tag key={item}>{item}</Tag>)}
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-
-      {/* Tools (Kit) */}
-      {active === "Tools" && (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(8rem, 1fr))", gap: "0.75rem" }}>
-          {dailyTools.map(tool => <IconCard key={tool.name} tool={tool} />)}
+          <p style={{ fontSize: "0.8125rem", color: "var(--text-muted)", lineHeight: 1.6 }}>
+            The ones I use on a daily basis in work and study.
+          </p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(8rem, 1fr))", gap: "0.75rem" }}>
+            {dailyTools.map(tool => <IconCard key={tool.name} tool={tool} />)}
+          </div>
         </div>
       )}
 
@@ -213,13 +401,15 @@ export default function TechStack() {
           <div>
             <SectionLabel>Certifications</SectionLabel>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
-              {["Associate Data Engineer in SQL — DataCamp", "Data Engineer in Python — DataCamp", "CISA — Coursera", "NLP in Python — DataCamp", "IBM Data Engineering — Coursera", "Business Analysis in IT — Beetroot Academy"].map(item => <Tag key={item}>{item}</Tag>)}
+              {["Associate Data Engineer in SQL — DataCamp", "Data Engineer in Python — DataCamp", "CISA — Coursera", "NLP in Python — DataCamp", "IBM Data Engineering — Coursera", "Business Analysis in IT — Beetroot Academy"].map(item => (
+                <Tag key={item}>{item}</Tag>
+              ))}
             </div>
           </div>
           <div>
             <SectionLabel>Bootcamps</SectionLabel>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
-              {["Turing College — Data Science & AI (Apr 2026)"].map(item => <Tag key={item}>{item}</Tag>)}
+              <Tag>Turing College — Data Science &amp; AI (Apr 2026)</Tag>
             </div>
           </div>
           <div>
@@ -259,8 +449,34 @@ export default function TechStack() {
                   </div>
                 )}
 
+                {/* Book cover */}
+                {"cover" in r && r.cover && (
+                  <div style={{
+                    width: "100%",
+                    borderRadius: "0.75rem 0.75rem 0 0",
+                    background: "linear-gradient(160deg, rgba(14,40,90,0.15) 0%, rgba(7,20,60,0.22) 100%)",
+                    borderBottom: "1px solid rgba(137,196,225,0.15)",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    padding: "1.25rem 1rem",
+                    flexShrink: 0,
+                  }}>
+                    <img
+                      src={(r as { cover: string }).cover}
+                      alt={r.title}
+                      style={{
+                        width: "110px",
+                        borderRadius: "0.25rem",
+                        boxShadow: "0 8px 24px rgba(10,30,80,0.25), 0 2px 6px rgba(10,30,80,0.15)",
+                        display: "block",
+                      }}
+                    />
+                  </div>
+                )}
+
                 {/* Paper header */}
-                {!embedId && (
+                {!embedId && !("cover" in r && r.cover) && (
                   <div style={{
                     width: "100%",
                     borderRadius: "0.75rem 0.75rem 0 0",
@@ -302,6 +518,62 @@ export default function TechStack() {
               </div>
             );
           })}
+        </div>
+      )}
+
+      {/* Specs */}
+      {active === "Specs" && (
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "0.75rem" }}>
+          {specs.map(spec => (
+            <SpecCard
+              key={spec.label}
+              spec={spec}
+              onMouseMove={e => setHoveredSpec({ spec, x: e.clientX, y: e.clientY })}
+              onMouseLeave={() => setHoveredSpec(null)}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* Spec info popup */}
+      {hoveredSpec?.spec.info && (
+        <div style={{
+          position: "fixed",
+          left: hoveredSpec.x + 16,
+          top: hoveredSpec.y + 16,
+          width: "18rem",
+          zIndex: 9999,
+          pointerEvents: "none",
+          borderRadius: "0.6rem",
+          background: "linear-gradient(135deg, rgba(200,220,245,0.55) 0%, rgba(210,215,255,0.45) 50%, rgba(200,195,255,0.5) 100%)",
+          backdropFilter: "blur(28px) saturate(180%)",
+          WebkitBackdropFilter: "blur(28px) saturate(180%)",
+          border: "1px solid rgba(200,220,255,0.45)",
+          boxShadow: "0 8px 32px rgba(100,140,255,0.1), inset 0 1px 0 rgba(255,255,255,0.6)",
+          overflow: "hidden",
+        }}>
+          {/* Header */}
+          <div style={{ padding: "0.625rem 0.875rem 0.5rem", borderBottom: "1px solid rgba(137,196,225,0.2)", display: "flex", alignItems: "center", gap: "0.4rem" }}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="rgba(100,130,200,0.7)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect width="14" height="8" x="5" y="2" rx="2"/><rect width="20" height="8" x="2" y="14" rx="2"/><path d="M6 18h2"/><path d="M12 18h6"/>
+            </svg>
+            <span style={{ fontSize: "0.6rem", fontFamily: "var(--font-mono)", color: "rgba(80,110,180,0.8)", letterSpacing: "0.09em", textTransform: "uppercase" }}>
+              {hoveredSpec.spec.value}
+            </span>
+          </div>
+          {/* Rows */}
+          <div style={{ padding: "0.375rem 0" }}>
+            {hoveredSpec.spec.info.map((row, idx) => (
+              <div key={idx} style={{ display: "flex", gap: "0.75rem", padding: "0.3rem 0.875rem", alignItems: "baseline" }}>
+                <span style={{ fontSize: "0.58rem", fontFamily: "var(--font-mono)", color: "rgba(100,130,200,0.6)", textTransform: "uppercase", letterSpacing: "0.07em", flexShrink: 0, width: "4rem" }}>
+                  {row.label}
+                </span>
+                <span style={{ fontSize: "0.75rem", color: "rgba(30,40,80,0.85)", lineHeight: 1.45 }}>
+                  {row.value}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
       )}
 

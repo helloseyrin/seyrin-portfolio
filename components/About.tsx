@@ -25,7 +25,7 @@ export default function About() {
             fontSize: "0.8125rem",
             color: "var(--text-secondary)",
             fontStyle: "italic",
-            fontFamily: "'Fira Code', var(--font-mono)",
+            fontFamily: "var(--font-mono)",
             lineHeight: 1.6,
             maxWidth: "26rem",
           }}>

@@ -2,6 +2,28 @@
 
 import { useState } from "react";
 
+const inputStyle = {
+  width: "100%",
+  background: "rgba(255,255,255,0.45)",
+  border: "1px solid var(--border)",
+  borderRadius: "0.5rem",
+  padding: "0.6rem 0.875rem",
+  fontSize: "0.875rem",
+  color: "var(--text-primary)",
+  fontFamily: "var(--font-sans)",
+  outline: "none",
+} as React.CSSProperties;
+
+const labelBubbleStyle = {
+  alignSelf: "flex-start",
+  padding: "0.4em 0.85em",
+  borderRadius: "0 0.75rem 0.75rem 0.75rem",
+  background: "rgba(14, 60, 140, 0.08)",
+  border: "1px solid rgba(99, 170, 255, 0.2)",
+  fontSize: "0.8125rem",
+  color: "var(--text-secondary)",
+} as React.CSSProperties;
+
 export default function ContactForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -15,19 +37,6 @@ export default function ContactForm() {
     window.location.href = `mailto:smyrna.volzhevska@protonmail.com?subject=${subject}&body=${body}`;
     setSent(true);
   };
-
-  const inputStyle = {
-    width: "100%",
-    background: "rgba(255,255,255,0.45)",
-    border: "1px solid var(--border)",
-    borderRadius: "0.5rem",
-    padding: "0.6rem 0.875rem",
-    fontSize: "0.875rem",
-    color: "var(--text-primary)",
-    fontFamily: "var(--font-sans)",
-    outline: "none",
-    transition: "border-color 0.15s",
-  } as React.CSSProperties;
 
   return (
     <div style={{
@@ -69,99 +78,66 @@ export default function ContactForm() {
 
           {/* Name */}
           <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-            <div style={{
-              alignSelf: "flex-start",
-              padding: "0.4em 0.85em",
-              borderRadius: "0 0.75rem 0.75rem 0.75rem",
-              background: "rgba(14, 60, 140, 0.08)",
-              border: "1px solid rgba(99, 170, 255, 0.2)",
-              fontSize: "0.8125rem",
-              color: "var(--text-secondary)",
-            }}>
-              What&apos;s your name?
-            </div>
+            <div style={labelBubbleStyle}>What&apos;s your name?</div>
             <input
               type="text"
               placeholder="Full name"
               value={name}
               required
               onChange={e => setName(e.target.value)}
+              className="form-input"
               style={inputStyle}
-              onFocus={e => (e.currentTarget.style.borderColor = "rgba(99, 170, 255, 0.5)")}
-              onBlur={e => (e.currentTarget.style.borderColor = "var(--border)")}
             />
           </div>
 
           {/* Email */}
           <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-            <div style={{
-              alignSelf: "flex-start",
-              padding: "0.4em 0.85em",
-              borderRadius: "0 0.75rem 0.75rem 0.75rem",
-              background: "rgba(14, 60, 140, 0.08)",
-              border: "1px solid rgba(99, 170, 255, 0.2)",
-              fontSize: "0.8125rem",
-              color: "var(--text-secondary)",
-            }}>
-              And your email?
-            </div>
+            <div style={labelBubbleStyle}>And your email?</div>
             <input
               type="email"
               placeholder="email@example.com"
               value={email}
               required
               onChange={e => setEmail(e.target.value)}
+              className="form-input"
               style={inputStyle}
-              onFocus={e => (e.currentTarget.style.borderColor = "rgba(99, 170, 255, 0.5)")}
-              onBlur={e => (e.currentTarget.style.borderColor = "var(--border)")}
             />
           </div>
 
           {/* Message */}
           <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-            <div style={{
-              alignSelf: "flex-start",
-              padding: "0.4em 0.85em",
-              borderRadius: "0 0.75rem 0.75rem 0.75rem",
-              background: "rgba(14, 60, 140, 0.08)",
-              border: "1px solid rgba(99, 170, 255, 0.2)",
-              fontSize: "0.8125rem",
-              color: "var(--text-secondary)",
-            }}>
-              How can I help?
-            </div>
+            <div style={labelBubbleStyle}>How can I help?</div>
             <textarea
               placeholder="Tell me what you have in mind..."
               value={message}
               required
               rows={4}
               onChange={e => setMessage(e.target.value)}
+              className="form-input"
               style={{ ...inputStyle, resize: "vertical", lineHeight: 1.6 }}
-              onFocus={e => (e.currentTarget.style.borderColor = "rgba(99, 170, 255, 0.5)")}
-              onBlur={e => (e.currentTarget.style.borderColor = "var(--border)")}
             />
           </div>
 
           {/* Send */}
-          <button type="submit" style={{
-            alignSelf: "flex-end",
-            display: "flex",
-            alignItems: "center",
-            gap: "0.4rem",
-            padding: "0.5rem 1.1rem",
-            borderRadius: "9999px",
-            border: "1px solid rgba(99, 170, 255, 0.4)",
-            background: "linear-gradient(135deg, rgba(14, 60, 140, 0.15) 0%, rgba(7, 30, 90, 0.22) 100%)",
-            backdropFilter: "blur(8px)",
-            color: "#2563eb",
-            fontSize: "0.875rem",
-            fontFamily: "var(--font-sans)",
-            fontWeight: 500,
-            cursor: "pointer",
-            transition: "all 0.15s ease",
-          }}
-            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.boxShadow = "0 0 12px rgba(147, 197, 253, 0.15)"; }}
-            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.boxShadow = "none"; }}
+          <button
+            type="submit"
+            className="form-submit"
+            style={{
+              alignSelf: "flex-end",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.4rem",
+              padding: "0.5rem 1.1rem",
+              borderRadius: "9999px",
+              border: "1px solid rgba(99, 170, 255, 0.4)",
+              background: "linear-gradient(135deg, rgba(14, 60, 140, 0.15) 0%, rgba(7, 30, 90, 0.22) 100%)",
+              backdropFilter: "blur(8px)",
+              color: "#2563eb",
+              fontSize: "0.875rem",
+              fontFamily: "var(--font-sans)",
+              fontWeight: 500,
+              cursor: "pointer",
+            }}
           >
             Send
             <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
