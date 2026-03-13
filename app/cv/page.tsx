@@ -486,10 +486,6 @@ export default function CVPage() {
               <div className="skill-category">English</div>
               <div className="skill-items">Full professional proficiency (C1/C2)</div>
             </div>
-            <div style={{ display: "contents" }}>
-              <div className="skill-category">Finnish</div>
-              <div className="skill-items">Elementary (A2, ongoing)</div>
-            </div>
           </div>
         </div>
 

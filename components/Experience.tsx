@@ -61,7 +61,17 @@ export default function Experience() {
             <IconExperience />
             Experience
           </h1>
-          <p style={{ fontSize: "0.875rem", color: "var(--text-muted)" }}>Work history and roles.</p>
+          <p style={{ fontSize: "0.875rem", color: "var(--text-muted)" }}>
+            Work history and roles. &nbsp;
+            <a
+              href="/cv"
+              style={{ color: "var(--text-dim)", fontFamily: "var(--font-mono)", fontSize: "0.8rem", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.25rem" }}
+              className="about-link"
+            >
+              view as CV
+              <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
+            </a>
+          </p>
         </div>
 
         <div ref={containerRef} style={{ position: "relative", display: "flex", flexDirection: "column", gap: "0" }}>
