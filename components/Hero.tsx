@@ -186,6 +186,7 @@ export default function Hero() {
             "ELT pipelines",
             "Recursive Language Models",
             "Knowledge Graphs",
+            "SBOM Analysis",
             "CI/CD",
           ].map(item => (
             <span key={item} style={{
