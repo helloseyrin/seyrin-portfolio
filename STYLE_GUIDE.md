@@ -117,16 +117,6 @@ background-position: 0 100%;
 /* hover: background-size: 100% 1.5px, 100%; */
 ```
 
-### Code Tag — `.tag`
-
-Dark navy background, teal text. Used for inline `<code>`-style tags in content.
-
-```css
-background: linear-gradient(135deg, #0f1e3a 0%, #0a2a4a 60%, #0d3060 100%);
-color: #7ecfef;
-border: 1px solid #1a4a7a;
-```
-
 ### Section Header Icons — `GradientIcon.tsx`
 
 Phosphor Icons (`@phosphor-icons/react`) with `weight="duotone"`, filled via an inline SVG `linearGradient` (blue→lavender). All Phosphor imports are isolated inside this single `"use client"` file — server components import only the named exports.
