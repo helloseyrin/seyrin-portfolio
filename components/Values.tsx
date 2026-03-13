@@ -89,7 +89,19 @@ function PrincipleChip({ abbr, term, def, color }: { abbr: string; term: string;
 const values = [
   {
     title: "Responsible Design & Development",
-    body: "Technology shapes behaviour at scale. Every design choice carries moral weight — I build with that in mind.",
+    body: "Integrating sustainability, inclusivity, and social responsibility into the full lifecycle of what you build — accounting for downstream effects on people and the planet, not just the immediate deliverable. I avoid technologies and patterns that extract value at the expense of communities or the environment, and favour longevity and modularity over disposability.",
+  },
+  {
+    title: "Design for Longevity",
+    body: "In software, longevity means writing systems and interfaces that outlast their original authors — maintainable, documented, built on open standards rather than proprietary lock-in. The opposite of throwaway code. I favour solutions that can be understood, modified, and extended by whoever inherits them.",
+  },
+  {
+    title: "Right to Repair",
+    body: "Users and independent technicians should have the legal right and practical ability to repair the devices and software they own — with access to parts, documentation, and tools. Manufacturer-enforced obsolescence through repair restriction is both an environmental and a justice issue.",
+  },
+  {
+    title: "Against Planned Obsolescence",
+    body: "Deliberately designing products to fail, degrade, or become incompatible is an extraction strategy — extracting money, extracting materials, and externalising the environmental cost onto everyone else. In software it shows up as forced upgrades, dropped support for functional hardware, and dark patterns that push users toward paid tiers.",
   },
   {
     title: "Digital Sovereignty",
