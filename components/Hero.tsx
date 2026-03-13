@@ -6,33 +6,7 @@ import ContactForm from "./ContactForm";
 import Editable from "./Editable";
 import { useEdit } from "@/contexts/EditContext";
 import { statusStyle } from "@/lib/constants";
-
-const featured = [
-  {
-    title: "Anima Mundi // Obsidian PKM",
-    desc: "Self-organising PKM with semantic search across articles, videos, PDFs, and repos.",
-    status: "Active",
-    cover: "/project-anima-mundi.jpg",
-    coverPosition: "center 40%",
-    href: "#",
-  },
-  {
-    title: "Lexis // Text Classifier",
-    desc: "Fine-tuned transformer pipeline for multi-label document classification.",
-    status: "In progress",
-    cover: "/cover-aero.jpg",
-    coverPosition: "center 60%",
-    href: "/projects",
-  },
-  {
-    title: "Strata // Data Pipeline",
-    desc: "Modular ELT pipeline with schema inference, lineage tracking, and incremental loading.",
-    status: "In progress",
-    cover: "/cover-flow.jpg",
-    coverPosition: "center 40%",
-    href: "/projects",
-  },
-];
+import { featuredProjects } from "@/lib/projects";
 
 export default function Hero() {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -335,7 +309,7 @@ export default function Hero() {
             scrollbarWidth: "none",
             paddingBottom: "0.25rem",
           }}>
-            {featured.map((p) => {
+            {featuredProjects.map((p) => {
               const s = statusStyle[p.status] ?? statusStyle["In progress"];
               return (
                 <a
