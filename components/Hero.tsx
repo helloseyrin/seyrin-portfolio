@@ -84,9 +84,8 @@ export default function Hero() {
 
         {/* H1 + H2 + meta row */}
         <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-          <h1 style={{ fontSize: "3rem", fontWeight: 500, lineHeight: 1.1, display: "flex", alignItems: "center", gap: "0.5rem", animation: "fade-down 0.45s ease both" }}>
+          <h1 style={{ fontSize: "3rem", fontWeight: 500, lineHeight: 1.1, animation: "fade-down 0.45s ease both" }}>
             Smyrna V.
-            <img src="/wave.gif" alt="wave" style={{ width: "2.75rem", height: "2.75rem", verticalAlign: "middle", imageRendering: "auto", filter: "blur(0.4px) contrast(1.05)", willChange: "transform" }} />
           </h1>
           <h2 style={{ fontSize: "2.25rem", fontWeight: 400, lineHeight: 1.2, animation: "fade-down 0.45s 0.08s ease both", background: "linear-gradient(90deg, var(--text-muted) 0%, #8aaac8 60%, #a78bfa 100%)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>
             <Editable file="hero" path="subtitle" tag="span" />
