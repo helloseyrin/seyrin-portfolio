@@ -174,7 +174,7 @@ function LinkedTag({ skill }: { skill: string }) {
   const sources = skillSources[skill];
   const [pos, setPos] = useState<{ x: number; y: number } | null>(null);
 
-  if (!sources?.length) return <span className="tag-pill tag-pill-gradient">{skill}</span>;
+  if (!sources?.length) return <Tag>{skill}</Tag>;
 
   const certs      = sources.filter((s): s is CertSource       => s.kind === "cert");
   const experience = sources.filter((s): s is ExperienceSource => s.kind === "experience");
@@ -183,7 +183,7 @@ function LinkedTag({ skill }: { skill: string }) {
   return (
     <>
       <span
-        className="tag-pill tag-pill-gradient"
+        className="tag-pill"
         onMouseMove={e => setPos({ x: e.clientX, y: e.clientY })}
         onMouseLeave={() => setPos(null)}
         style={{ cursor: "default", display: "inline-flex", alignItems: "center", gap: "0.3em" }}
@@ -299,20 +299,7 @@ export default function Skills() {
       <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
         {skills.map(sec => (
           <div key={sec.name} className="card" style={{ padding: "var(--space-2) var(--space-3)" }}>
-            <p style={{
-              fontSize: "0.6rem",
-              textTransform: "uppercase",
-              letterSpacing: "0.12em",
-              fontFamily: "var(--font-mono)",
-              marginBottom: "0.75rem",
-              background: "linear-gradient(90deg, var(--accent-purple), var(--accent-emerald), var(--accent-teal))",
-              WebkitBackgroundClip: "text",
-              backgroundClip: "text",
-              color: "transparent",
-              display: "inline-block",
-            }}>
-              {sec.name}
-            </p>
+            <p className="skill-group-label">{sec.name}</p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
               {sec.items.map(item => <LinkedTag key={item} skill={item} />)}
             </div>

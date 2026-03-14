@@ -454,20 +454,19 @@ body[data-page="cv"] footer { display: none !important; }
   background-clip: text;
 }
 
-/* ── Skill tag — gradient text by default ───────── */
-.tag-pill-gradient {
-  background: linear-gradient(135deg, var(--accent-purple), var(--accent-emerald), var(--accent-teal));
+/* ── Skill group label — gradient heading ────────── */
+.skill-group-label {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  margin-bottom: 0.75rem;
+  display: inline-block;
+  background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-ice) 75%, var(--accent-teal) 100%);
   -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   background-clip: text;
-  color: transparent;
-  border-color: rgba(var(--accent-purple-rgb), 0.2);
-}
-.tag-pill-gradient:hover {
-  background: var(--gradient-accent);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  border-color: rgba(var(--accent-ice-rgb), 0.5);
 }
 
 /* ── Entry back link ─────────────────────────────── */
