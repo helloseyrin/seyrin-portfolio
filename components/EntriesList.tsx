@@ -68,7 +68,7 @@ function EntryCard({ entry }: { entry: EntryMeta }) {
                 textTransform: "uppercase",
                 userSelect: "none",
               }}>
-                {entry.tags[0] ?? "entry"}
+                {entry.coverWord ?? entry.tags[0] ?? "entry"}
               </span>
             </div>
           )}

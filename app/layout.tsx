@@ -21,6 +21,7 @@ const firaCode = Fira_Code({
   weight: ["400", "500"],
 });
 
+
 export const metadata: Metadata = {
   title: "Smyrna V. | Knowledge Engineering",
   description: "Personal portfolio — Knowledge Engineering, unstructured data, AI tooling.",

@@ -13,6 +13,7 @@ export type EntryMeta = {
   readingTime: number;
   draft: boolean;
   cover?: string;
+  coverWord?: string;
 };
 
 export type Entry = EntryMeta & {
@@ -38,6 +39,7 @@ export function getAllEntries(): EntryMeta[] {
         readingTime: data.readingTime ?? 5,
         draft: data.draft ?? false,
         cover: data.cover ?? undefined,
+        coverWord: data.coverWord ?? undefined,
       } satisfies EntryMeta;
     })
     .filter((e) => !e.draft)
@@ -60,6 +62,7 @@ export function getEntry(slug: string): Entry | null {
     readingTime: data.readingTime ?? 5,
     draft: data.draft ?? false,
     cover: data.cover ?? undefined,
+    coverWord: data.coverWord ?? undefined,
     content,
   };
 }
