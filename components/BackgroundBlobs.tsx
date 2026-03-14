@@ -9,7 +9,7 @@ export default function BackgroundBlobs() {
       pointerEvents: "none",
       overflow: "hidden",
     }}>
-      {/* Blob 1 — electric blue, upper right — sampled from Anima Mundi mid-tones */}
+      {/* Blob 1 — electric blue, upper right */}
       <div style={{
         position: "absolute",
         top: "-12rem",
@@ -20,7 +20,7 @@ export default function BackgroundBlobs() {
         background: "radial-gradient(circle, #1d6fa4 0%, #0a3d6b 40%, transparent 70%)",
         opacity: 0.28,
         filter: "blur(60px)",
-        animation: "blob-1 24s ease-in-out infinite",
+        animation: "blob-1 28s ease-in-out infinite",
       }} />
       {/* Blob 2 — deep indigo, lower left */}
       <div style={{
@@ -33,7 +33,7 @@ export default function BackgroundBlobs() {
         background: "radial-gradient(circle, #1a4fa8 0%, #0d2860 40%, transparent 70%)",
         opacity: 0.22,
         filter: "blur(70px)",
-        animation: "blob-2 30s ease-in-out infinite",
+        animation: "blob-2 34s ease-in-out infinite",
       }} />
       {/* Blob 3 — cyan glow, centre */}
       <div style={{
@@ -46,7 +46,7 @@ export default function BackgroundBlobs() {
         background: "radial-gradient(circle, #0ea5e9 0%, #0369a1 35%, transparent 70%)",
         opacity: 0.14,
         filter: "blur(55px)",
-        animation: "blob-3 19s ease-in-out infinite",
+        animation: "blob-3 22s ease-in-out infinite",
       }} />
       {/* Blob 4 — periwinkle accent, upper left */}
       <div style={{

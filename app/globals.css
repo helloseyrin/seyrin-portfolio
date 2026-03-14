@@ -153,20 +153,31 @@ code, pre {
   animation: blink 530ms step-end infinite;
 }
 
-/* ── Blob drift animations ───────────────────────────── */
+/* ── Blob nebula animations ──────────────────────────── */
 @keyframes blob-1 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33%       { transform: translate(40px, -30px) scale(1.06); }
-  66%       { transform: translate(-20px, 20px) scale(0.96); }
+  0%   { transform: translate(0,     0)      scale(1)    ; border-radius: 50%; }
+  18%  { transform: translate(90px, -70px)   scale(1.12) ; border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%; }
+  36%  { transform: translate(160px, 40px)   scale(0.92) ; border-radius: 45% 55% 40% 60% / 55% 45% 60% 40%; }
+  54%  { transform: translate(60px,  120px)  scale(1.08) ; border-radius: 55% 45% 65% 35% / 40% 60% 45% 55%; }
+  72%  { transform: translate(-80px, 60px)   scale(1.04) ; border-radius: 40% 60% 50% 50% / 60% 40% 55% 45%; }
+  88%  { transform: translate(-40px, -30px)  scale(0.97) ; border-radius: 52% 48% 44% 56% / 48% 52% 58% 42%; }
+  100% { transform: translate(0,     0)      scale(1)    ; border-radius: 50%; }
 }
 @keyframes blob-2 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  40%       { transform: translate(-50px, 35px) scale(1.08); }
-  70%       { transform: translate(30px, -20px) scale(0.94); }
+  0%   { transform: translate(0,      0)      scale(1)    ; border-radius: 50%; }
+  22%  { transform: translate(-110px, 80px)   scale(1.14) ; border-radius: 55% 45% 60% 40% / 45% 55% 40% 60%; }
+  44%  { transform: translate(-60px, -90px)   scale(0.90) ; border-radius: 40% 60% 45% 55% / 60% 40% 55% 45%; }
+  60%  { transform: translate(80px,  -50px)   scale(1.06) ; border-radius: 62% 38% 50% 50% / 50% 50% 38% 62%; }
+  78%  { transform: translate(100px,  70px)   scale(1.10) ; border-radius: 45% 55% 55% 45% / 55% 45% 45% 55%; }
+  90%  { transform: translate(20px,   30px)   scale(0.96) ; border-radius: 50% 50% 42% 58% / 58% 42% 50% 50%; }
+  100% { transform: translate(0,      0)      scale(1)    ; border-radius: 50%; }
 }
 @keyframes blob-3 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  50%       { transform: translate(25px, 45px) scale(1.04); }
+  0%   { transform: translate(0,    0)      scale(1)    ; border-radius: 50%; }
+  25%  { transform: translate(70px, -80px)  scale(1.18) ; border-radius: 58% 42% 50% 50% / 42% 58% 50% 50%; }
+  50%  { transform: translate(-50px, 60px)  scale(0.88) ; border-radius: 44% 56% 60% 40% / 56% 44% 40% 60%; }
+  75%  { transform: translate(-90px,-40px)  scale(1.09) ; border-radius: 50% 50% 44% 56% / 60% 40% 56% 44%; }
+  100% { transform: translate(0,    0)      scale(1)    ; border-radius: 50%; }
 }
 
 /* ── Sidebar border shimmer ──────────────────────────── */
