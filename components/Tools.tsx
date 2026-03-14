@@ -1037,7 +1037,7 @@ export default function Tools() {
               fontSize: "0.775rem",
               color: "var(--text-secondary)",
               lineHeight: 1.65,
-              fontFamily: "var(--font-sans)",
+              fontFamily: "var(--font-fira-code), \"Fira Code\", monospace",
             }}>
               {localResources.find(r => r.id === hoveredId.id)!.note}
             </div>

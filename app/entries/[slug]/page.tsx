@@ -2,6 +2,7 @@ import { getEntry, getAllEntries } from "@/lib/entries";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import Link from "next/link";
 import Tag from "@/components/Tag";
+import NotebookBody from "@/components/NotebookBody";
 import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
@@ -110,10 +111,9 @@ export default async function EntryPage({ params }: { params: Promise<{ slug: st
           <span style={{ marginLeft: "auto", opacity: 0.5 }}>// personal notes</span>
         </div>
 
-        {/* Ruled prose area */}
-        <div className="entry-prose">
+        <NotebookBody>
           <MDXRemote source={entry.content} />
-        </div>
+        </NotebookBody>
       </div>
     </article>
   );
