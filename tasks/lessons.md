@@ -26,18 +26,18 @@
 ## Content
 
 ### C001 — Values: OpenAI objection is specific, not a blanket anti-proprietary stance
-- User uses Anthropic (proprietary) consciously because of genocide non-compliance
+- I use Anthropic (proprietary) consciously because of genocide non-compliance
 - The OpenAI objection is specifically about #QuitGPT movement and documented harm compliance
 - Keep these as TWO separate value cards, not conflated into one callout
 
 ### C002 — Rename Experience → Stack
-- User doesn't have formal work experience, framing as "Stack" + CV history is more accurate
+- Section is framed as "Stack" rather than "Experience" — skills, tools, and CV history over a traditional employment timeline
 
 ### C003 — Tools section is a first-class nav item
 - Separate from projects, shows languages/ML/NLP/infra/workflow categories
 
 ### C004 — Never add content that wasn't asked for
-- Do NOT add explanatory text, callout boxes, or editorial opinions to user-authored content
-- Do NOT expand or rephrase the user's original wording
+- Do NOT add explanatory text, callout boxes, or editorial opinions to my content
+- Do NOT expand or rephrase my original wording
 - Only modify content when explicitly instructed to
 - Hyperlinks to definitions: add only when asked, not proactively

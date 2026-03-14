@@ -9,7 +9,7 @@
 ## Features
 - [ ] Hook up contact form to a real backend (Notion Forms, Formspree, or similar)
 - [ ] Add real cover image for Anima Mundi project card (currently using a gradient placeholder)
-- [ ] Populate Tools → Resources tab with actual blogs / papers you follow
+- [ ] Populate Tools → Resources tab with actual blogs / papers I follow
 
 ## Polish
 - [ ] Values page — review and personalise copy

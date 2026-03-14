@@ -6,8 +6,8 @@
       "title": "The most beautiful formula not enough people understand",
       "author": "3Blue1Brown",
       "url": "https://www.youtube.com/watch?v=fsLh-NYhOoU",
-      "note": "Got me thinking about hyperdimensional spaces at the right level to reason about vector databases at scale — specifically the 21:14 section on Why 4πr². I couldn't do the maths but the intuition was directly applicable.",
-      "date": "Mar 2026"
+      "date": "Mar 2026",
+      "note": "I was struggling with conceptual understanding of HNSW and ANN search, so went down the rabbit hole of trying to get at least conceptual understanding of high dimensional spaces and how the map on vector databases and fast similarity queries at scale when I was planning embedding strategy for my Anima Mundi project. While I'm not a mathematician, this video helped my understand why the LLM must reason over retrieved text rather than trust distances alone and why I should not trust plain geometry to distinguish relevance."
     },
     {
       "id": "linux-mint",
@@ -15,8 +15,18 @@
       "title": "Linux Mint Cinnamon — why it might be the best desktop",
       "author": "YouTube",
       "url": "https://youtu.be/z4iSZetVkRg",
-      "note": "Switched to Linux Mint Cinnamon on Feb 27 after a Windows update fried itself and its own bootloader — got sick of it the same day and just installed this instead. Two weeks in: my 2020 mid-grade laptop is visibly happier, I customised it to look better than Windows ever did, and it didn't cost €200 for a license key Microsoft might invalidate in three years.",
-      "date": "Feb 2026"
+      "date": "Feb 2026",
+      "note": "Switched to Linux after an infamous Windows February update bricked my laptop — got sick of Microsoft shenanigans and in the same day and just went ahead and installed Linux Mint Cinnamon. Three weeks in: my 2020 mid-grade laptop is visibly happier, I customized it to look better than Windows ever did, and it didn't cost €200 for a license key Microsoft might invalidate in three years."
+    },
+    {
+      "id": "ddia",
+      "type": "Book",
+      "title": "Designing Data-Intensive Applications",
+      "author": "Martin Kleppmann · O'Reilly",
+      "url": "https://www.oreilly.com/library/view/designing-data-intensive-applications/9781491903063/",
+      "date": "2017",
+      "note": "Must-read for data operations. It’s a clandestine textbook on how to build a living, breathing \"thinking engine\" by solving the wrong data problems first. Covers the internals of databases, distributed systems, and data pipelines. Kleppmann introduces the concept of the immutable event log as the primary source of truth. This is the holy grail for Knowledge Engineering: schema-less evolution and infinitely reusable knowledge.",
+      "cover": "/book-ddia.jpg"
     },
     {
       "id": "rlm-paper",
@@ -24,10 +34,10 @@
       "title": "Recursive Language Models",
       "author": "Alex Zhang et al. · MIT",
       "url": "https://arxiv.org/pdf/2512.24601",
+      "date": "Jan 2026",
+      "note": "This paper reframes long-context processing as a systems architecture problem rather than a model capacity problem. The core insight is \"context rot\": even within a model's stated context window, performance degrades as input length increases because attention dilutes . The RLM solution treats the prompt as an external Python environment variable rather than forcing it into the model's context window. The model writes code to probe, filter, and recursively call itself on relevant snippets only . For my project, this addresses the \"whole file vs. chunks\" dilemma: instead of pre-chunking large PDFs and hoping the LLM reassembles context, RLM lets the model decide what to fetch and when. The 10M+ token results  suggest this is how I should architect processing for book-length texts and document archives in Anima Mundi.",
       "codeUrl": "https://alexzhang13.github.io/blog/2025/rlm/",
-      "abstract": "We study allowing LLMs to process arbitrarily long prompts through inference-time scaling. Rather than feeding a giant context into the neural network directly, the prompt is stored as a plain-text variable in a Python environment and the model is given search tools to navigate it recursively — going deeper into relevant sections and back out, no summarisation, no lossy compression.",
-      "note": "The elegant bit is that the problem was never really about context windows — it was about treating the neural network as the *only* place information could live. Offload the text, give the model grep. Relevant to anything involving long docs, giant codebases, or vector DB retrieval strategies where you want the model to stay precise at scale rather than hallucinating under context rot.",
-      "date": "Jan 2026"
+      "abstract": "We study allowing LLMs to process arbitrarily long prompts through inference-time scaling. Rather than feeding a giant context into the neural network directly, the prompt is stored as a plain-text variable in a Python environment and the model is given search tools to navigate it recursively — going deeper into relevant sections and back out, no summarisation, no lossy compression."
     }
   ]
 }

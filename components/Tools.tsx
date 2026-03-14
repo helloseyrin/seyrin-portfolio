@@ -3,8 +3,38 @@
 import { useState } from "react";
 import Tag from "./Tag";
 import { IconTools } from "./GradientIcon";
+import { useEdit } from "@/contexts/EditContext";
 
-// ── Data ─────────────────────────────────────────
+// ── Types ─────────────────────────────────────────
+
+type ResourceType = "Video" | "Paper" | "Book" | "Article";
+
+type Resource = {
+  id: string;
+  type: ResourceType;
+  title: string;
+  author: string;
+  url: string;
+  note?: string;
+  date: string;
+  codeUrl?: string;
+  abstract?: string;
+  cover?: string;
+};
+
+type ResourceForm = {
+  type: ResourceType;
+  title: string;
+  author: string;
+  url: string;
+  note: string;
+  date: string;
+  codeUrl: string;
+  abstract: string;
+  cover: string;
+};
+
+// ── Static data ───────────────────────────────────
 
 const dailyTools = [
   { name: "Cursor",      category: "IDE",           icon: "https://cdn.simpleicons.org/cursor/89c4e1",     color: "#89c4e1" },
@@ -12,7 +42,7 @@ const dailyTools = [
   { name: "Obsidian",    category: "PKM",           icon: "https://cdn.simpleicons.org/obsidian/a78bfa",   color: "#a78bfa" },
   { name: "Notion",      category: "Productivity",  icon: "https://cdn.simpleicons.org/notion/89c4e1",     color: "#89c4e1" },
   { name: "NotebookLM",  category: "Research",      icon: "https://cdn.simpleicons.org/google/4ade80",     color: "#4ade80" },
-  { name: "Canva",       category: "Design",        icon: "https://cdn.simpleicons.org/canva",             color: "#00c4cc" },
+  { name: "Canva",       category: "Design",        icon: "https://cdn.simpleicons.org/canva/00c4cc",      color: "#00c4cc" },
   { name: "Protonmail",  category: "Communication", icon: "https://cdn.simpleicons.org/protonmail/6d4aff", color: "#6d4aff" },
 ];
 
@@ -22,44 +52,7 @@ const learningPlatforms = [
   { name: "Anthropic Academy", category: "AI",       icon: "https://cdn.simpleicons.org/anthropic/c084fc",   color: "#c084fc" },
   { name: "Scrimba",           category: "Coding",   icon: "https://cdn.simpleicons.org/scrimba/f4a261",     color: "#f4a261" },
   { name: "Khan Academy",      category: "Learning", icon: "https://cdn.simpleicons.org/khanacademy/14bf96", color: "#14bf96" },
-];
-
-const resources = [
-  {
-    type: "Video",
-    title: "The most beautiful formula not enough people understand",
-    author: "3Blue1Brown",
-    url: "https://www.youtube.com/watch?v=fsLh-NYhOoU",
-    note: "Got me thinking about hyperdimensional spaces at the right level to reason about vector databases at scale — specifically the 21:14 section on Why 4πr². I couldn't do the maths but the intuition was directly applicable.",
-    date: "Mar 2026",
-  },
-  {
-    type: "Video",
-    title: "Linux Mint Cinnamon — why it might be the best desktop",
-    author: "YouTube",
-    url: "https://youtu.be/z4iSZetVkRg",
-    note: "Switched to Linux Mint Cinnamon on Feb 27 after a Windows update fried itself and its own bootloader — got sick of it the same day and just installed this instead. Two weeks in: my 2020 mid-grade laptop is visibly happier, I customised it to look better than Windows ever did, and it didn't cost €200 for a license key Microsoft might invalidate in three years.",
-    date: "Feb 2026",
-  },
-  {
-    type: "Book",
-    title: "Designing Data-Intensive Applications",
-    author: "Martin Kleppmann · O'Reilly",
-    url: "https://www.oreilly.com/library/view/designing-data-intensive-applications/9781491903063/",
-    cover: "/book-ddia.jpg",
-    note: "Must-read for data operations. Covers the internals of databases, distributed systems, and data pipelines at the level where you actually understand the tradeoffs — not just which tool to pick but why. ACID, BASE, replication, partitioning, stream vs batch — all grounded in how real systems fail. The book that makes CAP theorem feel obvious in retrospect.",
-    date: "2017",
-  },
-  {
-    type: "Paper",
-    title: "Recursive Language Models",
-    author: "Alex Zhang et al. · MIT",
-    url: "https://arxiv.org/pdf/2512.24601",
-    codeUrl: "https://alexzhang13.github.io/blog/2025/rlm/",
-    abstract: "We study allowing LLMs to process arbitrarily long prompts through inference-time scaling. Rather than feeding a giant context into the neural network directly, the prompt is stored as a plain-text variable in a Python environment and the model is given search tools to navigate it recursively — going deeper into relevant sections and back out, no summarisation, no lossy compression.",
-    note: "The elegant bit is that the problem was never really about context windows — it was about treating the neural network as the *only* place information could live. Offload the text, give the model grep. Relevant to anything involving long docs, giant codebases, or vector DB retrieval strategies where you want the model to stay precise at scale rather than hallucinating under context rot.",
-    date: "Jan 2026",
-  },
+  { name: "MIT OpenLearning",  category: "Courses",  icon: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23c084fc' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z'/%3E%3Cpath d='M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z'/%3E%3C/svg%3E", color: "#c084fc" },
 ];
 
 type SpecItem = {
@@ -246,7 +239,6 @@ function SpecCard({
       onMouseLeave={spec.info ? onMouseLeave : undefined}
       style={{ padding: 0, overflow: "hidden", display: "flex", flexDirection: "column", cursor: spec.info ? "default" : "default" }}
     >
-      {/* Image area */}
       <div style={{
         aspectRatio: "4/3",
         background: "linear-gradient(135deg, rgba(138,170,200,0.18) 0%, rgba(192,132,252,0.14) 50%, rgba(167,139,250,0.18) 100%)",
@@ -289,8 +281,6 @@ function SpecCard({
           </div>
         )}
       </div>
-
-      {/* Info */}
       <div style={{ padding: "0.625rem 0.75rem", display: "flex", flexDirection: "column", gap: "0.2rem" }}>
         <p style={{ fontSize: "0.6rem", fontFamily: "var(--font-mono)", textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--text-dim)", margin: 0 }}>
           {spec.label}
@@ -299,6 +289,273 @@ function SpecCard({
           {spec.value}
         </p>
       </div>
+    </div>
+  );
+}
+
+// ── Resource editor panel ─────────────────────────
+
+const BLANK_FORM: ResourceForm = {
+  type: "Video",
+  title: "",
+  author: "",
+  url: "",
+  note: "",
+  date: "",
+  codeUrl: "",
+  abstract: "",
+  cover: "",
+};
+
+function generateId(title: string): string {
+  return title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 40) + "-" + Date.now().toString(36);
+}
+
+const inputStyle: React.CSSProperties = {
+  width: "100%",
+  padding: "0.4rem 0.6rem",
+  fontSize: "0.8125rem",
+  fontFamily: "var(--font-sans)",
+  color: "var(--text-primary)",
+  background: "rgba(255,255,255,0.5)",
+  border: "1px solid var(--border)",
+  borderRadius: "0.375rem",
+  outline: "none",
+  boxSizing: "border-box",
+};
+
+const labelStyle: React.CSSProperties = {
+  fontSize: "0.6rem",
+  fontFamily: "var(--font-mono)",
+  textTransform: "uppercase",
+  letterSpacing: "0.08em",
+  color: "var(--text-dim)",
+  display: "block",
+  marginBottom: "0.25rem",
+};
+
+function Field({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div style={{ display: "flex", flexDirection: "column" }}>
+      <span style={labelStyle}>{label}</span>
+      {children}
+    </div>
+  );
+}
+
+function ResourceEditorPanel({
+  items,
+  editingId,
+  isAdding,
+  form,
+  saving,
+  onFormChange,
+  onEdit,
+  onDelete,
+  onStartAdd,
+  onSave,
+  onCancel,
+}: {
+  items: Resource[];
+  editingId: string | null;
+  isAdding: boolean;
+  form: ResourceForm;
+  saving: boolean;
+  onFormChange: (patch: Partial<ResourceForm>) => void;
+  onEdit: (r: Resource) => void;
+  onDelete: (id: string) => void;
+  onStartAdd: () => void;
+  onSave: () => void;
+  onCancel: () => void;
+}) {
+  const showForm = isAdding || editingId !== null;
+
+  return (
+    <div className="card" style={{ padding: "1.25rem 1.5rem", display: "flex", flexDirection: "column", gap: "1rem", marginTop: "0.5rem" }}>
+      {/* Header */}
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(137,196,225,0.8)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/>
+          </svg>
+          <span style={{ fontSize: "0.65rem", fontFamily: "var(--font-mono)", textTransform: "uppercase", letterSpacing: "0.1em", color: "rgba(137,196,225,0.9)" }}>
+            resource editor
+          </span>
+        </div>
+        {!showForm && (
+          <button
+            onClick={onStartAdd}
+            style={{ display: "inline-flex", alignItems: "center", gap: "0.3rem", padding: "0.3em 0.8em", fontSize: "0.75rem", fontFamily: "var(--font-mono)", borderRadius: "9999px", border: "1px solid rgba(137,196,225,0.35)", background: "rgba(137,196,225,0.08)", color: "var(--accent-ice)", cursor: "pointer" }}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+            Add resource
+          </button>
+        )}
+      </div>
+
+      {/* Existing resources list */}
+      {!showForm && (
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+          {items.map(r => {
+            const tpal = typeColor[r.type] ?? typeColor["Article"];
+            return (
+              <div key={r.id} style={{ display: "flex", alignItems: "center", gap: "0.75rem", padding: "0.5rem 0.75rem", borderRadius: "0.5rem", background: "rgba(255,255,255,0.3)", border: "1px solid var(--border)" }}>
+                <span style={{ fontSize: "0.6rem", fontFamily: "var(--font-mono)", fontWeight: 500, letterSpacing: "0.06em", textTransform: "uppercase", padding: "0.15em 0.45em", borderRadius: "0.2rem", background: tpal.bg, color: tpal.text, border: `1px solid ${tpal.border}`, flexShrink: 0 }}>
+                  {r.type}
+                </span>
+                <span style={{ fontSize: "0.8125rem", color: "var(--text-primary)", flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                  {r.title}
+                </span>
+                <span style={{ fontSize: "0.7rem", fontFamily: "var(--font-mono)", color: "var(--text-dim)", flexShrink: 0 }}>{r.date}</span>
+                <button
+                  onClick={() => onEdit(r)}
+                  title="Edit"
+                  style={{ padding: "0.25rem", background: "none", border: "none", cursor: "pointer", color: "var(--text-muted)", display: "flex", flexShrink: 0 }}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+                </button>
+                <button
+                  onClick={() => onDelete(r.id)}
+                  title="Delete"
+                  style={{ padding: "0.25rem", background: "none", border: "none", cursor: "pointer", color: "#f87171", display: "flex", flexShrink: 0 }}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+                </button>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Add / Edit form */}
+      {showForm && (
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem" }}>
+          <p style={{ fontSize: "0.75rem", color: "var(--text-muted)", margin: 0, fontFamily: "var(--font-mono)" }}>
+            {editingId ? "editing resource" : "new resource"}
+          </p>
+
+          {/* Row 1: type + date */}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}>
+            <Field label="Type">
+              <select
+                value={form.type}
+                onChange={e => onFormChange({ type: e.target.value as ResourceType })}
+                style={{ ...inputStyle, cursor: "pointer" }}
+              >
+                {(["Video", "Paper", "Book", "Article"] as ResourceType[]).map(t => (
+                  <option key={t} value={t}>{t}</option>
+                ))}
+              </select>
+            </Field>
+            <Field label="Date">
+              <input
+                type="text"
+                placeholder="e.g. Mar 2026"
+                value={form.date}
+                onChange={e => onFormChange({ date: e.target.value })}
+                style={inputStyle}
+              />
+            </Field>
+          </div>
+
+          {/* Row 2: title */}
+          <Field label="Title">
+            <input
+              type="text"
+              placeholder="Title"
+              value={form.title}
+              onChange={e => onFormChange({ title: e.target.value })}
+              style={inputStyle}
+            />
+          </Field>
+
+          {/* Row 3: author + url */}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}>
+            <Field label="Author">
+              <input
+                type="text"
+                placeholder="Author · Publisher"
+                value={form.author}
+                onChange={e => onFormChange({ author: e.target.value })}
+                style={inputStyle}
+              />
+            </Field>
+            <Field label="URL">
+              <input
+                type="text"
+                placeholder="https://..."
+                value={form.url}
+                onChange={e => onFormChange({ url: e.target.value })}
+                style={inputStyle}
+              />
+            </Field>
+          </div>
+
+          {/* Note */}
+          <Field label="My note (shows on hover)">
+            <textarea
+              placeholder="What made this worth reading / watching?"
+              value={form.note}
+              onChange={e => onFormChange({ note: e.target.value })}
+              rows={4}
+              style={{ ...inputStyle, resize: "vertical", lineHeight: 1.6 }}
+            />
+          </Field>
+
+          {/* Optional fields by type */}
+          {form.type === "Paper" && (
+            <>
+              <Field label="Abstract (optional)">
+                <textarea
+                  placeholder="Short summary of the paper"
+                  value={form.abstract}
+                  onChange={e => onFormChange({ abstract: e.target.value })}
+                  rows={3}
+                  style={{ ...inputStyle, resize: "vertical", lineHeight: 1.6 }}
+                />
+              </Field>
+              <Field label="Author blog / code URL (optional)">
+                <input
+                  type="text"
+                  placeholder="https://..."
+                  value={form.codeUrl}
+                  onChange={e => onFormChange({ codeUrl: e.target.value })}
+                  style={inputStyle}
+                />
+              </Field>
+            </>
+          )}
+
+          {form.type === "Book" && (
+            <Field label="Cover image path (optional)">
+              <input
+                type="text"
+                placeholder="/book-cover.jpg or https://..."
+                value={form.cover}
+                onChange={e => onFormChange({ cover: e.target.value })}
+                style={inputStyle}
+              />
+            </Field>
+          )}
+
+          {/* Buttons */}
+          <div style={{ display: "flex", gap: "0.5rem", justifyContent: "flex-end" }}>
+            <button
+              onClick={onCancel}
+              style={{ padding: "0.35em 1em", fontSize: "0.8rem", fontFamily: "var(--font-mono)", borderRadius: "9999px", border: "1px solid var(--border)", background: "transparent", color: "var(--text-muted)", cursor: "pointer" }}
+            >
+              Cancel
+            </button>
+            <button
+              onClick={onSave}
+              disabled={saving || !form.title || !form.url}
+              style={{ padding: "0.35em 1em", fontSize: "0.8rem", fontFamily: "var(--font-mono)", borderRadius: "9999px", border: "1px solid rgba(137,196,225,0.4)", background: "rgba(137,196,225,0.12)", color: saving ? "var(--text-dim)" : "var(--accent-ice)", cursor: saving ? "default" : "pointer" }}
+            >
+              {saving ? "Saving…" : "Save"}
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -329,9 +586,90 @@ const TABS: { id: Tab; label: string; icon: React.ReactNode }[] = [
 // ── Main component ────────────────────────────────
 
 export default function Tools() {
+  const { editMode, data } = useEdit();
+
   const [active, setActive] = useState<Tab>("Kit");
-  const [hoveredNote, setHoveredNote] = useState<{ i: number; x: number; y: number } | null>(null);
+  const [hoveredId, setHoveredId] = useState<{ id: string; x: number; y: number } | null>(null);
   const [hoveredSpec, setHoveredSpec] = useState<{ spec: SpecItem; x: number; y: number } | null>(null);
+
+  // Resource editor state
+  const [localResources, setLocalResources] = useState<Resource[]>(() => data.resources.items as Resource[]);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [isAdding, setIsAdding] = useState(false);
+  const [form, setForm] = useState<ResourceForm>(BLANK_FORM);
+  const [saving, setSaving] = useState(false);
+
+  function handleFormChange(patch: Partial<ResourceForm>) {
+    setForm(prev => ({ ...prev, ...patch }));
+  }
+
+  function startEdit(r: Resource) {
+    setIsAdding(false);
+    setEditingId(r.id);
+    setForm({
+      type: r.type,
+      title: r.title,
+      author: r.author,
+      url: r.url,
+      note: r.note ?? "",
+      date: r.date,
+      codeUrl: r.codeUrl ?? "",
+      abstract: r.abstract ?? "",
+      cover: r.cover ?? "",
+    });
+  }
+
+  function startAdd() {
+    setEditingId(null);
+    setIsAdding(true);
+    setForm(BLANK_FORM);
+  }
+
+  function cancel() {
+    setEditingId(null);
+    setIsAdding(false);
+  }
+
+  async function saveResource() {
+    setSaving(true);
+    const cleaned: Resource = {
+      id: editingId ?? generateId(form.title),
+      type: form.type,
+      title: form.title,
+      author: form.author,
+      url: form.url,
+      date: form.date,
+      ...(form.note     ? { note: form.note }         : {}),
+      ...(form.codeUrl  ? { codeUrl: form.codeUrl }   : {}),
+      ...(form.abstract ? { abstract: form.abstract } : {}),
+      ...(form.cover    ? { cover: form.cover }       : {}),
+    };
+
+    const newItems = isAdding
+      ? [...localResources, cleaned]
+      : localResources.map(r => r.id === editingId ? cleaned : r);
+
+    setLocalResources(newItems);
+    cancel();
+
+    await fetch("/api/resources", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ items: newItems }),
+    }).catch(console.error);
+
+    setSaving(false);
+  }
+
+  async function deleteResource(id: string) {
+    const newItems = localResources.filter(r => r.id !== id);
+    setLocalResources(newItems);
+    await fetch("/api/resources", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ items: newItems }),
+    }).catch(console.error);
+  }
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-6)" }}>
@@ -423,102 +761,141 @@ export default function Tools() {
 
       {/* Resources feed */}
       {active === "Resources" && (
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "1rem" }}>
-          {resources.map((r, i) => {
-            const tpal = typeColor[r.type] ?? typeColor["Article"];
-            const rawId = r.url.includes("v=") ? r.url.split("v=")[1]?.split("&")[0] : r.url.split("/").pop()?.split("?")[0];
-            const embedId = r.url.includes("youtu") ? rawId : null;
-            return (
-              <div
-                key={i}
-                className="card"
-                onMouseMove={r.note ? (e) => setHoveredNote({ i, x: e.clientX, y: e.clientY }) : undefined}
-                onMouseLeave={r.note ? () => setHoveredNote(null) : undefined}
-                style={{ padding: 0, overflow: "hidden", display: "flex", flexDirection: "column" }}
-              >
-                {/* Video embed */}
-                {embedId && (
-                  <div style={{ width: "100%", borderRadius: "0.75rem 0.75rem 0 0", overflow: "hidden", aspectRatio: "16/9", background: "#000", flexShrink: 0 }}>
-                    <iframe
-                      src={`https://www.youtube.com/embed/${embedId}`}
-                      title={r.title}
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      style={{ width: "100%", height: "100%", border: "none", display: "block" }}
-                    />
-                  </div>
-                )}
+        <>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "1rem" }}>
+            {localResources.map(r => {
+              const tpal = typeColor[r.type] ?? typeColor["Article"];
+              const rawId = r.url.includes("v=") ? r.url.split("v=")[1]?.split("&")[0] : r.url.split("/").pop()?.split("?")[0];
+              const embedId = r.url.includes("youtu") ? rawId : null;
+              return (
+                <div
+                  key={r.id}
+                  className="card"
+                  onMouseMove={r.note ? (e) => setHoveredId({ id: r.id, x: e.clientX, y: e.clientY }) : undefined}
+                  onMouseLeave={r.note ? () => setHoveredId(null) : undefined}
+                  style={{ padding: 0, overflow: "hidden", display: "flex", flexDirection: "column", position: "relative" }}
+                >
+                  {/* Edit mode overlay buttons */}
+                  {editMode && (
+                    <div style={{ position: "absolute", top: "0.4rem", right: "0.4rem", zIndex: 10, display: "flex", gap: "0.25rem" }}>
+                      <button
+                        onClick={() => startEdit(r)}
+                        title="Edit"
+                        style={{ width: "1.5rem", height: "1.5rem", borderRadius: "50%", background: "rgba(137,196,225,0.2)", border: "1px solid rgba(137,196,225,0.4)", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--accent-ice)" }}
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+                      </button>
+                      <button
+                        onClick={() => deleteResource(r.id)}
+                        title="Delete"
+                        style={{ width: "1.5rem", height: "1.5rem", borderRadius: "50%", background: "rgba(239,68,68,0.12)", border: "1px solid rgba(239,68,68,0.3)", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", color: "#f87171" }}
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+                      </button>
+                    </div>
+                  )}
 
-                {/* Book cover */}
-                {"cover" in r && r.cover && (
-                  <div style={{
-                    width: "100%",
-                    borderRadius: "0.75rem 0.75rem 0 0",
-                    background: "linear-gradient(160deg, rgba(14,40,90,0.15) 0%, rgba(7,20,60,0.22) 100%)",
-                    borderBottom: "1px solid rgba(137,196,225,0.15)",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    padding: "1.25rem 1rem",
-                    flexShrink: 0,
-                  }}>
-                    <img
-                      src={(r as { cover: string }).cover}
-                      alt={r.title}
-                      style={{
-                        width: "110px",
-                        borderRadius: "0.25rem",
-                        boxShadow: "0 8px 24px rgba(10,30,80,0.25), 0 2px 6px rgba(10,30,80,0.15)",
-                        display: "block",
-                      }}
-                    />
-                  </div>
-                )}
+                  {/* Video embed */}
+                  {embedId && (
+                    <div style={{ width: "100%", borderRadius: "0.75rem 0.75rem 0 0", overflow: "hidden", aspectRatio: "16/9", background: "#000", flexShrink: 0 }}>
+                      <iframe
+                        src={`https://www.youtube.com/embed/${embedId}`}
+                        title={r.title}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        style={{ width: "100%", height: "100%", border: "none", display: "block" }}
+                      />
+                    </div>
+                  )}
 
-                {/* Paper header */}
-                {!embedId && !("cover" in r && r.cover) && (
-                  <div style={{
-                    width: "100%",
-                    borderRadius: "0.75rem 0.75rem 0 0",
-                    padding: "1.25rem 1.125rem 1rem",
-                    background: "repeating-linear-gradient(to bottom, transparent 0, transparent calc(1.5rem - 1px), rgba(137,196,225,0.1) calc(1.5rem - 1px), rgba(137,196,225,0.1) 1.5rem), linear-gradient(160deg, rgba(14,40,90,0.18) 0%, rgba(7,20,60,0.25) 100%)",
-                    backgroundSize: "100% 1.5rem, 100% 100%",
-                    backgroundPositionY: "0.75rem, 0",
-                    borderBottom: "1px solid rgba(137,196,225,0.15)",
-                    flexShrink: 0,
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "0.5rem",
-                  }}>
-                    <p style={{ fontSize: "0.8rem", fontWeight: 600, color: "var(--text-primary)", lineHeight: 1.4, margin: 0 }}>{r.title}</p>
-                    {"abstract" in r && r.abstract && (
-                      <p style={{ fontSize: "0.72rem", color: "var(--text-muted)", lineHeight: 1.6, margin: 0 }}>{(r as { abstract: string }).abstract}</p>
-                    )}
-                    {"codeUrl" in r && r.codeUrl && (
-                      <a href={(r as { codeUrl: string }).codeUrl} target="_blank" rel="noopener noreferrer" style={{ fontSize: "0.68rem", fontFamily: "var(--font-mono)", color: "var(--accent-ice)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.25rem", width: "fit-content" }}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-                        author&apos;s blog ↗
-                      </a>
-                    )}
-                  </div>
-                )}
+                  {/* Book cover */}
+                  {r.cover && (
+                    <div style={{
+                      width: "100%",
+                      borderRadius: "0.75rem 0.75rem 0 0",
+                      background: "linear-gradient(160deg, rgba(14,40,90,0.15) 0%, rgba(7,20,60,0.22) 100%)",
+                      borderBottom: "1px solid rgba(137,196,225,0.15)",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      padding: "1.25rem 1rem",
+                      flexShrink: 0,
+                    }}>
+                      <img
+                        src={r.cover}
+                        alt={r.title}
+                        style={{
+                          width: "110px",
+                          borderRadius: "0.25rem",
+                          boxShadow: "0 8px 24px rgba(10,30,80,0.25), 0 2px 6px rgba(10,30,80,0.15)",
+                          display: "block",
+                        }}
+                      />
+                    </div>
+                  )}
 
-                {/* Info row */}
-                <div style={{ padding: "0.625rem 0.875rem", display: "flex", flexDirection: "column", gap: "0.3rem" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap" }}>
-                    <span style={{ fontSize: "0.6rem", fontFamily: "var(--font-mono)", fontWeight: 500, letterSpacing: "0.06em", textTransform: "uppercase", padding: "0.15em 0.5em", borderRadius: "0.2rem", background: tpal.bg, color: tpal.text, border: `1px solid ${tpal.border}`, flexShrink: 0 }}>
-                      {r.type}
-                    </span>
-                    <span style={{ fontSize: "0.65rem", color: "var(--text-dim)", fontFamily: "var(--font-mono)", flexShrink: 0 }}>{r.author} · {r.date}</span>
+                  {/* Paper / Article header */}
+                  {!embedId && !r.cover && (
+                    <div style={{
+                      width: "100%",
+                      borderRadius: "0.75rem 0.75rem 0 0",
+                      padding: "1.25rem 1.125rem 1rem",
+                      background: "repeating-linear-gradient(to bottom, transparent 0, transparent calc(1.5rem - 1px), rgba(137,196,225,0.1) calc(1.5rem - 1px), rgba(137,196,225,0.1) 1.5rem), linear-gradient(160deg, rgba(14,40,90,0.18) 0%, rgba(7,20,60,0.25) 100%)",
+                      backgroundSize: "100% 1.5rem, 100% 100%",
+                      backgroundPositionY: "0.75rem, 0",
+                      borderBottom: "1px solid rgba(137,196,225,0.15)",
+                      flexShrink: 0,
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "0.5rem",
+                    }}>
+                      <p style={{ fontSize: "0.8rem", fontWeight: 600, color: "var(--text-primary)", lineHeight: 1.4, margin: 0 }}>{r.title}</p>
+                      {r.abstract && (
+                        <p style={{ fontSize: "0.72rem", color: "var(--text-muted)", lineHeight: 1.6, margin: 0 }}>{r.abstract}</p>
+                      )}
+                      {r.codeUrl && (
+                        <a href={r.codeUrl} target="_blank" rel="noopener noreferrer" style={{ fontSize: "0.68rem", fontFamily: "var(--font-mono)", color: "var(--accent-ice)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.25rem", width: "fit-content" }}>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                          author&apos;s blog ↗
+                        </a>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Info row */}
+                  <div style={{ padding: "0.625rem 0.875rem", display: "flex", flexDirection: "column", gap: "0.3rem" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap" }}>
+                      <span style={{ fontSize: "0.6rem", fontFamily: "var(--font-mono)", fontWeight: 500, letterSpacing: "0.06em", textTransform: "uppercase", padding: "0.15em 0.5em", borderRadius: "0.2rem", background: tpal.bg, color: tpal.text, border: `1px solid ${tpal.border}`, flexShrink: 0 }}>
+                        {r.type}
+                      </span>
+                      <span style={{ fontSize: "0.65rem", color: "var(--text-dim)", fontFamily: "var(--font-mono)", flexShrink: 0 }}>{r.author} · {r.date}</span>
+                    </div>
+                    <a href={r.url} target="_blank" rel="noopener noreferrer" style={{ fontSize: "0.8125rem", fontWeight: 500, color: "var(--text-primary)", textDecoration: "none", lineHeight: 1.4 }}>
+                      {r.type === "Paper" ? `arxiv: ${r.url.split("/").pop()} ↗` : `${r.title} ↗`}
+                    </a>
                   </div>
-                  <a href={r.url} target="_blank" rel="noopener noreferrer" style={{ fontSize: "0.8125rem", fontWeight: 500, color: "var(--text-primary)", textDecoration: "none", lineHeight: 1.4 }}>
-                    {r.type === "Paper" ? "arxiv: 2512.24601 ↗" : `${r.title} ↗`}
-                  </a>
                 </div>
-              </div>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
+
+          {/* Editor panel — dev only */}
+          {editMode && (
+            <ResourceEditorPanel
+              items={localResources}
+              editingId={editingId}
+              isAdding={isAdding}
+              form={form}
+              saving={saving}
+              onFormChange={handleFormChange}
+              onEdit={startEdit}
+              onDelete={deleteResource}
+              onStartAdd={startAdd}
+              onSave={saveResource}
+              onCancel={cancel}
+            />
+          )}
+        </>
       )}
 
       {/* Specs */}
@@ -552,7 +929,6 @@ export default function Tools() {
           boxShadow: "0 8px 32px rgba(100,140,255,0.1), inset 0 1px 0 rgba(255,255,255,0.6)",
           overflow: "hidden",
         }}>
-          {/* Header */}
           <div style={{ padding: "0.625rem 0.875rem 0.5rem", borderBottom: "1px solid rgba(137,196,225,0.2)", display: "flex", alignItems: "center", gap: "0.4rem" }}>
             <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="rgba(100,130,200,0.7)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <rect width="14" height="8" x="5" y="2" rx="2"/><rect width="20" height="8" x="2" y="14" rx="2"/><path d="M6 18h2"/><path d="M12 18h6"/>
@@ -561,7 +937,6 @@ export default function Tools() {
               {hoveredSpec.spec.value}
             </span>
           </div>
-          {/* Rows */}
           <div style={{ padding: "0.375rem 0" }}>
             {hoveredSpec.spec.info.map((row, idx) => (
               <div key={idx} style={{ display: "flex", gap: "0.75rem", padding: "0.3rem 0.875rem", alignItems: "baseline" }}>
@@ -577,12 +952,12 @@ export default function Tools() {
         </div>
       )}
 
-      {/* Cursor-following note tooltip */}
-      {hoveredNote && resources[hoveredNote.i]?.note && (
+      {/* Hover note tooltip */}
+      {hoveredId && localResources.find(r => r.id === hoveredId.id)?.note && (
         <div style={{
           position: "fixed",
-          left: hoveredNote.x + 16,
-          top: hoveredNote.y + 16,
+          left: hoveredId.x + 16,
+          top: hoveredId.y + 16,
           maxWidth: "22rem",
           zIndex: 9999,
           pointerEvents: "none",
@@ -605,7 +980,7 @@ export default function Tools() {
             </svg>
             <span style={{ fontSize: "0.58rem", fontFamily: "var(--font-mono)", color: "rgba(137,196,225,0.9)", letterSpacing: "0.09em", textTransform: "uppercase" }}>my note</span>
           </div>
-          {resources[hoveredNote.i].note}
+          {localResources.find(r => r.id === hoveredId.id)!.note}
         </div>
       )}
 
