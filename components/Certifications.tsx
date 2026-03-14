@@ -112,6 +112,7 @@ export default function Certifications() {
               key={tab}
               onClick={() => setActive(tab)}
               className="tab-btn"
+              data-active={isActive}
               style={{
                 padding: "0.35em 1em",
                 borderRadius: "9999px",

@@ -9,6 +9,7 @@ import {
   Compass,
   Plant,
   Brain,
+  Article,
   type IconWeight,
 } from "@phosphor-icons/react";
 
@@ -44,3 +45,4 @@ export const IconSkills         = () => <GradientIcon icon={Brain} />;
 export const IconTools          = () => <GradientIcon icon={Wrench} />;
 export const IconValues         = () => <GradientIcon icon={Compass} />;
 export const IconAbout          = () => <GradientIcon icon={Plant} />;
+export const IconEntries        = () => <GradientIcon icon={Article} />;

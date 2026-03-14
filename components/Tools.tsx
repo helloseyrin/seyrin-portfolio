@@ -690,6 +690,7 @@ export default function Tools() {
               key={id}
               onClick={() => setActive(id)}
               className="tab-btn"
+              data-active={isActive}
               style={{
                 padding: "0.35em 1em",
                 borderRadius: "9999px",
@@ -952,35 +953,95 @@ export default function Tools() {
         </div>
       )}
 
-      {/* Hover note tooltip */}
+      {/* Hover note — retro window panel */}
       {hoveredId && localResources.find(r => r.id === hoveredId.id)?.note && (
         <div style={{
           position: "fixed",
           left: hoveredId.x + 16,
           top: hoveredId.y + 16,
           maxWidth: "22rem",
+          minWidth: "14rem",
           zIndex: 9999,
           pointerEvents: "none",
-          borderRadius: "0.6rem",
-          background: "repeating-linear-gradient(to bottom, transparent 0, transparent calc(1.5rem - 1px), rgba(137,196,225,0.15) calc(1.5rem - 1px), rgba(137,196,225,0.15) 1.5rem), linear-gradient(160deg, rgba(255,253,250,0.97) 0%, rgba(237,246,255,0.95) 100%)",
-          backgroundSize: "100% 1.5rem, 100% 100%",
-          backgroundPositionY: "0.8rem, 0",
-          backdropFilter: "blur(20px)",
-          WebkitBackdropFilter: "blur(20px)",
-          border: "1px solid rgba(137,196,225,0.3)",
-          boxShadow: "0 8px 24px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.9)",
-          padding: "0.75rem 1rem",
-          fontSize: "0.775rem",
-          color: "var(--text-secondary)",
-          lineHeight: 1.6,
+          borderRadius: "7px",
+          overflow: "hidden",
+          border: "1.5px solid rgba(167, 139, 250, 0.55)",
+          boxShadow: "0 12px 36px rgba(124, 58, 237, 0.18), 0 2px 8px rgba(0,0,0,0.1)",
         }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "0.35rem", marginBottom: "0.4rem" }}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="rgba(137,196,225,0.8)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/>
-            </svg>
-            <span style={{ fontSize: "0.58rem", fontFamily: "var(--font-mono)", color: "rgba(137,196,225,0.9)", letterSpacing: "0.09em", textTransform: "uppercase" }}>my note</span>
+          {/* Titlebar */}
+          <div style={{
+            background: "linear-gradient(135deg, #6d28d9 0%, #a78bfa 55%, #c084fc 100%)",
+            padding: "0.3rem 0.45rem",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "0.5rem",
+          }}>
+            {/* Icon + filename */}
+            <div style={{ display: "flex", alignItems: "center", gap: "0.3rem" }}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.85)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+              </svg>
+              <span style={{
+                fontSize: "0.6rem",
+                fontFamily: "var(--font-mono)",
+                color: "rgba(255,255,255,0.92)",
+                letterSpacing: "0.04em",
+              }}>
+                my_note.txt
+              </span>
+            </div>
+            {/* Window controls */}
+            <div style={{ display: "flex", alignItems: "center", gap: "0.2rem" }}>
+              {["─", "□"].map((glyph) => (
+                <span key={glyph} style={{
+                  width: "13px", height: "13px",
+                  background: "rgba(255,255,255,0.18)",
+                  border: "1px solid rgba(255,255,255,0.28)",
+                  borderRadius: "2px",
+                  display: "inline-flex", alignItems: "center", justifyContent: "center",
+                  fontSize: "0.45rem", color: "rgba(255,255,255,0.85)",
+                  lineHeight: 1,
+                }}>{glyph}</span>
+              ))}
+              <span style={{
+                width: "13px", height: "13px",
+                background: "rgba(239,68,68,0.65)",
+                border: "1px solid rgba(220,38,38,0.45)",
+                borderRadius: "2px",
+                display: "inline-flex", alignItems: "center", justifyContent: "center",
+                fontSize: "0.45rem", color: "rgba(255,255,255,0.95)",
+                fontWeight: 700, lineHeight: 1,
+              }}>✕</span>
+            </div>
           </div>
-          {localResources.find(r => r.id === hoveredId.id)!.note}
+
+          {/* Body */}
+          <div style={{
+            background: "repeating-linear-gradient(to bottom, transparent 0, transparent calc(1.45rem - 1px), rgba(167,139,250,0.09) calc(1.45rem - 1px), rgba(167,139,250,0.09) 1.45rem), linear-gradient(180deg, rgba(250,248,255,0.98) 0%, rgba(245,242,255,0.98) 100%)",
+            backgroundSize: "100% 1.45rem, 100% 100%",
+            padding: "0.55rem 0.75rem 0.65rem",
+          }}>
+            {/* Code-style comment prefix */}
+            <div style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: "0.6rem",
+              color: "rgba(124, 58, 237, 0.45)",
+              marginBottom: "0.3rem",
+              letterSpacing: "0.02em",
+            }}>
+              {`// personal annotation`}
+            </div>
+            {/* Note text */}
+            <div style={{
+              fontSize: "0.775rem",
+              color: "var(--text-secondary)",
+              lineHeight: 1.65,
+              fontFamily: "var(--font-sans)",
+            }}>
+              {localResources.find(r => r.id === hoveredId.id)!.note}
+            </div>
+          </div>
         </div>
       )}
 

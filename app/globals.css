@@ -21,19 +21,19 @@
   --bg-deep:      rgba(234, 240, 248, 0.6);
   --border:       #ccd8ea;
   --border-hover: #8aaac8;
-  --border-active:#18181b;
+  --border-active:#1e103c;
 
-  --text-primary:  #18181b;
-  --text-secondary:#52525b;
-  --text-muted:    #71717a;
-  --text-dim:      #a1a1aa;
-  --text-accent:   #18181b;
+  --text-primary:  #1e103c;
+  --text-secondary:#3d2f5f;
+  --text-muted:    #5e5070;
+  --text-dim:      #7d728e;
+  --text-accent:   #1e103c;
   --text-accent-2: #2563eb;
-  --text-tag:      #52525b;
+  --text-tag:      #3d2f5f;
 
   /* Sidebar */
   --sidebar-bg:      rgba(240, 246, 255, 0.45);
-  --nav-active-bg:   #18181b;
+  --nav-active-bg:   #1e103c;
   --nav-active-text: #ffffff;
 
   /* Badges / status */
@@ -364,8 +364,14 @@ body[data-page="cv"] footer { display: none !important; }
 .icon-card { transition: transform var(--duration-base) var(--ease), box-shadow var(--duration-base) var(--ease); }
 .icon-card:hover { transform: translateY(-4px); }
 
-/* ── Tab buttons (Tools, Values) ────────────────── */
+/* ── Tab buttons (Tools, Certifications) ────────── */
 .tab-btn { transition: all var(--duration-fast) var(--ease); }
+.tab-btn:not([data-active="true"]):hover {
+  border-color: rgba(137, 196, 225, 0.45) !important;
+  color: var(--text-primary) !important;
+  background: rgba(137, 196, 225, 0.07) !important;
+  box-shadow: 0 0 10px rgba(137, 196, 225, 0.15) !important;
+}
 
 /* ── Floating contact button ────────────────────── */
 .floating-btn {
@@ -380,5 +386,124 @@ body[data-page="cv"] footer { display: none !important; }
   background: linear-gradient(135deg, rgba(14,60,140,0.18) 0%, rgba(7,30,90,0.25) 100%) !important;
   box-shadow: 0 0 14px 3px rgba(137, 196, 225, 0.35) !important;
   color: #89c4e1 !important;
+}
+
+/* ── Entry card hover ────────────────────────────── */
+.entry-card:hover p:first-of-type {
+  background: linear-gradient(90deg, #8aaac8, #a78bfa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Entry back link ─────────────────────────────── */
+.back-link:hover {
+  color: var(--text-primary) !important;
+}
+
+/* ── Entry notebook window ───────────────────────── */
+.entry-notebook {
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1.5px solid rgba(167, 139, 250, 0.4);
+  box-shadow:
+    0 16px 48px rgba(109, 40, 217, 0.12),
+    0 4px 16px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(24px) saturate(150%);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  background: rgba(250, 248, 255, 0.65);
+}
+
+.entry-notebook-header {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.7rem;
+  background: linear-gradient(135deg, #6d28d9 0%, #a78bfa 55%, #c084fc 100%);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: rgba(255, 255, 255, 0.88);
+  letter-spacing: 0.04em;
+}
+
+/* ── Entry prose typography ──────────────────────── */
+.entry-prose {
+  font-size: 0.9375rem;
+  line-height: 1.875rem;
+  color: var(--text-secondary);
+  padding: 1.5rem 2rem 2rem;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent calc(1.875rem - 1px),
+      rgba(167, 139, 250, 0.07) calc(1.875rem - 1px),
+      rgba(167, 139, 250, 0.07) 1.875rem
+    );
+  background-size: 100% 1.875rem;
+}
+.entry-prose h2 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.015em;
+}
+.entry-prose h3 {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+}
+.entry-prose p {
+  margin-bottom: 1.375rem;
+}
+.entry-prose hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, var(--border), transparent);
+  margin: 2.5rem 0;
+}
+.entry-prose strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+.entry-prose em {
+  color: var(--text-muted);
+}
+.entry-prose a {
+  color: #a78bfa;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.entry-prose a:hover {
+  color: #c4b5fd;
+}
+.entry-prose blockquote {
+  border-left: 2px solid rgba(167, 139, 250, 0.4);
+  padding-left: 1.25rem;
+  margin: 1.75rem 0;
+  color: var(--text-muted);
+  font-style: italic;
+}
+.entry-prose code {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  background: rgba(109, 40, 217, 0.07);
+  border: 1px solid rgba(109, 40, 217, 0.14);
+  padding: 0.15em 0.45em;
+  border-radius: 4px;
+  color: #6d28d9;
+}
+.entry-prose ul,
+.entry-prose ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1.375rem;
+}
+.entry-prose li {
+  margin-bottom: 0.375rem;
 }
 
