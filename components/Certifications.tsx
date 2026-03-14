@@ -78,10 +78,10 @@ const learningProjects = [
 // ── Style helpers ─────────────────────────────────
 
 const platformColors: Record<string, { bg: string; text: string; border: string }> = {
-  DataCamp:           { bg: "rgba(3, 172, 140, 0.12)",  text: "#03ac8c", border: "rgba(3, 172, 140, 0.3)"  },
-  Coursera:           { bg: "rgba(37, 99, 235, 0.1)",   text: "#2563eb", border: "rgba(37, 99, 235, 0.25)" },
-  IBM:                { bg: "rgba(15, 98, 254, 0.1)",   text: "#0f62fe", border: "rgba(15, 98, 254, 0.25)" },
-  "Beetroot Academy": { bg: "rgba(74, 183, 73, 0.1)",   text: "#4ab749", border: "rgba(74, 183, 73, 0.25)" },
+  DataCamp:           { bg: "rgba(3, 172, 140, 0.12)",  text: "var(--platform-datacamp)", border: "rgba(3, 172, 140, 0.3)"  },
+  Coursera:           { bg: "rgba(37, 99, 235, 0.1)",   text: "var(--platform-coursera)", border: "rgba(37, 99, 235, 0.25)" },
+  IBM:                { bg: "rgba(15, 98, 254, 0.1)",   text: "var(--platform-ibm)",      border: "rgba(15, 98, 254, 0.25)" },
+  "Beetroot Academy": { bg: "rgba(74, 183, 73, 0.1)",   text: "var(--platform-beetroot)", border: "rgba(74, 183, 73, 0.25)" },
 };
 
 // ── Main component ────────────────────────────────

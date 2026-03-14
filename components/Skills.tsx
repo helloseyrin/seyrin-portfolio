@@ -142,16 +142,16 @@ const skillSources: Record<string, SkillSource[]> = {
 // ── Style helpers ─────────────────────────────────
 
 const platformColors: Record<string, string> = {
-  "DataCamp":         "#03ac8c",
-  "Coursera":         "#2563eb",
-  "Beetroot Academy": "#4ab749",
-  "IBM":              "#0f62fe",
+  "DataCamp":         "var(--platform-datacamp)",
+  "Coursera":         "var(--platform-coursera)",
+  "Beetroot Academy": "var(--platform-beetroot)",
+  "IBM":              "var(--platform-ibm)",
 };
 
 const statusColors: Record<string, string> = {
-  "Active":      "#4ade80",
-  "In progress": "#a78bfa",
-  "Planning":    "#89c4e1",
+  "Active":      "var(--accent-emerald)",
+  "In progress": "var(--accent-purple)",
+  "Planning":    "var(--accent-ice)",
 };
 
 // ── Tooltip section ───────────────────────────────
@@ -189,7 +189,7 @@ function LinkedTag({ skill }: { skill: string }) {
         style={{ cursor: "default", display: "inline-flex", alignItems: "center", gap: "0.3em" }}
       >
         {skill}
-        <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: "linear-gradient(135deg, #89c4e1, #a78bfa)", boxShadow: "0 0 4px rgba(137,196,225,0.6)", flexShrink: 0, display: "inline-block" }} />
+        <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: "var(--gradient-accent)", boxShadow: "0 0 4px rgba(var(--accent-ice-rgb),0.6)", flexShrink: 0, display: "inline-block" }} />
       </span>
 
       {pos && (

@@ -61,15 +61,15 @@ export default function Hero() {
           <h1 style={{ fontSize: "3rem", fontWeight: 500, lineHeight: 1.1, animation: "fade-down 0.45s ease both" }}>
             Good to see you, I&apos;m Smyrna.
           </h1>
-          <h2 style={{ fontSize: "2.25rem", fontWeight: 400, lineHeight: 1.2, animation: "fade-down 0.45s 0.08s ease both", background: "linear-gradient(90deg, var(--text-muted) 0%, #8aaac8 60%, #a78bfa 100%)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>
+          <h2 style={{ fontSize: "2.25rem", fontWeight: 400, lineHeight: 1.2, animation: "fade-down 0.45s 0.08s ease both", background: "linear-gradient(90deg, var(--text-muted) 0%, var(--accent-ice) 60%, var(--accent-purple) 100%)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>
             <Editable file="hero" path="subtitle" tag="span" />
           </h2>
           {/* Meta row */}
           <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", flexWrap: "wrap", paddingTop: "0.25rem", animation: "fade-down 0.45s 0.16s ease both" }}>
             {[
-              { label: "Helsinki GMT+3", dot: null,       href: null,   gradient: "linear-gradient(90deg, #5b7fd8, #7c3aed)" },
-              { label: "Open to Work",   dot: "#059669",  href: null,   gradient: "linear-gradient(90deg, #7c3aed, #059669)" },
-              { label: "this site on GitHub", dot: null,  href: "https://github.com/helloseyrin/seyrin-portfolio", gradient: "linear-gradient(90deg, #059669, #0d9488)" },
+              { label: "Helsinki GMT+3", dot: null,                       href: null,   gradient: "var(--gradient-meta-location)" },
+              { label: "Open to Work",   dot: "var(--accent-emerald)",  href: null,   gradient: "var(--gradient-meta-work)" },
+              { label: "this site on GitHub", dot: null,                 href: "https://github.com/helloseyrin/seyrin-portfolio", gradient: "var(--gradient-meta-github)" },
             ].map(({ label, dot, href, gradient }, i) => (
               <React.Fragment key={label}>
                 {i > 0 && <span style={{ width: "3px", height: "3px", borderRadius: "50%", background: "var(--border-hover)", display: "inline-block" }} />}
@@ -104,7 +104,7 @@ export default function Hero() {
                     backgroundClip: "text",
                     color: "transparent",
                   }}>
-                    {dot && <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: dot, boxShadow: `0 0 6px ${dot}`, display: "inline-block", flexShrink: 0 }} />}
+                    {dot && <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: dot, boxShadow: `0 0 6px var(--accent-emerald)`, display: "inline-block", flexShrink: 0 }} />}
                     {label}
                   </span>
                 )}
@@ -356,7 +356,7 @@ export default function Hero() {
                       fontSize: "0.6rem", fontFamily: "var(--font-mono)", fontWeight: 500,
                       padding: "0.18em 0.6em", borderRadius: "0.2rem",
                       background: s.bg, color: s.color, border: `1px solid ${s.border}`,
-                      backdropFilter: "blur(8px)", letterSpacing: "0.06em", textTransform: "uppercase",
+                      backdropFilter: "var(--blur-sm)", letterSpacing: "0.06em", textTransform: "uppercase",
                     }}>
                       {p.status}
                     </span>

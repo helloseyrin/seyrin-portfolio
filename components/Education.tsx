@@ -48,10 +48,10 @@ import Tag from "./Tag";
 import { IconEducation } from "./GradientIcon";
 
 const typeColors: Record<string, { bg: string; text: string; border: string }> = {
-  Programme:   { bg: "rgba(37, 99, 235, 0.1)",   text: "#2563eb", border: "rgba(37, 99, 235, 0.25)"  },
-  Course:      { bg: "rgba(71, 168, 189, 0.12)",  text: "#2a9db5", border: "rgba(71, 168, 189, 0.3)" },
-  Certificate: { bg: "rgba(126, 207, 239, 0.12)", text: "#4a9ebe", border: "rgba(126, 207, 239, 0.4)"},
-  Degree:      { bg: "rgba(94, 80, 112, 0.08)",   text: "#5e5070", border: "rgba(94,80,112,0.2)"    },
+  Programme:   { bg: "rgba(37, 99, 235, 0.1)",   text: "var(--accent-blue)",  border: "rgba(37, 99, 235, 0.25)"  },
+  Course:      { bg: "rgba(71, 168, 189, 0.12)",  text: "#2a9db5",             border: "rgba(71, 168, 189, 0.3)"  },
+  Certificate: { bg: "rgba(126, 207, 239, 0.12)", text: "var(--accent-aqua)",  border: "rgba(126, 207, 239, 0.4)" },
+  Degree:      { bg: "rgba(94, 80, 112, 0.08)",   text: "var(--text-muted)",   border: "rgba(94,80,112,0.2)"      },
 };
 
 type EducationEntry = typeof education[0];

@@ -54,7 +54,7 @@ function EntryCard({ entry }: { entry: EntryMeta }) {
             <div style={{
               width: "100%",
               height: "100%",
-              background: "linear-gradient(135deg, rgba(109,40,217,0.55) 0%, rgba(167,139,250,0.45) 45%, rgba(137,196,225,0.4) 100%)",
+              background: "var(--gradient-entry-cover)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -73,7 +73,7 @@ function EntryCard({ entry }: { entry: EntryMeta }) {
             </div>
           )}
           {/* Fade-to-card gradient at bottom */}
-          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 30%, rgba(240,246,252,0.7) 100%)" }} />
+          <div style={{ position: "absolute", inset: 0, background: "var(--gradient-card-fade)" }} />
         </div>
 
         {/* Body */}

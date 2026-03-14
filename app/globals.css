@@ -44,9 +44,50 @@
   --font-sans: var(--font-outfit), "Outfit", sans-serif;
   --font-mono: var(--font-fira-code), "Fira Code", monospace;
 
-  --accent-ice: #89c4e1;
-  --accent-aqua: #4a9ebe;
+  /* Accent palette */
+  --accent-ice:        #89c4e1;
+  --accent-aqua:       #4a9ebe;
   --accent-periwinkle: #c5d8f0;
+  --accent-purple:     #a78bfa;
+  --accent-violet:     #7c3aed;
+  --accent-blue:       #2563eb;
+  --accent-emerald:    #059669;
+  --accent-teal:       #0d9488;
+
+  /* RGB components — for rgba() alpha variants */
+  --accent-ice-rgb:    137, 196, 225;
+  --accent-purple-rgb: 167, 139, 250;
+  --accent-violet-rgb: 109,  40, 217;
+
+  /* UI gradients */
+  --gradient-accent:         linear-gradient(90deg, var(--accent-ice), var(--accent-purple));
+  --gradient-entry-cover:    linear-gradient(135deg, rgba(var(--accent-violet-rgb), 0.55) 0%, rgba(var(--accent-purple-rgb), 0.45) 45%, rgba(var(--accent-ice-rgb), 0.4) 100%);
+  --gradient-card-fade:      linear-gradient(to bottom, transparent 30%, rgba(240, 246, 252, 0.7) 100%);
+  --gradient-meta-location:  linear-gradient(90deg, #5b7fd8, var(--accent-violet));
+  --gradient-meta-work:      linear-gradient(90deg, var(--accent-violet), var(--accent-emerald));
+  --gradient-meta-github:    linear-gradient(90deg, var(--accent-emerald), var(--accent-teal));
+
+  /* Backdrop blur scale */
+  --blur-sm: blur(8px);
+  --blur-md: blur(12px);
+  --blur-lg: blur(28px);
+
+  /* Platform brand colors */
+  --platform-datacamp: #03ac8c;
+  --platform-coursera: #2563eb;
+  --platform-beetroot: #4ab749;
+  --platform-ibm:      #0f62fe;
+
+  /* Background blob palette */
+  --blob-blue-1:   #1d6fa4;
+  --blob-blue-2:   #0a3d6b;
+  --blob-indigo-1: #1a4fa8;
+  --blob-indigo-2: #0d2860;
+  --blob-cyan-1:   #0ea5e9;
+  --blob-cyan-2:   #0369a1;
+  --blob-violet-1: #6366f1;
+  --blob-violet-2: #3730a3;
+  --blob-dot:      #3b82f6;
 
   /* Easing scale */
   --ease:        cubic-bezier(0.4, 0, 0.2, 1);
@@ -101,15 +142,15 @@ code, pre {
 }
 
 @keyframes neuron-fire {
-  0%   { box-shadow: 0 0 0px 0px rgba(137,196,225,0); }
-  25%  { box-shadow: 0 0 16px 4px rgba(137,196,225,0.9), 0 0 32px 8px rgba(99,170,255,0.4); }
-  60%  { box-shadow: 0 0 10px 2px rgba(137,196,225,0.5), 0 0 20px 4px rgba(99,170,255,0.2); }
-  100% { box-shadow: 0 0 6px 1px rgba(137,196,225,0.25), 0 0 12px 2px rgba(99,170,255,0.1); }
+  0%   { box-shadow: 0 0 0px 0px rgba(var(--accent-ice-rgb),0); }
+  25%  { box-shadow: 0 0 16px 4px rgba(var(--accent-ice-rgb),0.9), 0 0 32px 8px rgba(99,170,255,0.4); }
+  60%  { box-shadow: 0 0 10px 2px rgba(var(--accent-ice-rgb),0.5), 0 0 20px 4px rgba(99,170,255,0.2); }
+  100% { box-shadow: 0 0 6px 1px rgba(var(--accent-ice-rgb),0.25), 0 0 12px 2px rgba(99,170,255,0.1); }
 }
 
 @keyframes synapse-pulse {
-  0%, 100% { box-shadow: 0 0 6px 2px rgba(137,196,225,0.45), 0 0 12px 3px rgba(99,170,255,0.15); }
-  50%       { box-shadow: 0 0 12px 4px rgba(137,196,225,0.9), 0 0 24px 8px rgba(99,170,255,0.3); }
+  0%, 100% { box-shadow: 0 0 6px 2px rgba(var(--accent-ice-rgb),0.45), 0 0 12px 3px rgba(99,170,255,0.15); }
+  50%       { box-shadow: 0 0 12px 4px rgba(var(--accent-ice-rgb),0.9), 0 0 24px 8px rgba(99,170,255,0.3); }
 }
 @keyframes star-pulse {
   0%, 100% { box-shadow: 0 0 5px 2px rgba(255,255,255,0.5), 0 0 10px 3px rgba(210,225,255,0.2); }
@@ -277,15 +318,15 @@ code, pre {
 }
 .tag-pill:hover {
   font-weight: 500;
-  border-color: rgba(137, 196, 225, 0.5);
-  background: linear-gradient(90deg, #8aaac8, #a78bfa);
+  border-color: rgba(var(--accent-ice-rgb), 0.5);
+  background: var(--gradient-accent);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   box-shadow:
-    0 0 0 1px rgba(137, 196, 225, 0.2),
-    0 0 14px rgba(137, 196, 225, 0.3),
-    0 0 28px rgba(137, 196, 225, 0.12);
+    0 0 0 1px rgba(var(--accent-ice-rgb), 0.2),
+    0 0 14px rgba(var(--accent-ice-rgb), 0.3),
+    0 0 28px rgba(var(--accent-ice-rgb), 0.12);
 }
 
 /* ── Prose links (hero bio, etc) ────────────────── */
@@ -296,7 +337,7 @@ code, pre {
   font-weight: 500;
   border-bottom: 1px solid rgba(138, 170, 200, 0.35);
   transition: color var(--duration-base) var(--ease), border-color var(--duration-base) var(--ease), background-size var(--duration-slow) var(--ease);
-  background: linear-gradient(90deg, #8aaac8, #a78bfa);
+  background: var(--gradient-accent);
   background-size: 0% 1.5px;
   background-repeat: no-repeat;
   background-position: 0 100%;
@@ -307,7 +348,7 @@ code, pre {
   -webkit-background-clip: text;
   background-clip: text;
   background-size: 100% 1.5px, 100%;
-  background-image: linear-gradient(90deg, #8aaac8, #a78bfa), linear-gradient(90deg, #8aaac8, #a78bfa);
+  background-image: var(--gradient-accent), var(--gradient-accent);
   background-position: 0 100%, 0 0;
   background-repeat: no-repeat;
   border-bottom-color: transparent;
@@ -378,16 +419,16 @@ body[data-page="cv"] footer { display: none !important; }
 /* ── Tab buttons (Tools, Certifications) ────────── */
 .tab-btn { transition: all var(--duration-fast) var(--ease); }
 .tab-btn:not([data-active="true"]):hover {
-  border-color: rgba(137, 196, 225, 0.5) !important;
-  background: linear-gradient(90deg, #8aaac8, #a78bfa) !important;
+  border-color: rgba(var(--accent-ice-rgb), 0.5) !important;
+  background: var(--gradient-accent) !important;
   -webkit-background-clip: text !important;
   background-clip: text !important;
   color: transparent !important;
   box-shadow:
-    0 0 0 1px rgba(137, 196, 225, 0.2),
-    0 0 14px rgba(137, 196, 225, 0.3),
-    0 0 28px rgba(137, 196, 225, 0.12) !important;
-  box-shadow: 0 0 10px rgba(137, 196, 225, 0.15) !important;
+    0 0 0 1px rgba(var(--accent-ice-rgb), 0.2),
+    0 0 14px rgba(var(--accent-ice-rgb), 0.3),
+    0 0 28px rgba(var(--accent-ice-rgb), 0.12) !important;
+  box-shadow: 0 0 10px rgba(var(--accent-ice-rgb), 0.15) !important;
 }
 
 /* ── Floating contact button ────────────────────── */
@@ -399,15 +440,15 @@ body[data-page="cv"] footer { display: none !important; }
 }
 .floating-btn:hover,
 .floating-btn[data-open="true"] {
-  border-color: rgba(137, 196, 225, 0.6) !important;
+  border-color: rgba(var(--accent-ice-rgb), 0.6) !important;
   background: linear-gradient(135deg, rgba(14,60,140,0.18) 0%, rgba(7,30,90,0.25) 100%) !important;
-  box-shadow: 0 0 14px 3px rgba(137, 196, 225, 0.35) !important;
-  color: #89c4e1 !important;
+  box-shadow: 0 0 14px 3px rgba(var(--accent-ice-rgb), 0.35) !important;
+  color: var(--accent-ice) !important;
 }
 
 /* ── Entry card hover ────────────────────────────── */
 .entry-card:hover p:first-of-type {
-  background: linear-gradient(90deg, #8aaac8, #a78bfa);
+  background: var(--gradient-accent);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -422,9 +463,9 @@ body[data-page="cv"] footer { display: none !important; }
 .entry-notebook {
   border-radius: 10px;
   overflow: hidden; /* clips header corners */
-  border: 1.5px solid rgba(167, 139, 250, 0.4);
+  border: 1.5px solid rgba(var(--accent-purple-rgb), 0.4);
   box-shadow:
-    0 16px 48px rgba(109, 40, 217, 0.12),
+    0 16px 48px rgba(var(--accent-violet-rgb), 0.12),
     0 4px 16px rgba(0, 0, 0, 0.06),
     inset 0 1px 0 rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(24px) saturate(150%);
@@ -437,7 +478,7 @@ body[data-page="cv"] footer { display: none !important; }
   align-items: center;
   gap: 0.4rem;
   padding: 0.35rem 0.7rem;
-  background: linear-gradient(135deg, #6d28d9 0%, #a78bfa 55%, #c084fc 100%);
+  background: linear-gradient(135deg, var(--accent-violet) 0%, var(--accent-purple) 55%, #c084fc 100%);
   font-family: var(--font-fira-code), "Fira Code", monospace;
   font-size: 0.6rem;
   color: rgba(255, 255, 255, 0.88);
@@ -459,8 +500,8 @@ body[data-page="cv"] footer { display: none !important; }
       to bottom,
       transparent 0,
       transparent calc(1.875rem - 1px),
-      rgba(167, 139, 250, 0.07) calc(1.875rem - 1px),
-      rgba(167, 139, 250, 0.07) 1.875rem
+      rgba(var(--accent-purple-rgb), 0.07) calc(1.875rem - 1px),
+      rgba(var(--accent-purple-rgb), 0.07) 1.875rem
     );
   background-size: 100% 1.875rem;
 }
@@ -496,15 +537,15 @@ body[data-page="cv"] footer { display: none !important; }
   color: var(--text-muted);
 }
 .entry-prose a {
-  color: #a78bfa;
+  color: var(--accent-purple);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 .entry-prose a:hover {
-  color: #c4b5fd;
+  color: var(--accent-periwinkle);
 }
 .entry-prose blockquote {
-  border-left: 2px solid rgba(167, 139, 250, 0.4);
+  border-left: 2px solid rgba(var(--accent-purple-rgb), 0.4);
   padding-left: 1.25rem;
   margin: 1.75rem 0;
   color: var(--text-muted);
@@ -513,11 +554,11 @@ body[data-page="cv"] footer { display: none !important; }
 .entry-prose code {
   font-family: var(--font-fira-code), "Fira Code", monospace;
   font-size: 0.8125rem;
-  background: rgba(109, 40, 217, 0.07);
-  border: 1px solid rgba(109, 40, 217, 0.14);
+  background: rgba(var(--accent-violet-rgb), 0.07);
+  border: 1px solid rgba(var(--accent-violet-rgb), 0.14);
   padding: 0.15em 0.45em;
   border-radius: 4px;
-  color: #6d28d9;
+  color: var(--accent-violet);
 }
 .entry-prose ul,
 .entry-prose ol {
@@ -532,15 +573,15 @@ body[data-page="cv"] footer { display: none !important; }
 }
 .entry-prose::-webkit-scrollbar-track {
   background: rgba(230, 220, 255, 0.2);
-  border-left: 1px solid rgba(167, 139, 250, 0.12);
+  border-left: 1px solid rgba(var(--accent-purple-rgb), 0.12);
 }
 .entry-prose::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, rgba(197, 216, 240, 0.85) 0%, rgba(167, 139, 250, 0.55) 100%);
+  background: linear-gradient(180deg, rgba(var(--accent-ice-rgb), 0.85) 0%, rgba(var(--accent-purple-rgb), 0.55) 100%);
   border-radius: 2px;
-  border: 1px solid rgba(167, 139, 250, 0.3);
+  border: 1px solid rgba(var(--accent-purple-rgb), 0.3);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 .entry-prose::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, rgba(197, 216, 240, 1) 0%, rgba(167, 139, 250, 0.75) 100%);
+  background: linear-gradient(180deg, rgba(var(--accent-ice-rgb), 1) 0%, rgba(var(--accent-purple-rgb), 0.75) 100%);
 }
 
