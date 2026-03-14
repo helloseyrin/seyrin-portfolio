@@ -174,7 +174,7 @@ function LinkedTag({ skill }: { skill: string }) {
   const sources = skillSources[skill];
   const [pos, setPos] = useState<{ x: number; y: number } | null>(null);
 
-  if (!sources?.length) return <Tag>{skill}</Tag>;
+  if (!sources?.length) return <span className="tag-pill tag-pill-gradient">{skill}</span>;
 
   const certs      = sources.filter((s): s is CertSource       => s.kind === "cert");
   const experience = sources.filter((s): s is ExperienceSource => s.kind === "experience");
@@ -183,7 +183,7 @@ function LinkedTag({ skill }: { skill: string }) {
   return (
     <>
       <span
-        className="tag-pill"
+        className="tag-pill tag-pill-gradient"
         onMouseMove={e => setPos({ x: e.clientX, y: e.clientY })}
         onMouseLeave={() => setPos(null)}
         style={{ cursor: "default", display: "inline-flex", alignItems: "center", gap: "0.3em" }}
@@ -273,16 +273,6 @@ function LinkedTag({ skill }: { skill: string }) {
   );
 }
 
-// ── Section label ─────────────────────────────────
-
-function SectionLabel({ children }: { children: React.ReactNode }) {
-  return (
-    <p style={{ fontSize: "0.65rem", textTransform: "uppercase", letterSpacing: "0.12em", color: "var(--text-dim)", marginBottom: "0.75rem", fontFamily: "var(--font-mono)" }}>
-      {children}
-    </p>
-  );
-}
-
 // ── Data ──────────────────────────────────────────
 
 const skills = [
@@ -306,10 +296,23 @@ export default function Skills() {
         <p style={{ fontSize: "0.875rem", color: "var(--text-muted)" }}>What I know and what I build with.</p>
       </div>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-4)" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
         {skills.map(sec => (
-          <div key={sec.name}>
-            <SectionLabel>{sec.name}</SectionLabel>
+          <div key={sec.name} className="card" style={{ padding: "var(--space-2) var(--space-3)" }}>
+            <p style={{
+              fontSize: "0.6rem",
+              textTransform: "uppercase",
+              letterSpacing: "0.12em",
+              fontFamily: "var(--font-mono)",
+              marginBottom: "0.75rem",
+              background: "linear-gradient(90deg, var(--accent-purple), var(--accent-emerald), var(--accent-teal))",
+              WebkitBackgroundClip: "text",
+              backgroundClip: "text",
+              color: "transparent",
+              display: "inline-block",
+            }}>
+              {sec.name}
+            </p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
               {sec.items.map(item => <LinkedTag key={item} skill={item} />)}
             </div>
@@ -318,7 +321,7 @@ export default function Skills() {
       </div>
 
       <p style={{ fontSize: "0.7rem", fontFamily: "var(--font-mono)", color: "var(--text-dim)", display: "flex", alignItems: "center", gap: "0.4rem" }}>
-        <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: "linear-gradient(135deg, #89c4e1, #a78bfa)", display: "inline-block", flexShrink: 0 }} />
+        <span style={{ width: "5px", height: "5px", borderRadius: "50%", background: "var(--gradient-accent)", display: "inline-block", flexShrink: 0 }} />
         hover tagged skills to see backing credentials, experience, and projects
       </p>
     </div>
